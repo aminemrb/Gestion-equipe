@@ -1,2 +1,2 @@
-# football_manager
-Bienvenue sur le depot github
+# Football Manager Project
+Ce projet aide l’entraîneur à gérer les matchs et les joueurs.
