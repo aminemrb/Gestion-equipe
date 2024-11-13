@@ -1,18 +1,30 @@
 <?php
-// app/config/database.php
+// config/database.php
 
-function getDatabaseConnection() {
-    $host = getenv('DB_HOST');
-    $db = getenv('DB_NAME');
-    $user = getenv('DB_USER');
-    $pass = getenv('DB_PASS');
+class Database {
+    private static $instance = null;
+    private $pdo;
 
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $pdo;
-    } catch (PDOException $e) {
-        logMessage('ERROR', 'Erreur de connexion à la base de données: ' . $e->getMessage());
-        exit('Database connection error');
+    private function __construct() {
+        // Informations de connexion
+        $host = 'localhost';
+        $port = '3307';
+        $dbname = 'football_manager';
+        $username = 'root';
+        $password = ''; // Mot de passe MySQL (vide dans ce cas)
+
+        // DSN (Data Source Name)
+        $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+
+        // Création de l'instance PDO
+        $this->pdo = new PDO($dsn, $username, $password);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new Database();
+        }
+        return self::$instance->pdo;
     }
 }
