@@ -1,13 +1,12 @@
 <?php
+session_start();
+require_once '../routes/routes.php';
 
-// Charger les configurations de base
-require_once '../config/config.php';
-require_once '../app/Router.php';
+$router = require '../routes/routes.php';
 
-// Initialiser le routeur et charger les routes
-$router = require_once '../routes/routes.php';
+// Récupère l'URI de la requête
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-// Dispatcher la route actuelle
-$router->dispatch();
-
-
+// Dispatch la requête vers le contrôleur et l'action appropriés
+$router->dispatch($uri);
+?>

@@ -2,8 +2,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football Manager</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>Page d'accueil</title>
+    <link rel="stylesheet" href="/public/assets/css/style.css"> <!-- Si le fichier CSS est dans assets -->
 </head>
 <body>
+    <header>
+        <h1>Bienvenue sur Football Manager</h1>
+        <?php include __DIR__ . '/menu.php'; ?>
+    </header>

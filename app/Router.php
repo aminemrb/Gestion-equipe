@@ -3,43 +3,25 @@
 class Router {
     private $routes = [];
 
-    public function addRoute($path, $controllerName, $methodName) {
-        $this->routes[$path] = ['controller' => $controllerName, 'method' => $methodName];
+    public function addRoute($path, $controller, $action) {
+        $this->routes[$path] = ['controller' => $controller, 'action' => $action];
     }
 
-    public function dispatch($path) {
-        if (isset($this->routes[$path])) {
-            $route = $this->routes[$path];
-            $controllerName = $route['controller'];
-            $methodName = $route['method'];
-
-            $controllerFile = __DIR__ . "/controleurs/$controllerName.php";
-            if (file_exists($controllerFile)) {
-                require_once $controllerFile;
-
-                if (class_exists($controllerName)) {
-                    $controller = new $controllerName();
-
-                    if (method_exists($controller, $methodName)) {
-                        call_user_func_array([$controller, $methodName], []);
-                        return;
-                    } else {
-                        $this->sendNotFound("Méthode '$methodName' non trouvée dans le contrôleur '$controllerName'");
-                    }
-                } else {
-                    $this->sendNotFound("Contrôleur '$controllerName' introuvable.");
-                }
-            } else {
-                $this->sendNotFound("Fichier du contrôleur '$controllerFile' introuvable.");
+    public function dispatch($uri) {
+        foreach ($this->routes as $path => $route) {
+            $pattern = preg_replace('#\{[^\}]+\}#', '([^/]+)', $path);
+            if (preg_match("#^$pattern$#", $uri, $matches)) {
+                $controllerName = $route['controller'];
+                $actionName = $route['action'];
+                require_once __DIR__ . "/../controleurs/$controllerName.php";
+                $controller = new $controllerName();
+                call_user_func_array([$controller, $actionName], array_slice($matches, 1));
+                return;
             }
-        } else {
-            $this->sendNotFound("Route '$path' non définie.");
         }
-    }
-
-    // Méthode pour envoyer une réponse 404
-    private function sendNotFound($message = "Page non trouvée") {
-        http_response_code(404);
-        echo "<h1>404 - $message</h1>";
+        // Si aucune route ne correspond, afficher une erreur 404
+        header("HTTP/1.0 404 Not Found");
+        echo "404 Not Found";
     }
 }
+?>

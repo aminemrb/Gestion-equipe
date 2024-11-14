@@ -1,6 +1,4 @@
 <?php
-// config/database.php
-
 class Database {
     private static $instance = null;
     private $pdo;
@@ -28,3 +26,4 @@ class Database {
         return self::$instance->pdo;
     }
 }
+?>
