@@ -1,12 +1,15 @@
 <?php
 
-require_once __DIR__ . '/../modeles/Utilisateur.php';
+namespace App\Controleurs;
+
+use App\Modeles\Utilisateur;
+use Config\Database;
 
 class AuthControleur {
     private $db;
 
     public function __construct() {
-        $this->db = require_once __DIR__ . '/../../config/database.php'; // Accès à la base de données
+        $this->db = Database::getInstance(); // Accès à la base de données
     }
 
     public function login($email, $password) {
@@ -23,6 +26,14 @@ class AuthControleur {
         } else {
             echo "Identifiants invalides.";
         }
+    }
+
+    public function logout() {
+        session_start();
+        session_unset();
+        session_destroy();
+        header('Location: ../vues/Authentification/login.php');
+        exit;
     }
 }
 ?>

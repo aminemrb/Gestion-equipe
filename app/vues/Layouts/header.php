@@ -8,5 +8,12 @@
 <body>
     <header>
         <h1>Bienvenue sur Football Manager</h1>
-        <?php include __DIR__ . '/menu.php'; ?>
+        <?php
+        session_start();
+        if (isset($_SESSION['utilisateur_id'])) {
+            include __DIR__ . '/menu.php';
+        } else {
+            include __DIR__ . '/menu_deconnecter.php';
+        }
+        ?>
     </header>

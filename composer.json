@@ -1,0 +1,17 @@
+{
+    "name": "amine/football_manager",
+    "autoload": {
+        "psr-4": {
+           "App\\": "app/",
+            "Config\\": "config/",
+            "Routes\\": "routes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pep Guardiola",
+            "email": "pep.guardiola@man-city.com"
+        }
+    ],
+    "require": {}
+}

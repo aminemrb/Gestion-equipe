@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 class Router {
     private $routes = [];
 
@@ -13,7 +15,6 @@ class Router {
             if (preg_match("#^$pattern$#", $uri, $matches)) {
                 $controllerName = $route['controller'];
                 $actionName = $route['action'];
-                require_once __DIR__ . "/../controleurs/$controllerName.php";
                 $controller = new $controllerName();
                 call_user_func_array([$controller, $actionName], array_slice($matches, 1));
                 return;

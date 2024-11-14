@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once '../routes/routes.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$router = require '../routes/routes.php';
+$router = require __DIR__ . '/../routes/routes.php';
 
 // Récupère l'URI de la requête
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

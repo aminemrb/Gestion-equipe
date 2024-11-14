@@ -1,5 +1,8 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
+
+namespace App\Modeles;
+
+use Config\Database;
 
 class Utilisateur {
     private $pdo;
@@ -11,7 +14,7 @@ class Utilisateur {
     public function trouverParEmail($email) {
         $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE email = :email");
         $stmt->execute(['email' => $email]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 }
 ?>

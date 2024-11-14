@@ -1,5 +1,7 @@
 <?php
-require_once __DIR__ . '/../../controleurs/AuthControleur.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+use App\Controleurs\AuthControleur;
 
 $auth = new AuthControleur();
 
@@ -8,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     if ($auth->login($email, $password)) {
-        header('Location: ../../vues/accueil.php');
+        header('Location: ../../accueil.php');
         exit;
     } else {
         $error = "Email ou mot de passe incorrect.";
