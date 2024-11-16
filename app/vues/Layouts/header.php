@@ -1,19 +1,26 @@
+<?php
+require_once __DIR__ . '/../../../vendor/autoload.php';
+include __DIR__ . '/../../config.php'; // Include config.php
+include __DIR__ . '/../../auth/auth.php'; // Include auth.php
+
+if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
+    verifierUtilisateurConnecte();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Page d'accueil</title>
     <link rel="stylesheet" href="/public/assets/css/style.css"> <!-- Si le fichier CSS est dans assets -->
 </head>
 <body>
-    <header>
-        <h1>Bienvenue sur Football Manager</h1>
-        <?php
-        session_start();
-        if (isset($_SESSION['utilisateur_id'])) {
-            include __DIR__ . '/menu.php';
-        } else {
-            include __DIR__ . '/menu_deconnecter.php';
-        }
-        ?>
-    </header>
+<header>
+    <?php
+    if (isset($_SESSION['utilisateur_id'])) {
+        include __DIR__ . '/menu.php';
+    } else {
+        include __DIR__ . '/menu_deconnecter.php';
+    }
+    ?>
+</header>

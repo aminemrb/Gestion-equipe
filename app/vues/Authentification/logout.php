@@ -1,7 +1,13 @@
 <?php
-session_start();
-session_unset();
-session_destroy();
-header('Location: login.php');
-exit;
+include __DIR__ . '/../../config.php'; // Include config.php
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
+use App\Controleurs\AuthControleur;
+
+echo "Starting logout process..."; // Debugging statement
+
+$auth = new AuthControleur();
+$auth->logout();
+
+echo "Logout process completed."; // Debugging statement
 ?>

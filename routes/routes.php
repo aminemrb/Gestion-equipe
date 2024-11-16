@@ -8,6 +8,7 @@ use App\Controleurs\StatsControleur;
 use App\Controleurs\FeuilleDeRencontreControleur;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+include __DIR__ . '/../config.php'; // Include config.php
 
 // Initialisation du routeur
 $router = new Router();
@@ -23,7 +24,7 @@ $router->addRoute('/Rencontres/ajouter_rencontre/([^/]+)', RencontreControleur::
 $router->addRoute('/Rencontres/modifier_rencontre/([^/]+)', RencontreControleur::class, 'modifier_rencontre');
 
 // Routes pour l'Authentification
-$router->addRoute('/accueil', AuthControleur::class, 'accueil');
+$router->addRoute('/Accueil/accueil', AuthControleur::class, 'accueil');
 $router->addRoute('/Authentification/login', AuthControleur::class, 'login');
 $router->addRoute('/Authentification/logout', AuthControleur::class, 'logout');
 
@@ -36,4 +37,3 @@ $router->addRoute('/Stats', StatsControleur::class, 'stats');
 
 // Retourne l'instance du routeur pour usage dans index.php
 return $router;
-?>

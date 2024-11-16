@@ -21,7 +21,7 @@ class AuthControleur {
             session_start();
             $_SESSION['utilisateur_id'] = $utilisateur['id_utilisateur'];
             $_SESSION['email'] = $utilisateur['email'];
-            header('Location: ../../vues/accueil.php');
+            header('Location: ' . BASE_URL . '/vues/Accueil/accueil.php');
             exit;
         } else {
             echo "Identifiants invalides.";
@@ -32,7 +32,7 @@ class AuthControleur {
         session_start();
         session_unset();
         session_destroy();
-        header('Location: ../vues/Authentification/login.php');
+        header('Location: ' . BASE_URL . '/vues/Accueil/accueil.php');
         exit;
     }
 }
