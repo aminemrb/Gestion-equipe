@@ -2,28 +2,28 @@
 # Tout le contenu de ce fichier est temporairement désactivé
 
 # Dépendances PHP et Node.js
-# vendor/
-# node_modules/
+ vendor/
+ node_modules/
 
 # Dossiers de cache et de logs
-# cache/
-# logs/
-# *.log
-# temp/
+ cache/
+ logs/
+ *.log
+ temp/
 
 # Fichiers générés par le système
-# .DS_Store
-# Thumbs.db
+ .DS_Store
+ Thumbs.db
 
 # Dossiers de build pour le frontend (si applicable)
-# dist/
-# build/
+ dist/
+ build/
 
 # Fichiers spécifiques aux éditeurs de code
-# .vscode/
-# .idea/
+ .vscode/
+ .idea/
 
 # Fichiers de sauvegarde temporaires
-# *.bak
-# *.swp
-# *.tmp
+ *.bak
+ *.swp
+ *.tmp
