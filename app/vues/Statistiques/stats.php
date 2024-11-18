@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../Layouts/header.php'; ?>
     <main>
-        <h1>Liste des rencontres</h1>
+        <h1>Statistiques</h1>
         <!-- Contenu de la liste des joueurs -->
     </main>
 

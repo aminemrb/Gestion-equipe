@@ -8,7 +8,6 @@ use App\Controleurs\StatsControleur;
 use App\Controleurs\FeuilleDeRencontreControleur;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-include __DIR__ . '/../config.php'; // Include config.php
 
 // Initialisation du routeur
 $router = new Router();
@@ -22,18 +21,15 @@ $router->addRoute('/Joueurs/modifier_joueur/([^/]+)', JoueurControleur::class, '
 $router->addRoute('/Rencontres/liste_rencontres', RencontreControleur::class, 'liste_rencontres');
 $router->addRoute('/Rencontres/ajouter_rencontre/([^/]+)', RencontreControleur::class, 'ajouter_rencontre');
 $router->addRoute('/Rencontres/modifier_rencontre/([^/]+)', RencontreControleur::class, 'modifier_rencontre');
+$router->addRoute('/Rencontres/formulaire_selection', RencontreControleur::class, 'formulaire_selection');
 
 // Routes pour l'Authentification
 $router->addRoute('/Accueil/accueil', AuthControleur::class, 'accueil');
 $router->addRoute('/Authentification/login', AuthControleur::class, 'login');
 $router->addRoute('/Authentification/logout', AuthControleur::class, 'logout');
 
-// Routes pour Feuille de Match
-$router->addRoute('/Feuille_rencontres/liste_rencontres', FeuilleDeRencontreControleur::class, 'liste_rencontres');
-$router->addRoute('/Feuille_rencontres/formulaire_selection', FeuilleDeRencontreControleur::class, 'formulaire_selection');
-
 // Routes pour Statistiques
-$router->addRoute('/Stats', StatsControleur::class, 'stats');
+$router->addRoute('/Statistiques', StatsControleur::class, 'stats');
 
 // Retourne l'instance du routeur pour usage dans index.php
 return $router;

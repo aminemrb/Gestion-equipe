@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5794ee69-df9b-480f-aeff-2575946002dc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/auth/auth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controleurs/AuthControleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controleurs/AuthControleur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Authentification/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Authentification/login.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/vues/Statistiques/stats.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controleurs/Controleur.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controleurs/FeuilleDeRencontreControleur.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/modeles/FeuilleDeRencontre.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/vues/Authentification/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Authentification/logout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Feuille_rencontres/formulaire_selection.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/formulaire_selection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Feuille_rencontres/liste_rencontres.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/vues/Layouts/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Layouts/menu_deconnecter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/menu_deconnecter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Accueil/accueil.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Stats/stats.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,6 +58,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\football_manager\app\vues\Rencontres" />
       <recent name="C:\xampp\htdocs\football_manager\app\vues\Accueil" />
     </key>
   </component>
@@ -77,6 +80,8 @@
       <updated>1731694610294</updated>
       <workItem from="1731694611379" duration="5759000" />
       <workItem from="1731745722610" duration="3438000" />
+      <workItem from="1731768853175" duration="2845000" />
+      <workItem from="1731922914702" duration="774000" />
     </task>
     <servers />
   </component>
