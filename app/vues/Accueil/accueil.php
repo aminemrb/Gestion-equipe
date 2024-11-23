@@ -14,7 +14,7 @@ include __DIR__ . '/../Layouts/header.php';
         if (isset($_SESSION['utilisateur_id'])) {
             echo htmlspecialchars($_SESSION['email']);
         } else {
-            echo "sur le site";
+            echo "sur Football Manager";
         }
         ?>!
     </h1>

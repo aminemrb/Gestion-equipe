@@ -15,11 +15,11 @@ $router = new Router();
 // Routes pour Joueurs
 $router->addRoute('/Joueurs/liste_joueurs', JoueurControleur::class, 'liste_joueurs');
 $router->addRoute('/Joueurs/ajouter_joueur', JoueurControleur::class, 'ajouter_joueur');
-$router->addRoute('/Joueurs/modifier_joueur/([^/]+)', JoueurControleur::class, 'modifier_joueur');
+$router->addRoute('/Joueurs/supprimer_joueur/{numero_licence}', JoueurControleur::class, 'supprimer_joueur');
 
 // Routes pour Rencontres
 $router->addRoute('/Rencontres/liste_rencontres', RencontreControleur::class, 'liste_rencontres');
-$router->addRoute('/Rencontres/ajouter_rencontre/([^/]+)', RencontreControleur::class, 'ajouter_rencontre');
+$router->addRoute('/Rencontres/ajouter_rencontre', RencontreControleur::class, 'ajouter_rencontre');
 $router->addRoute('/Rencontres/modifier_rencontre/([^/]+)', RencontreControleur::class, 'modifier_rencontre');
 $router->addRoute('/Rencontres/formulaire_selection', RencontreControleur::class, 'formulaire_selection');
 
