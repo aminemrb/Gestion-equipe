@@ -11,7 +11,7 @@ class Database {
     private function __construct() {
         // Informations de connexion
         $host = 'mysql-footballmanager.alwaysdata.net';
-        $port = '21';
+        $port = '3306';
         $dbname = 'footballmanager_v1';
         $username = '387083';
         $password = '$iutinfo'; // Mot de passe MySQL (vide dans ce cas)
