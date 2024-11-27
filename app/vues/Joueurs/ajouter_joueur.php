@@ -25,11 +25,11 @@ $joueurControleur->ajouter_joueur(); // Traite la requête POST
         <input type="date" id="date_naissance" name="date_naissance" required>
 
         <label for="taille">Taille (en mètres) :</label>
-        <input type="number" id="taille" name="taille" min="1.00" max="2.50" step="0.01" required>
+        <input type="number" id="taille" name="taille"required>
 
 
         <label for="poids">Poids (en kg) :</label>
-        <input type="number" id="poids" name="poids" min="30" max="200" step="0.1" required>
+        <input type="number" id="poids" name="poids"required>
 
         <label for="statut">Statut :</label>
         <select id="statut" name="statut" required>

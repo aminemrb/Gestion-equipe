@@ -37,8 +37,13 @@ if ($numero_licence) {
                 <label for="poids">Poids:</label>
                 <input type="number" id="poids" name="poids" value="<?php echo htmlspecialchars($joueur['poids']); ?>">
 
-                <label for="statut">Statut:</label>
-                <input type="text" id="statut" name="statut" value="<?php echo htmlspecialchars($joueur['statut']); ?>">
+                <label for="statut">Statut :</label>
+                <select id="statut" name="statut" required>
+                    <option value="Actif">Actif</option>
+                    <option value="Blessé">Blessé</option>
+                    <option value="Suspendu">Suspendu</option>
+                    <option value="Absent">Absent</option>
+                </select>
 
                 <label for="position_preferee">Position préférée:</label>
                 <input type="text" id="position_preferee" name="position_preferee" value="<?php echo htmlspecialchars($joueur['position_preferee']); ?>">

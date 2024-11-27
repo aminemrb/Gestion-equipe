@@ -10,11 +10,11 @@ class Database {
 
     private function __construct() {
         // Informations de connexion
-        $host = 'localhost';
-        $port = '3307';
-        $dbname = 'football_manager';
-        $username = 'root';
-        $password = ''; // Mot de passe MySQL (vide dans ce cas)
+        $host = 'mysql-footballmanager.alwaysdata.net';
+        $port = '21';
+        $dbname = 'footballmanager_v1';
+        $username = '387083';
+        $password = '$iutinfo'; // Mot de passe MySQL (vide dans ce cas)
 
         // DSN (Data Source Name)
         $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
