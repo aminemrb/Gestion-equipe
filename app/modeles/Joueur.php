@@ -20,12 +20,13 @@ class Joueur {
     }
 
     // Ajouter un joueur
-    public function ajouterJoueur($nom, $prenom, $date_naissance, $taille = null, $poids = null, $statut = 'Actif', $position_preferee = null, $commentaire = null) {
+    public function ajouterJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille = null, $poids = null, $statut = 'Actif', $position_preferee = null, $commentaire = null) {
         try {
-            $stmt = $this->db->prepare("INSERT INTO joueur (nom, prenom, date_naissance, taille, poids, statut, position_preferee, commentaire) 
-                                        VALUES (:nom, :prenom, :date_naissance, :taille, :poids, :statut, :position_preferee, :commentaire)");
+            $stmt = $this->db->prepare("INSERT INTO joueur (numero_licence, nom, prenom, date_naissance, taille, poids, statut, position_preferee, commentaire) 
+                                        VALUES (:numero_licence, :nom, :prenom, :date_naissance, :taille, :poids, :statut, :position_preferee, :commentaire)");
 
             // Lier les paramètres aux valeurs
+            $stmt->bindParam(':numero_licence', $numero_licence);
             $stmt->bindParam(':nom', $nom);
             $stmt->bindParam(':prenom', $prenom);
             $stmt->bindParam(':date_naissance', $date_naissance);

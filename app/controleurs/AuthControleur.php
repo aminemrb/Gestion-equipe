@@ -16,8 +16,7 @@ class AuthControleur {
         $utilisateurModel = new Utilisateur($this->db);
         $utilisateur = $utilisateurModel->trouverParEmail($email);
 
-        // Utiliser sha1 pour vérifier le mot de passe
-        if ($utilisateur && sha1($password) === $utilisateur['mot_de_passe']) {
+        if ($utilisateur && password_verify($password, $utilisateur['mot_de_passe'])) {
             session_start();
             $_SESSION['utilisateur_id'] = $utilisateur['id_utilisateur'];
             $_SESSION['email'] = $utilisateur['email'];
@@ -27,6 +26,8 @@ class AuthControleur {
             echo "Identifiants invalides.";
         }
     }
+
+
 
     public function logout() {
         session_start();

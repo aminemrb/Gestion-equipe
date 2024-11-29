@@ -27,6 +27,7 @@ class JoueurControleur {
     public function ajouter_joueur() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Récupérer les données du formulaire
+            $numero_licence = trim($_POST['numero_licence']);
             $nom = trim($_POST['nom']);
             $prenom = trim($_POST['prenom']);
             $date_naissance = $_POST['date_naissance'];
@@ -54,7 +55,7 @@ class JoueurControleur {
 
             // Ajouter le joueur via le modèle
             try {
-                $this->joueurModel->ajouterJoueur($nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
+                $this->joueurModel->ajouterJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
                 // Redirection vers la liste des joueurs après succès
                 header('Location: ' . $_SERVER['HTTP_REFERER']);
                 exit;
