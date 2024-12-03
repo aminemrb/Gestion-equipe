@@ -19,6 +19,13 @@ class Joueur {
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourner tous les résultats sous forme de tableau associatif
     }
 
+    // Récupérer les joueurs actifs
+    public function getJoueursActifs() {
+        $stmt = $this->db->prepare("SELECT * FROM joueur WHERE statut = 'Actif' ORDER BY nom, prenom");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Ajouter un joueur
     public function ajouterJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille = null, $poids = null, $statut = 'Actif', $position_preferee = null, $commentaire = null) {
         try {
@@ -89,5 +96,23 @@ class Joueur {
         } catch (\Exception $e) {
             throw new \Exception("Erreur lors de la récupération du joueur : " . $e->getMessage());
         }
+    }
+
+    // Incrementer le nombre de rencontres jouées
+    public function incrementerRencontresJouees($numero_licence) {
+        try {
+            $stmt = $this->db->prepare("UPDATE joueur SET rencontres_jouees = rencontres_jouees + 1 WHERE numero_licence = :numero_licence");
+            $stmt->bindParam(':numero_licence', $numero_licence);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new \Exception("Erreur lors de l'incrémentation des rencontres jouées : " . $e->getMessage());
+        }
+    }
+
+    // Décrémenter le nombre de rencontres jouées
+    public function decrementerRencontresJouees($numero_licence) {
+        $stmt = $this->db->prepare("UPDATE joueur SET rencontres_jouees = rencontres_jouees - 1 WHERE numero_licence = :numero_licence");
+        $stmt->bindParam(':numero_licence', $numero_licence);
+        $stmt->execute();
     }
 }

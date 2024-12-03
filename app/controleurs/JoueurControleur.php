@@ -23,6 +23,18 @@ class JoueurControleur {
         }
     }
 
+    // Afficher la liste des joueurs actifs
+    public function liste_joueurs_actifs() {
+        try {
+            // Récupérer les joueurs actifs depuis le modèle
+            return $this->joueurModel->getJoueursActifs();
+        } catch (\Exception $e) {
+            // Gérer les erreurs
+            error_log("Erreur lors de la récupération des joueurs actifs : " . $e->getMessage());
+            return [];
+        }
+    }
+
     // Afficher le formulaire d'ajout et gérer la soumission
     public function ajouter_joueur() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -113,6 +125,24 @@ class JoueurControleur {
             exit;
         } catch (\Exception $e) {
             echo "Erreur lors de la suppression du joueur : " . $e->getMessage();
+        }
+    }
+
+    // Incrémenter le nombre de rencontres jouées
+    public function incrementer_rencontres_jouees($numero_licence) {
+        try {
+            $this->joueurModel->incrementerRencontresJouees($numero_licence);
+        } catch (\Exception $e) {
+            echo "Erreur lors de l'incrémentation des rencontres jouées : " . $e->getMessage();
+        }
+    }
+
+    // Décrémenter le nombre de rencontres jouées
+    public function decrementer_rencontres_jouees($numero_licence) {
+        try {
+            $this->joueurModel->decrementerRencontresJouees($numero_licence);
+        } catch (\Exception $e) {
+            echo "Erreur lors de la décrémentation des rencontres jouées : " . $e->getMessage();
         }
     }
 }
