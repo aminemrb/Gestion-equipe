@@ -21,6 +21,7 @@ $router->addRoute('/Joueurs/supprimer_joueur/{numero_licence}', JoueurControleur
 $router->addRoute('/Rencontres/liste_rencontres', RencontreControleur::class, 'liste_rencontres');
 $router->addRoute('/Rencontres/ajouter_rencontre', RencontreControleur::class, 'ajouter_rencontre');
 $router->addRoute('/Rencontres/modifier_rencontre/([^/]+)', RencontreControleur::class, 'modifier_rencontre');
+$router->addRoute('/Rencontres/supprimer_rencontre/([^/]+)', RencontreControleur::class, 'supprimer_rencontre');
 $router->addRoute('/Rencontres/formulaire_selection', RencontreControleur::class, 'formulaire_selection');
 
 // Routes pour l'Authentification

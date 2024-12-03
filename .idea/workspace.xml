@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5794ee69-df9b-480f-aeff-2575946002dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controleurs/AuthControleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controleurs/AuthControleur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controleurs/JoueurControleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controleurs/JoueurControleur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modeles/Joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Joueur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Authentification/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Authentification/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/ajouter_joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/ajouter_joueur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controleurs/RencontreControleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controleurs/RencontreControleur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/modeles/Rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Rencontre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_rencontre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/modifier_rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/modifier_rencontre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/routes.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/routes.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,20 +38,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "PHP Script.migration_passwords.php.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Amine",
-    "last_opened_file_path": "C:/Users/amine/football_manager",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;PHP Script.migration_passwords.php.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Amine&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/amine/football_manager&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\football_manager\app\vues\Rencontres" />
@@ -89,6 +90,8 @@
       <workItem from="1732699474225" duration="11000" />
       <workItem from="1732713355509" duration="622000" />
       <workItem from="1732788170570" duration="3740000" />
+      <workItem from="1732873781182" duration="1235000" />
+      <workItem from="1732954707298" duration="3003000" />
     </task>
     <servers />
   </component>
