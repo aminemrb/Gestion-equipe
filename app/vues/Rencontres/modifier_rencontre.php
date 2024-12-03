@@ -1,87 +1,58 @@
 <?php
-require_once 'config.php'; // Connexion à la base via PDO
-session_start();
+include __DIR__ . '/../Layouts/header.php';
+use App\Controleurs\RencontreControleur;
 
-// Vérification de l'authentification
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+// Instantiate the controller
+$rencontreControleur = new RencontreControleur();
+
+// Get the rencontre ID from the request (e.g., URL parameter)
+$id_rencontre = $_GET['id_rencontre'] ?? null;
+
+if ($id_rencontre) {
+    // Call the method to get the rencontre details
+    $rencontre = $rencontreControleur->modifier_rencontre($id_rencontre);
+} else {
+    echo "ID de la rencontre non fourni.";
     exit;
-}
-
-// Récupération de l'ID de la rencontre
-$rencontre_id = $_GET['id'] ?? null;
-
-if (!$rencontre_id) {
-    die("ID de la rencontre manquant.");
-}
-
-// Récupération des données actuelles de la rencontre
-$query = $pdo->prepare("SELECT * FROM rencontres WHERE id = ?");
-$query->execute([$rencontre_id]);
-$rencontre = $query->fetch(PDO::FETCH_ASSOC);
-
-if (!$rencontre) {
-    die("Rencontre introuvable.");
-}
-
-$errors = [];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $date = $_POST['date'] ?? '';
-    $heure = $_POST['heure'] ?? '';
-    $equipe_adverse = trim($_POST['equipe_adverse'] ?? '');
-    $lieu = $_POST['lieu'] ?? '';
-
-    // Validation des champs côté serveur
-    if (!$date || !$heure || !$equipe_adverse || !$lieu) {
-        $errors[] = "Tous les champs sont obligatoires.";
-    }
-
-    if (empty($errors)) {
-        // Mise à jour des informations dans la base de données
-        $query = $pdo->prepare("UPDATE rencontres SET date = ?, heure = ?, equipe_adverse = ?, lieu = ? WHERE id = ?");
-        $query->execute([$date, $heure, $equipe_adverse, $lieu, $rencontre_id]);
-
-        header('Location: liste_rencontres.php');
-        exit;
-    }
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Modifier une rencontre</title>
-</head>
-<body>
-    <h1>Modifier une rencontre</h1>
-    <a href="liste_rencontres.php">Retour à la liste des rencontres</a>
+<main>
+    <h1>Modifier la rencontre</h1>
 
-    <?php if ($errors): ?>
-        <ul style="color: red;">
-            <?php foreach ($errors as $error): ?>
-                <li><?php echo htmlspecialchars($error); ?></li>
-            <?php endforeach; ?>
-        </ul>
+    <?php if ($rencontre): ?>
+        <form method="post" action="">
+            <label for="equipe_adverse">Équipe Adverse :</label>
+            <input type="text" id="equipe_adverse" name="equipe_adverse"
+                   value="<?php echo htmlspecialchars($rencontre['equipe_adverse']); ?>" required>
+
+            <label for="date_rencontre">Date de la rencontre :</label>
+            <input type="date" id="date_rencontre" name="date_rencontre"
+                   value="<?php echo htmlspecialchars($rencontre['date_rencontre']); ?>" required>
+
+            <label for="heure_rencontre">Heure de la rencontre :</label>
+            <input type="time" id="heure_rencontre" name="heure_rencontre"
+                   value="<?php echo htmlspecialchars($rencontre['heure_rencontre']); ?>" required>
+
+            <label for="lieu">Lieu :</label>
+            <select id="lieu" name="lieu" required>
+                <option value="Domicile">Domicile</option>
+                <option value="Exterieur">Exterieur</option>
+            </select>
+
+            <label for="resultat">Résultat :</label>
+            <select id="resultat" name="resultat" required>
+                <option value="Victoire">Victoire</option>
+                <option value="Défaite">Défaite</option>
+                <option value="Nul">Nul</option>
+                <option value="<Rien>">Rien</option>
+            </select>
+
+            <button type="submit">Modifier</button>
+        </form>
+    <?php else: ?>
+        <p>Rencontre non trouvée.</p>
     <?php endif; ?>
+</main>
 
-    <form method="POST">
-        <label>Date :</label>
-        <input type="date" name="date" value="<?php echo htmlspecialchars($rencontre['date']); ?>" required><br>
-
-        <label>Heure :</label>
-        <input type="time" name="heure" value="<?php echo htmlspecialchars($rencontre['heure']); ?>" required><br>
-
-        <label>Équipe adverse :</label>
-        <input type="text" name="equipe_adverse" maxlength="255" value="<?php echo htmlspecialchars($rencontre['equipe_adverse']); ?>" required><br>
-
-        <label>Lieu :</label>
-        <select name="lieu" required>
-            <option value="domicile" <?php echo $rencontre['lieu'] === 'domicile' ? 'selected' : ''; ?>>Domicile</option>
-            <option value="exterieur" <?php echo $rencontre['lieu'] === 'exterieur' ? 'selected' : ''; ?>>Extérieur</option>
-        </select><br>
-
-        <button type="submit">Enregistrer les modifications</button>
-    </form>
-</body>
-</html>
+<?php include __DIR__ . '/../Layouts/footer.php'; ?>

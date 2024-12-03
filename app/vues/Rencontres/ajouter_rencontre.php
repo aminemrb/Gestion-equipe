@@ -1,63 +1,50 @@
 <?php
-require_once 'config.php'; 
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
-}
+// Inclure le header
+include __DIR__ . '/../Layouts/header.php';
 
-$errors = [];
+use App\Controleurs\RencontreControleur;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $date = $_POST['date'] ?? '';
-    $heure = $_POST['heure'] ?? '';
-    $equipe_adverse = trim($_POST['equipe_adverse'] ?? '');
-    $lieu = $_POST['lieu'] ?? '';
+// Créez une instance du contrôleur Rencontre
+$rencontreControleur = new RencontreControleur();
 
-    if (!$date || !$heure || !$equipe_adverse || !$lieu) {
-        $errors[] = "Tous les champs sont obligatoires.";
-    }
-
-    if (empty($errors)) {
-        $query = $pdo->prepare("INSERT INTO rencontres (date, heure, equipe_adverse, lieu) VALUES (?, ?, ?, ?)");
-        $query->execute([$date, $heure, $equipe_adverse, $lieu]);
-
-        header('Location: liste_rencontres.php');
-        exit;
-    }
-}
+// Traitez la soumission du formulaire via le contrôleur
+$rencontreControleur->ajouter_rencontre(); // Traite la requête POST
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ajouter une rencontre</title>
-</head>
-<body>
+<main>
     <h1>Ajouter une rencontre</h1>
-    <a href="liste_rencontres.php">Retour à la liste des rencontres</a>
+    <form method="POST" action="">
+        <label for="equipe_adverse">Équipe Adverse :</label>
+        <input type="text" id="equipe_adverse" name="equipe_adverse" required>
 
-    <?php if ($errors): ?>
-        <ul style="color: red;">
-            <?php foreach ($errors as $error): ?>
-                <li><?php echo htmlspecialchars($error); ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endif; ?>
+        <label for="date_rencontre">Date de la rencontre :</label>
+        <input type="date" id="date_rencontre" name="date_rencontre" required>
 
-    <form method="POST">
-        <label>Date :</label>
-        <input type="date" name="date" required><br>
-        <label>Heure :</label>
-        <input type="time" name="heure" required><br>
-        <label>Équipe adverse :</label>
-        <input type="text" name="equipe_adverse" maxlength="255" required><br>
-        <label>Lieu :</label>
-        <select name="lieu" required>
-            <option value="domicile">Domicile</option>
-            <option value="exterieur">Extérieur</option>
-        </select><br>
+        <label for="heure_rencontre">Heure de la rencontre :</label>
+        <input type="time" id="heure_rencontre" name="heure_rencontre" required>
+
+        <label for="lieu">Lieu :</label>
+        <select id="lieu" name="lieu" required>
+            <option value="Domicile">Domicile</option>
+            <option value="Exterieur">Exterieur</option>
+        </select>
+
+        <label for="resultat">Résultat :</label>
+        <input type="text" id="resultat" name="resultat" placeholder="Laissez vide si pas encore joué">
+
+        <label for="resultat">Résultat :</label>
+        <select id="resultat" name="resultat" required>
+            <option value="Victoire">Victoire</option>
+            <option value="Défaite">Défaite</option>
+            <option value="Nul">Nul</option>
+            <option value="<Rien>">Rien</option>
+        </select>
+
         <button type="submit">Ajouter</button>
     </form>
-</body>
-</html>
+</main>
+
+<?php
+// Inclure le footer
+include __DIR__ . '/../Layouts/footer.php';
+?>

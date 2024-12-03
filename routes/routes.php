@@ -4,8 +4,8 @@ use App\Router;
 use App\Controleurs\AuthControleur;
 use App\Controleurs\JoueurControleur;
 use App\Controleurs\RencontreControleur;
+use App\Controleurs\SelectionControleur;
 use App\Controleurs\StatsControleur;
-use App\Controleurs\FeuilleDeRencontreControleur;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -21,7 +21,9 @@ $router->addRoute('/Joueurs/supprimer_joueur/{numero_licence}', JoueurControleur
 $router->addRoute('/Rencontres/liste_rencontres', RencontreControleur::class, 'liste_rencontres');
 $router->addRoute('/Rencontres/ajouter_rencontre', RencontreControleur::class, 'ajouter_rencontre');
 $router->addRoute('/Rencontres/modifier_rencontre/([^/]+)', RencontreControleur::class, 'modifier_rencontre');
-$router->addRoute('/Rencontres/formulaire_selection', RencontreControleur::class, 'formulaire_selection');
+$router->addRoute('/Rencontres/supprimer_rencontre/([^/]+)', RencontreControleur::class, 'supprimer_rencontre');
+$router->addRoute('/Rencontres/formulaire_selection', SelectionControleur::class, 'formulaire_selection');
+$router->addRoute('/Rencontres/traiter_selection', SelectionControleur::class, 'traiter_selection');
 
 // Routes pour l'Authentification
 $router->addRoute('/Accueil/accueil', AuthControleur::class, 'accueil');
