@@ -54,8 +54,8 @@ $rencontres = $rencontreControleur->liste_rencontres();
                         </td>
                         <td>
                             <a href="<?php echo BASE_URL; ?>/vues/Rencontres/formulaire_selection.php?id_rencontre=<?php echo $rencontre['id_rencontre']; ?>">Sélection</a>
-                            <a href="<?php echo BASE_URL; ?>/vues/Rencontres/modifier_selection.php?id_rencontre=<?php echo $rencontre['id_rencontre']; ?>">Modifier</a>
-                            <a href="<?php echo BASE_URL; ?>/vues/Rencontres/supprimer_selection.php?id_rencontre=<?php echo $rencontre['id_rencontre']; ?>">Supprimer</a>
+                            <a href="<?php echo BASE_URL; ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?php echo $rencontre['id_rencontre']; ?>">Modifier</a>
+                            <a href="<?php echo BASE_URL; ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?php echo $rencontre['id_rencontre']; ?>">Supprimer</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

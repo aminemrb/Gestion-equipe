@@ -29,17 +29,6 @@ $rencontreControleur->ajouter_rencontre(); // Traite la requête POST
             <option value="Exterieur">Exterieur</option>
         </select>
 
-        <label for="resultat">Résultat :</label>
-        <input type="text" id="resultat" name="resultat" placeholder="Laissez vide si pas encore joué">
-
-        <label for="resultat">Résultat :</label>
-        <select id="resultat" name="resultat" required>
-            <option value="Victoire">Victoire</option>
-            <option value="Défaite">Défaite</option>
-            <option value="Nul">Nul</option>
-            <option value="<Rien>">Rien</option>
-        </select>
-
         <button type="submit">Ajouter</button>
     </form>
 </main>

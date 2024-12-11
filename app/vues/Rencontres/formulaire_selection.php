@@ -29,7 +29,7 @@ if (count($joueurs) < 1) {
         <form method="post" action="traiter_selection.php">
             <input type="hidden" name="id_rencontre" value="<?php echo htmlspecialchars($id_rencontre); ?>">
             <fieldset>
-                <legend>Sélectionnez les joueurs</legend>
+                <legend>Sélectionnez les joueurs actifs pour cette rencontre</legend>
                 <?php foreach ($joueurs as $joueur): ?>
                     <div>
                         <input type="checkbox" id="joueur_<?php echo $joueur['numero_licence']; ?>" name="joueurs[]" value="<?php echo $joueur['numero_licence']; ?>" <?php echo in_array($joueur['numero_licence'], $selectionnes_ids) ? 'checked' : ''; ?>>
