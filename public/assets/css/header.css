@@ -1,6 +1,4 @@
 /* Styles généraux du site */
-
-/* Corps de la page */
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f7fc;
@@ -8,74 +6,76 @@ body {
     padding: 0;
 }
 
-/* Styles spécifiques au header (isolés grâce à la classe .header-style) */
+/* Header */
 .header-style {
-    background-color: #2c3e50;
+    background-color: #b3b3b3; /* Couleur du fond du header */
     color: white;
-    padding: 20px;
-    text-align: center;
+    padding: 15px 30px; /* Espacement du header  */
+    display: flex;
+    justify-content: space-between; /* Espacement entre l'image et le menu */
+    align-items: center; /* Centrage vertical des éléments */
 }
 
-.header-style h1 {
-    font-size: 2rem;
-    font-weight: 600;
+.header-style .logo {
+    max-height: 50px; /* Hauteur du logo */
+    width: auto;
+}
+
+/* Styles pour le menu */
+nav {
+    padding: 10px 20px; /* Espacement du menu */
+}
+
+nav ul {
+    list-style: none; /* Supprimer les puces des éléments de la liste */
+    padding: 0;
     margin: 0;
+    display: flex; /* Affichage en ligne des éléments */
+    justify-content: flex-end; /* Aligner le menu à droite */
+    gap: 20px; /* Espacement entre les éléments du menu */
 }
 
-.header-style nav {
-    margin-top: 20px;
+nav li {
+    margin: 0; /* Enlever les marges par défaut des éléments de liste */
 }
 
-.header-style nav a {
-    color: #ecf0f1;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 1rem;
-    padding: 5px;
+nav a {
+    color: #000000; /* Couleur des liens */
+    text-decoration: none; /* Enlever la décoration de texte */
+    padding: 8px 15px; /* Ajouter de l'espace autour du texte */
+    border-radius: 4px; /* Coins arrondis des boutons */
+    font-size: 1rem; /* Taille de police */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Animation de l'effet de survol */
 }
 
-.header-style nav a:hover {
-    color: #3498db;
-    text-decoration: underline;
+nav a:hover {
+    color: #ffffff; /* Couleur du texte au survol */
 }
 
-/* Autres styles généraux pour la page */
-main {
-    padding: 20px;
+nav a:active {
+    background-color: #2980b9; /* Couleur de fond lorsque le lien est cliqué */
 }
 
-/* Styles pour les tableaux dans la page principale */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
+/* Styles pour les petits écrans (mobile-first) */
+@media (max-width: 768px) {
+    .header-style {
+        flex-direction: column; /* Empiler l'image et le menu sur mobile */
+        align-items: center; /* Centrer l'image et le menu */
+        text-align: center; /* Centrer le texte du menu */
+    }
 
-table th, table td {
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
-}
+    nav ul {
+        flex-direction: column; /* Afficher les éléments du menu en colonne */
+        align-items: center; /* Centrer les éléments dans le menu */
+        gap: 10px; /* Espacement réduit pour les éléments sur mobile */
+    }
 
-table th {
-    background-color: #2c3e50;
-    color: white;
-}
+    nav a {
+        padding: 12px 20px; /* Plus d'espace pour les éléments de menu sur mobile */
+        font-size: 1.2rem; /* Augmenter la taille de la police pour les petits écrans */
+    }
 
-table td {
-    background-color: #f9f9f9;
-}
-
-table tr:hover {
-    background-color: #ecf0f1;
-}
-
-/* Liens pour les actions de la page */
-a {
-    color: #3498db;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
+    nav {
+        padding: 15px 20px; /* Plus d'espace dans le menu pour les petits écrans */
+    }
 }

@@ -6,7 +6,7 @@ body, h1, table, th, td, a {
 }
 
 /* Cible uniquement le contenu dans le main, pas le header */
-#liste-joueurs {
+#liste {
     font-family: Arial, sans-serif;
     font-size: 16px;
     line-height: 1.6;
@@ -15,14 +15,14 @@ body, h1, table, th, td, a {
     margin: 20px;
 }
 
-#liste-joueurs h1 {
+#liste h1 {
     text-align: center;
     color: #444;
     margin-bottom: 20px;
 }
 
 /* Boutons et liens */
-#liste-joueurs a {
+#liste a {
     text-decoration: none;
     color: #ffffff;
     background-color: #007bff;
@@ -32,17 +32,26 @@ body, h1, table, th, td, a {
     transition: background-color 0.3s ease;
 }
 
-#liste-joueurs a:hover {
+#liste a:hover {
     background-color: #0056b3;
 }
 
-#liste-joueurs a:disabled {
+/* Bouton Supprimer */
+#liste .btn-supprimer {
+    background-color: #e74c3c;
+}
+
+#liste .btn-supprimer:hover {
+    background-color: #c0392b;
+}
+
+#liste a:disabled {
     background-color: #cccccc;
     pointer-events: none;
 }
 
 /* Tableau des joueurs */
-#liste-joueurs table {
+#liste table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px auto;
@@ -52,37 +61,33 @@ body, h1, table, th, td, a {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-#liste-joueurs thead {
-    background-color: #007bff;
+#liste thead {
+    background-color: #272727;
     color: #fff;
 }
 
-#liste-joueurs th, #liste-joueurs td {
+#liste th, #liste td {
     text-align: left;
     padding: 12px 15px;
     border-bottom: 1px solid #ddd;
 }
 
-#liste-joueurs tr:hover {
-    background-color: #f1f1f1;
-}
-
-#liste-joueurs th {
+#liste th {
     text-transform: uppercase;
     font-size: 14px;
     letter-spacing: 0.05em;
 }
 
-#liste-joueurs td {
+#liste td {
     font-size: 14px;
 }
 
-#liste-joueurs tr:last-child td {
+#liste tr:last-child td {
     border-bottom: none;
 }
 
 /* Message d'absence de joueurs */
-#liste-joueurs p {
+#liste p {
     text-align: center;
     font-style: italic;
     margin: 20px 0;

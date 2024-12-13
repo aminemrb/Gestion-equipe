@@ -20,6 +20,9 @@ if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
 </head>
 <body>
 <header class="header-style">
+    <!-- Ajouter l'image à gauche -->
+    <img src="/football_manager/public/assets/images/fm.svg" alt="Logo" class="logo">
+
     <?php
     // Inclusion du menu en fonction de l'état de connexion
     if (isset($_SESSION['utilisateur_id'])) {
@@ -29,4 +32,5 @@ if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
     }
     ?>
 </header>
+
 

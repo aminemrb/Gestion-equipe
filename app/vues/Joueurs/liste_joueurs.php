@@ -28,8 +28,8 @@ foreach ($joueurs as $joueur) {
         <td>{$joueur['commentaire']}</td>
         <td>
             <a href=\"" . BASE_URL . "/vues/Joueurs/modifier_joueur.php?numero_licence={$joueur['numero_licence']}\">Modifier</a>
-            <a href=\"" . BASE_URL . "/vues/Joueurs/supprimer_joueur.php?numero_licence={$joueur['numero_licence']}\" 
-               onclick=\"return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');\">Supprimer</a>
+             <a href=\"" . BASE_URL . "/vues/Joueurs/supprimer_joueur.php?numero_licence={$joueur['numero_licence']}\" 
+           class=\"btn-supprimer\" onclick=\"return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');\">Supprimer</a>
         </td>
     </tr>
     ";

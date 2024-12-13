@@ -96,6 +96,11 @@ class JoueurControleur {
                 return;
             }
 
+            if ($taille < 1.00 || $taille > 2.50) {
+                echo"La taille doit être comprise entre 1.00 mètre et 2.50 mètres.";
+                return;
+            }
+
             // Modifier le joueur via le modèle
             try {
                 $this->joueurModel->modifierJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
