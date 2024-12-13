@@ -1,0 +1,98 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Main Layout */
+main {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+main h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007BFF;
+}
+
+/* Fieldset Styling */
+fieldset {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Legend Styling */
+fieldset legend {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    padding: 0 10px;
+}
+
+/* Checkbox Container */
+fieldset div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Checkbox Input */
+fieldset input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Checkbox Label */
+fieldset label {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Button Styling */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    main {
+        padding: 15px;
+    }
+
+    fieldset {
+        padding: 15px;
+    }
+
+    button[type="submit"] {
+        font-size: 14px;
+    }
+}

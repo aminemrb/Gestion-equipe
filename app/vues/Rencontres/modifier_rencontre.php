@@ -2,57 +2,57 @@
 include __DIR__ . '/../Layouts/header.php';
 use App\Controleurs\RencontreControleur;
 
-// Instantiate the controller
+// Créez une instance du contrôleur
 $rencontreControleur = new RencontreControleur();
 
-// Get the rencontre ID from the request (e.g., URL parameter)
+// Récupérez l'ID de la rencontre depuis l'URL
 $id_rencontre = $_GET['id_rencontre'] ?? null;
 
-if ($id_rencontre) {
-    // Call the method to get the rencontre details
-    $rencontre = $rencontreControleur->modifier_rencontre($id_rencontre);
-} else {
+if (!$id_rencontre) {
     echo "ID de la rencontre non fourni.";
     exit;
 }
+
+// Obtenez les détails de la rencontre à modifier
+$rencontre = $rencontreControleur->modifier_rencontre($id_rencontre);
+
+if (!$rencontre) {
+    echo "Rencontre non trouvée.";
+    exit;
+}
+
+// Charger le template HTML pour modifier la rencontre
+$template = file_get_contents(__DIR__ . '/templates/modifier_rencontre.html');
+
+// Remplacer les placeholders dans le template
+$output = str_replace(
+    [
+        '{{rencontre.equipe_adverse}}',
+        '{{rencontre.date_rencontre}}',
+        '{{rencontre.heure_rencontre}}',
+        '{{selected.domicile}}',
+        '{{selected.exterieur}}',
+        '{{selected.victoire}}',
+        '{{selected.defaite}}',
+        '{{selected.nul}}',
+        '{{selected.rien}}'
+    ],
+    [
+        htmlspecialchars($rencontre['equipe_adverse']),
+        htmlspecialchars($rencontre['date_rencontre']),
+        htmlspecialchars($rencontre['heure_rencontre']),
+        $rencontre['lieu'] === 'Domicile' ? 'selected' : '',
+        $rencontre['lieu'] === 'Exterieur' ? 'selected' : '',
+        $rencontre['resultat'] === 'Victoire' ? 'selected' : '',
+        $rencontre['resultat'] === 'Défaite' ? 'selected' : '',
+        $rencontre['resultat'] === 'Nul' ? 'selected' : '',
+        $rencontre['resultat'] === '<Rien>' ? 'selected' : ''
+    ],
+    $template
+);
+
+// Afficher le formulaire modifié
+echo $output;
+
+include __DIR__ . '/../Layouts/footer.php';
 ?>
-
-<main>
-    <h1>Modifier la rencontre</h1>
-
-    <?php if ($rencontre): ?>
-        <form method="post" action="">
-            <label for="equipe_adverse">Équipe Adverse :</label>
-            <input type="text" id="equipe_adverse" name="equipe_adverse"
-                   value="<?php echo htmlspecialchars($rencontre['equipe_adverse']); ?>" required>
-
-            <label for="date_rencontre">Date de la rencontre :</label>
-            <input type="date" id="date_rencontre" name="date_rencontre"
-                   value="<?php echo htmlspecialchars($rencontre['date_rencontre']); ?>" required>
-
-            <label for="heure_rencontre">Heure de la rencontre :</label>
-            <input type="time" id="heure_rencontre" name="heure_rencontre"
-                   value="<?php echo htmlspecialchars($rencontre['heure_rencontre']); ?>" required>
-
-            <label for="lieu">Lieu :</label>
-            <select id="lieu" name="lieu" required>
-                <option value="Domicile">Domicile</option>
-                <option value="Exterieur">Exterieur</option>
-            </select>
-
-            <label for="resultat">Résultat :</label>
-            <select id="resultat" name="resultat" required>
-                <option value="Victoire">Victoire</option>
-                <option value="Défaite">Défaite</option>
-                <option value="Nul">Nul</option>
-                <option value="<Rien>">Rien</option>
-            </select>
-
-            <button type="submit">Modifier</button>
-        </form>
-    <?php else: ?>
-        <p>Rencontre non trouvée.</p>
-    <?php endif; ?>
-</main>
-
-<?php include __DIR__ . '/../Layouts/footer.php'; ?>
