@@ -15,11 +15,11 @@ if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive -->
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/style.css"> <!-- Chemin absolu basé sur BASE_URL -->
+    <link rel="stylesheet" href="/football_manager/public/assets/css/header.css"> <!-- Chemin absolu basé sur BASE_URL -->
     <title>Football Manager</title>
 </head>
 <body>
-<header>
+<header class="header-style">
     <?php
     // Inclusion du menu en fonction de l'état de connexion
     if (isset($_SESSION['utilisateur_id'])) {
@@ -29,3 +29,4 @@ if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
     }
     ?>
 </header>
+

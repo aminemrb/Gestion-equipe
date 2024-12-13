@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/football_manager/public/assets/css/liste.css">
+  <title>Liste des joueurs</title>
+</head>
+<body>
+<main id="liste-joueurs">
+  <h1>Liste des joueurs</h1>
+
+  <a href="{{BASE_URL}}/vues/Joueurs/ajouter_joueur.php">Ajouter un joueur</a>
+
+  <table border="1">
+    <thead>
+    <tr>
+      <th>Numéro de Licence</th>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Date de Naissance</th>
+      <th>Taille</th>
+      <th>Poids</th>
+      <th>Statut</th>
+      <th>Position Préférée</th>
+      <th>Commentaire</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{ROWS}}
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

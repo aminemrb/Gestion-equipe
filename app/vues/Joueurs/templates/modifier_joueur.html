@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/football_manager/public/assets/css/modifier.css">
+  <title>Modifier un joueur</title>
+</head>
+<body>
+<div id="modifier-style">
+  <main>
+    <h1>Modifier un joueur</h1>
+    <form method="post" action="">
+      <div class="form-group">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" value="{{joueur.nom}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" value="{{joueur.prenom}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="date_naissance">Date de naissance :</label>
+        <input type="date" id="date_naissance" name="date_naissance" value="{{joueur.date_naissance}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="taille">Taille (en mètres) :</label>
+        <input type="number" id="taille" name="taille" value="{{joueur.taille}}">
+      </div>
+
+      <div class="form-group">
+        <label for="poids">Poids (en kg) :</label>
+        <input type="number" id="poids" name="poids" value="{{joueur.poids}}">
+      </div>
+
+      <div class="form-group">
+        <label for="statut">Statut :</label>
+        <select id="statut" name="statut" required>
+          <option value="Actif" {{joueur.statut == 'Actif' ? 'selected' : ''}}>Actif</option>
+          <option value="Blessé" {{joueur.statut == 'Blessé' ? 'selected' : ''}}>Blessé</option>
+          <option value="Suspendu" {{joueur.statut == 'Suspendu' ? 'selected' : ''}}>Suspendu</option>
+          <option value="Absent" {{joueur.statut == 'Absent' ? 'selected' : ''}}>Absent</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="position_preferee">Position préférée :</label>
+        <input type="text" id="position_preferee" name="position_preferee" value="{{joueur.position_preferee}}">
+      </div>
+
+      <div class="form-group">
+        <label for="commentaire">Commentaire :</label>
+        <textarea id="commentaire" name="commentaire">{{joueur.commentaire}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <button type="submit">Modifier</button>
+      </div>
+    </form>
+  </main>
+</div>
+</body>
+</html>

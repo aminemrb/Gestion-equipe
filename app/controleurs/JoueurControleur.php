@@ -127,22 +127,4 @@ class JoueurControleur {
             echo "Erreur lors de la suppression du joueur : " . $e->getMessage();
         }
     }
-
-    // Incrémenter le nombre de rencontres jouées
-    public function incrementer_rencontres_jouees($numero_licence) {
-        try {
-            $this->joueurModel->incrementerRencontresJouees($numero_licence);
-        } catch (\Exception $e) {
-            echo "Erreur lors de l'incrémentation des rencontres jouées : " . $e->getMessage();
-        }
-    }
-
-    // Décrémenter le nombre de rencontres jouées
-    public function decrementer_rencontres_jouees($numero_licence) {
-        try {
-            $this->joueurModel->decrementerRencontresJouees($numero_licence);
-        } catch (\Exception $e) {
-            echo "Erreur lors de la décrémentation des rencontres jouées : " . $e->getMessage();
-        }
-    }
 }
