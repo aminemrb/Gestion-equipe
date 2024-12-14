@@ -32,10 +32,6 @@ $output = str_replace(
         '{{rencontre.heure_rencontre}}',
         '{{selected.domicile}}',
         '{{selected.exterieur}}',
-        '{{selected.victoire}}',
-        '{{selected.defaite}}',
-        '{{selected.nul}}',
-        '{{selected.rien}}'
     ],
     [
         htmlspecialchars($rencontre['equipe_adverse']),
@@ -43,10 +39,6 @@ $output = str_replace(
         htmlspecialchars($rencontre['heure_rencontre']),
         $rencontre['lieu'] === 'Domicile' ? 'selected' : '',
         $rencontre['lieu'] === 'Exterieur' ? 'selected' : '',
-        $rencontre['resultat'] === 'Victoire' ? 'selected' : '',
-        $rencontre['resultat'] === 'Défaite' ? 'selected' : '',
-        $rencontre['resultat'] === 'Nul' ? 'selected' : '',
-        $rencontre['resultat'] === '<Rien>' ? 'selected' : ''
     ],
     $template
 );

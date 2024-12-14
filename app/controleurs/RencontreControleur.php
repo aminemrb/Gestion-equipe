@@ -31,7 +31,6 @@ class RencontreControleur {
             $date_rencontre = $_POST['date_rencontre'];
             $heure_rencontre = $_POST['heure_rencontre'];
             $lieu = $_POST['lieu'];
-            $resultat = $_POST['resultat'] ?? null;
 
             // Validation des champs
             if (empty($equipe_adverse) || empty($date_rencontre) || empty($heure_rencontre) || empty($lieu)) {
@@ -41,7 +40,7 @@ class RencontreControleur {
 
             // Ajouter la rencontre via le modèle
             try {
-                $this->rencontreModel->ajouterRencontre($equipe_adverse, $date_rencontre, $heure_rencontre, $lieu, $resultat);
+                $this->rencontreModel->ajouterRencontre($equipe_adverse, $date_rencontre, $heure_rencontre, $lieu);
                 // Redirection vers la liste des rencontres après succès
                 header('Location: ' . $_SERVER['HTTP_REFERER']);
                 exit;
@@ -59,7 +58,6 @@ class RencontreControleur {
             $date_rencontre = $_POST['date_rencontre'];
             $heure_rencontre = $_POST['heure_rencontre'];
             $lieu = $_POST['lieu'];
-            $resultat = $_POST['resultat'] ?? null;
 
             // Validation des champs
             if (empty($equipe_adverse) || empty($date_rencontre) || empty($heure_rencontre) || empty($lieu)) {
@@ -69,7 +67,7 @@ class RencontreControleur {
 
             // Modifier la rencontre via le modèle
             try {
-                $this->rencontreModel->modifierRencontre($id_rencontre, $equipe_adverse, $date_rencontre, $heure_rencontre, $lieu, $resultat);
+                $this->rencontreModel->modifierRencontre($id_rencontre, $equipe_adverse, $date_rencontre, $heure_rencontre, $lieu);
                 // Redirection vers la liste des rencontres après succès
                 header('Location: ' . $_SERVER['HTTP_REFERER']);
                 exit;
@@ -96,6 +94,39 @@ class RencontreControleur {
             exit;
         } catch (\Exception $e) {
             echo "Erreur lors de la suppression de la rencontre : " . $e->getMessage();
+        }
+    }
+
+    public function ajouter_resultat() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id_rencontre = $_POST['id_rencontre'];
+            $score_equipe = (int)$_POST['score_equipe'];
+            $score_adverse = (int)$_POST['score_adverse'];
+
+            $resultat = 'Nul';
+            if ($score_equipe > $score_adverse) {
+                $resultat = 'Victoire';
+            } elseif ($score_equipe < $score_adverse) {
+                $resultat = 'Défaite';
+            }
+
+            try {
+                $this->rencontreModel->mettreAJourResultat($id_rencontre, $score_equipe, $score_adverse, $resultat);
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
+            } catch (\Exception $e) {
+                echo "Erreur lors de l'ajout du résultat : " . $e->getMessage();
+            }
+        } else {
+            $id_rencontre = $_GET['id_rencontre'] ?? null;
+            if ($id_rencontre) {
+                try {
+                    return $this->rencontreModel->getRencontreById($id_rencontre);
+                } catch (\Exception $e) {
+                    echo "Erreur lors de la récupération de la rencontre : " . $e->getMessage();
+                    return null;
+                }
+            }
         }
     }
 }

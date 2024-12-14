@@ -73,6 +73,12 @@ class Rencontre {
         }
     }
 
+    public function mettreAJourResultat($id_rencontre, $score_equipe, $score_adverse, $resultat) {
+        $sql = "UPDATE rencontre SET score_equipe = ?, score_adverse = ?, resultat = ? WHERE id_rencontre = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$score_equipe, $score_adverse, $resultat, $id_rencontre]);
+    }
+
     // Récupérer une rencontre par son ID
     public function getRencontreById($id_rencontre) {
         try {

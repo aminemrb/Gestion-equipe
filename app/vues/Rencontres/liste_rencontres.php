@@ -26,6 +26,19 @@ foreach ($rencontres as $rencontre) {
             $joueurs_selectionnes
         ));
 
+    // Construire le résultat et le score
+    $resultat = $rencontre['resultat'] ?? 'N/A';
+    $score = ($resultat !== 'N/A' && isset($rencontre['score_equipe']) && isset($rencontre['score_adverse']))
+        ? "{$rencontre['score_equipe']}-{$rencontre['score_adverse']}"
+        : 'N/A';
+
+    // Vérifier si la sélection a été faite et si la date et l'heure de la rencontre sont atteintes
+    $currentDateTime = new DateTime();
+    $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
+    $ajouter_resultat_link = (empty($joueurs_selectionnes) || $currentDateTime < $matchDateTime)
+        ? ''
+        : "<a href=\"" . BASE_URL . "/vues/Rencontres/ajouter_resultat.php?id_rencontre={$rencontre['id_rencontre']}\">Ajouter Résultat</a>";
+
     // Ajouter la ligne au tableau
     $rows .= "
     <tr>
@@ -34,13 +47,14 @@ foreach ($rencontres as $rencontre) {
         <td>{$rencontre['date_rencontre']}</td>
         <td>{$rencontre['heure_rencontre']}</td>
         <td>{$rencontre['lieu']}</td>
-        <td>" . ($rencontre['resultat'] ?? 'N/A') . "</td>
+        <td>$resultat" . ($score !== 'N/A' ? " ($score)" : '') . "</td>
         <td>$joueurs</td>
         <td>
             <a href=\"" . BASE_URL . "/vues/Rencontres/formulaire_selection.php?id_rencontre={$rencontre['id_rencontre']}\">Sélection</a>
             <a href=\"" . BASE_URL . "/vues/Rencontres/modifier_rencontre.php?id_rencontre={$rencontre['id_rencontre']}\">Modifier</a>
-            <a href=\"" . BASE_URL . "/vues/Rencontres/supprimer_rencontre.php?id_rencontre={$rencontre['id_rencontre']}\" 
+            <a href=\"" . BASE_URL . "/vues/Rencontres/supprimer_rencontre.php?id_rencontre={$rencontre['id_rencontre']}\"
                class=\"btn-supprimer\" onclick=\"return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');\">Supprimer</a>
+            $ajouter_resultat_link
         </td>
     </tr>
     ";
