@@ -50,7 +50,7 @@ foreach ($rencontres as $rencontre) {
         <td>$resultat" . ($score !== 'N/A' ? " ($score)" : '') . "</td>
         <td>$joueurs</td>
         <td>
-            <a href=\"" . BASE_URL . "/vues/Rencontres/formulaire_selection.php?id_rencontre={$rencontre['id_rencontre']}\">Sélection</a>
+            <a href=\"" . BASE_URL . "/vues/Feuille_rencontres/formulaire_selection.php?id_rencontre={$rencontre['id_rencontre']}\">Sélection</a>
             <a href=\"" . BASE_URL . "/vues/Rencontres/modifier_rencontre.php?id_rencontre={$rencontre['id_rencontre']}\">Modifier</a>
             <a href=\"" . BASE_URL . "/vues/Rencontres/supprimer_rencontre.php?id_rencontre={$rencontre['id_rencontre']}\"
                class=\"btn-supprimer\" onclick=\"return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');\">Supprimer</a>

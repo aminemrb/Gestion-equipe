@@ -2,10 +2,12 @@
 include __DIR__ . '/../Layouts/header.php';
 use App\Controleurs\SelectionControleur;
 use App\Controleurs\JoueurControleur;
+use App\Controleurs\RencontreControleur;
 
 // Créer une instance des contrôleurs
 $selectionControleur = new SelectionControleur();
 $joueurControleur = new JoueurControleur();
+$rencontreControleur = new RencontreControleur();
 
 // Récupérer l'ID de la rencontre
 $id_rencontre = $_GET['id_rencontre'] ?? null;
@@ -23,6 +25,20 @@ if (count($joueurs) < 1) {
     exit;
 }
 
+// Récupérer les rencontres à venir
+$rencontres = $rencontreControleur->liste_rencontres();
+$upcoming_rencontres = array_filter($rencontres, function($rencontre) {
+    $currentDateTime = new DateTime();
+    $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
+    return $matchDateTime > $currentDateTime;
+});
+
+// Vérifier si la rencontre est à venir
+if (!$id_rencontre || !in_array($id_rencontre, array_column($upcoming_rencontres, 'id_rencontre'))) {
+    echo "<p>La selection des joueurs n'est pas possible car le match est déjà passé.</p>";
+    exit;
+}
+
 // Charger le template HTML
 $template = file_get_contents(__DIR__ . '/templates/formulaire_selection.html');
 
@@ -33,7 +49,7 @@ foreach ($joueurs as $joueur) {
     $joueurs_html .= "
         <div>
             <input type=\"checkbox\" id=\"joueur_{$joueur['numero_licence']}\" name=\"joueurs[]\" value=\"{$joueur['numero_licence']}\" $checked>
-            <label for=\"joueur_{$joueur['numero_licence']}\">" . htmlspecialchars($joueur['nom'] . ' ' . $joueur['prenom']) . "</label>
+            <label for=\"joueur_{$joueur['numero_licence']}\">" . htmlspecialchars($joueur['nom'] . ' ' . $joueur['prenom']) . " - Taille: " . htmlspecialchars($joueur['taille']) . " cm, Poids: " . htmlspecialchars($joueur['poids']) . " kg, Commentaire: " . htmlspecialchars($joueur['commentaire']) . "</label>
         </div>
     ";
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/selection.css">
+    <title>Sélection des joueurs</title>
+</head>
+<body>
+<main>
+    <h1>Formulaire de sélection des joueurs</h1>
+    <form method="post" action="traiter_selection.php">
+        <input type="hidden" name="id_rencontre" value="{{id_rencontre}}">
+        <fieldset>
+            <legend>Sélectionnez les joueurs actifs pour cette rencontre</legend>
+            {{joueurs}}
+        </fieldset>
+        <button type="submit">Valider la sélection</button>
+    </form>
+</main>
+</body>
+</html>

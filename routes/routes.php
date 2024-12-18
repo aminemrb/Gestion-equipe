@@ -25,8 +25,9 @@ $router->addRoute('/Rencontres/supprimer_rencontre/([^/]+)', RencontreControleur
 $router->addRoute('/Rencontres/ajouter_resultat', RencontreControleur::class, 'ajouter_rencontre');
 
 //Routes pour la sélection des joueurs
-$router->addRoute('/Rencontres/formulaire_selection', SelectionControleur::class, 'formulaire_selection');
-$router->addRoute('/Rencontres/traiter_selection', SelectionControleur::class, 'traiter_selection');
+$router->addRoute('/Feuille_rencontres/feuille_rencontres', RencontreControleur::class, 'feuille_rencontres');
+$router->addRoute('/Feuille_rencontres/formulaire_selection', SelectionControleur::class, 'formulaire_selection');
+$router->addRoute('/Feuille_rencontres/traiter_selection', SelectionControleur::class, 'traiter_selection');
 
 // Routes pour l'Authentification
 $router->addRoute('/Accueil/accueil', AuthControleur::class, 'accueil');
