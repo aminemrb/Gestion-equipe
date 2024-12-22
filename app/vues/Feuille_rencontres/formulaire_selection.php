@@ -35,10 +35,10 @@ $upcoming_rencontres = array_filter($rencontres, function($rencontre) {
 });
 
 // Vérifier si la rencontre est à venir
-if (!$id_rencontre || !in_array($id_rencontre, array_column($upcoming_rencontres, 'id_rencontre'))) {
+/*if (!$id_rencontre || !in_array($id_rencontre, array_column($upcoming_rencontres, 'id_rencontre'))) {
     echo "<p>La sélection des joueurs n'est pas possible car le match est déjà passé.</p>";
     exit;
-}
+}*/
 
 // Construire les cases à cocher des joueurs
 $joueurs_html = '';

@@ -1,12 +1,12 @@
 /* Style global du body */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
 
-/* Cible le container principal avec l'ID liste */
+/* Container principal des rencontres */
 #liste {
     padding: 20px;
     background-color: #ffffff;
@@ -14,7 +14,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Style du titre de la page */
+/* Titre de la page */
 #liste h1 {
     color: #333;
     font-size: 26px;
@@ -22,8 +22,8 @@ body {
     margin-bottom: 20px;
 }
 
-/* Style du lien pour ajouter une rencontre */
-#liste a {
+/* Lien pour ajouter une rencontre */
+.btn-ajouter {
     display: inline-block;
     padding: 10px 15px;
     margin-bottom: 20px;
@@ -34,47 +34,91 @@ body {
     border-radius: 5px;
 }
 
-#liste a:hover {
+.btn-ajouter:hover {
     background-color: #0056b3;
 }
 
-/* Style pour la table */
-#liste table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+/* Container de toutes les cartes de match */
+.rencontres-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
 }
 
-#liste table th, #liste table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+/* Style de chaque carte de match */
+.match-card {
+    background-color: #ffffff;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0 auto; /* Centrer les cartes */
 }
 
-#liste table th {
+/* Header de la carte : Date, Heure, Lieu, et Résultat */
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.match-date-time {
+    color: #555;
+}
+
+.match-result {
+    font-weight: bold;
+    color: #28a745; /* Victoire */
+}
+
+/* Corps de la carte : équipes et score */
+.match-body {
+    display: flex;
+    justify-content: center; /* Centrer les éléments */
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+}
+
+.team-name {
+    font-weight: bold;
+    margin-right: 15px; /* Espacement entre l'équipe et le score */
+}
+
+.score {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 15px;
+}
+
+/* Footer de la carte : Actions et joueurs sélectionnés */
+.match-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.actions a {
+    text-decoration: none;
+    color: #007BFF;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+.actions a:hover {
     background-color: #007BFF;
     color: white;
-    font-weight: bold;
 }
 
-#liste table td {
-    background-color: #f9f9f9;
-}
-
-/* Style pour les liens dans la table */
-#liste table td a {
-    color: #007BFF;
-    text-decoration: none;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-#liste table td a:hover {
-    background-color: #f1f1f1;
-}
-
-/* Style pour les boutons de suppression */
-#liste .btn-supprimer {
+.btn-supprimer {
     background-color: #DC3545;
     color: white;
     padding: 5px 10px;
@@ -82,30 +126,15 @@ body {
     text-decoration: none;
 }
 
-#liste .btn-supprimer:hover {
+.btn-supprimer:hover {
     background-color: #c82333;
 }
 
-/* Style pour les colonnes des joueurs sélectionnés (qui peuvent être longues) */
-#liste table td {
-    word-wrap: break-word; /* Assurez-vous que les longs mots ou noms se coupent correctement */
+.players-selected {
+    font-size: 14px;
+    color: #555;
 }
 
-/* Pour les cellules contenant plusieurs joueurs sélectionnés, on les stylise pour qu'elles s'ajustent bien */
-#liste table td {
-    white-space: normal;
-}
-
-/* Style pour les liens d'ajout de résultat */
-#liste .ajouter-resultat {
-    display: inline-block;
-    padding: 5px 10px;
-    background-color: #28a745;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-#liste .ajouter-resultat:hover {
-    background-color: #218838;
+.players-selected strong {
+    font-weight: bold;
 }

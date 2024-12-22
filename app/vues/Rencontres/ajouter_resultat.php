@@ -1,33 +1,39 @@
 <?php
+// Inclure le header
 include __DIR__ . '/../Layouts/header.php';
 
 use App\Controleurs\RencontreControleur;
 
-// Initialisation
+// Créer une instance du contrôleur
 $rencontreControleur = new RencontreControleur();
-$id_rencontre = $_GET['id_rencontre'] ?? null;
 
-// Vérifie si l'ID est fourni
+// Vérifier si un ID de rencontre est passé dans l'URL
+$id_rencontre = $_GET['id_rencontre'] ?? null;
 if (!$id_rencontre) {
-    echo "<p>ID de la rencontre non fourni.</p>";
+    echo "ID de la rencontre manquant.";
     include __DIR__ . '/../Layouts/footer.php';
     exit;
 }
 
-// Si le formulaire est soumis
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupérer les scores depuis le formulaire
-    $score_equipe = $_POST['score_equipe'] ?? null;
-    $score_adverse = $_POST['score_adverse'] ?? null;
+// Récupérer les informations de la rencontre via la méthode ajouter_resultat
+$rencontre = $rencontreControleur->ajouter_resultat(); // Appel de la méthode
 
-    // Validation des entrées
-    if (is_numeric($score_equipe) && is_numeric($score_adverse)) {
-        // Ajouter ou mettre à jour le résultat
-        $rencontreControleur->ajouter_resultat($id_rencontre, $score_equipe, $score_adverse);
-        echo "<p>Résultat ajouté avec succès.</p>";
-    } else {
-        echo "<p>Veuillez entrer des scores valides.</p>";
-    }
+// Si aucune rencontre n'a été trouvée, afficher un message d'erreur
+if (!$rencontre) {
+    echo "Rencontre non trouvée.";
+    include __DIR__ . '/../Layouts/footer.php';
+    exit;
+}
+
+// Récupérer les scores actuels (s'ils existent)
+$score_equipe = $rencontre['score_equipe'] ?? null;
+$score_adverse = $rencontre['score_adverse'] ?? null;
+
+// Traiter la soumission du formulaire pour ajouter ou modifier les résultats
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Appeler la méthode ajouter_resultat pour mettre à jour les résultats
+    $rencontreControleur->ajouter_resultat(); // Cette méthode gère l'ajout du résultat
+    echo "<p>Résultat ajouté avec succès.</p>";
 }
 ?>
 
@@ -49,13 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Champ pour le score de l'équipe -->
         <div>
             <label for="score_equipe">Score de notre équipe:</label>
-            <input type="number" id="score_equipe" name="score_equipe" min="0" required>
+            <input type="number" id="score_equipe" name="score_equipe" min="0" value="<?= $score_equipe !== null ? htmlspecialchars($score_equipe) : '' ?>" required>
         </div>
 
         <!-- Champ pour le score adverse -->
         <div>
             <label for="score_adverse">Score de l'équipe adverse:</label>
-            <input type="number" id="score_adverse" name="score_adverse" min="0" required>
+            <input type="number" id="score_adverse" name="score_adverse" min="0" value="<?= $score_adverse !== null ? htmlspecialchars($score_adverse) : '' ?>" required>
         </div>
 
         <!-- Bouton de soumission -->
@@ -65,4 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 </html>
 
-<?php include __DIR__ . '/../Layouts/footer.php'; ?>
+<?php
+// Inclure le footer
+include __DIR__ . '/../Layouts/footer.php';
+?>

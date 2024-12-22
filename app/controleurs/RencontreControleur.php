@@ -11,6 +11,7 @@ class RencontreControleur {
         $this->rencontreModel = new Rencontre(); // Créer une instance du modèle Rencontre
     }
 
+
     // Afficher la liste des rencontres
     public function liste_rencontres() {
         try {
