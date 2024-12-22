@@ -1,10 +1,11 @@
 <?php
 include __DIR__ . '/../Layouts/header.php';
+
 use App\Controleurs\SelectionControleur;
 use App\Controleurs\JoueurControleur;
 use App\Controleurs\RencontreControleur;
 
-// Créer une instance des contrôleurs
+// Créer des instances des contrôleurs
 $selectionControleur = new SelectionControleur();
 $joueurControleur = new JoueurControleur();
 $rencontreControleur = new RencontreControleur();
@@ -35,12 +36,9 @@ $upcoming_rencontres = array_filter($rencontres, function($rencontre) {
 
 // Vérifier si la rencontre est à venir
 if (!$id_rencontre || !in_array($id_rencontre, array_column($upcoming_rencontres, 'id_rencontre'))) {
-    echo "<p>La selection des joueurs n'est pas possible car le match est déjà passé.</p>";
+    echo "<p>La sélection des joueurs n'est pas possible car le match est déjà passé.</p>";
     exit;
 }
-
-// Charger le template HTML
-$template = file_get_contents(__DIR__ . '/templates/formulaire_selection.html');
 
 // Construire les cases à cocher des joueurs
 $joueurs_html = '';
@@ -54,15 +52,32 @@ foreach ($joueurs as $joueur) {
     ";
 }
 
-// Remplacer les placeholders dans le template
-$output = str_replace(
-    ['{{id_rencontre}}', '{{joueurs}}'],
-    [htmlspecialchars($id_rencontre), $joueurs_html],
-    $template
-);
+// Afficher le formulaire avec les données dynamiques
+?>
 
-// Afficher le résultat
-echo $output;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/selection.css">
+    <title>Sélection des joueurs</title>
+</head>
+<body>
+<main>
+    <h1>Formulaire de sélection des joueurs</h1>
+    <form method="post" action="traiter_selection.php">
+        <input type="hidden" name="id_rencontre" value="<?= htmlspecialchars($id_rencontre) ?>">
+        <fieldset>
+            <legend>Sélectionnez les joueurs actifs pour cette rencontre</legend>
+            <?= $joueurs_html ?>
+        </fieldset>
+        <button type="submit">Valider la sélection</button>
+    </form>
+</main>
+</body>
+</html>
 
+<?php
 include __DIR__ . '/../Layouts/footer.php';
 ?>

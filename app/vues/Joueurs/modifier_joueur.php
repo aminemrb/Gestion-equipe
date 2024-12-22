@@ -1,43 +1,110 @@
 <?php
+// Inclure le header
 include __DIR__ . '/../Layouts/header.php';
+
 use App\Controleurs\JoueurControleur;
 
-// Instantiate the controller
+// Créer une instance du contrôleur
 $joueurControleur = new JoueurControleur();
 
-// Get the numero_licence from the request (e.g., URL parameter)
+// Vérifier si un numéro de licence est passé dans l'URL
 $numero_licence = $_GET['numero_licence'] ?? null;
-
-if ($numero_licence) {
-    // Call the method to get the player details
-    $joueur = $joueurControleur->modifier_joueur($numero_licence);
-} else {
-    echo "Numéro de licence non fourni.";
+if (!$numero_licence) {
+    echo "Numéro de licence manquant.";
+    include __DIR__ . '/../Layouts/footer.php';
     exit;
 }
 
-// Charger le template HTML pour modifier le joueur
-$template = file_get_contents(__DIR__ . '/templates/modifier_joueur.html');
+// Récupérer les informations du joueur
+$joueur = $joueurControleur->modifier_joueur($numero_licence); // Cette méthode renvoie les données du joueur
 
-// Remplacer les placeholders dans le template
-$output = str_replace(
-    ['{{joueur.nom}}', '{{joueur.prenom}}', '{{joueur.date_naissance}}', '{{joueur.taille}}', '{{joueur.poids}}',
-        '{{joueur.statut}}', '{{joueur.position_preferee}}', '{{joueur.commentaire}}'],
-    [
-        htmlspecialchars($joueur['nom']),
-        htmlspecialchars($joueur['prenom']),
-        htmlspecialchars($joueur['date_naissance']),
-        htmlspecialchars($joueur['taille']),
-        htmlspecialchars($joueur['poids']),
-        htmlspecialchars($joueur['statut']),
-        htmlspecialchars($joueur['position_preferee']),
-        htmlspecialchars($joueur['commentaire'])
-    ],
-    $template
-);
+if (!$joueur) {
+    echo "Aucun joueur trouvé pour ce numéro de licence.";
+    include __DIR__ . '/../Layouts/footer.php';
+    exit;
+}
 
-// Afficher le résultat
-echo $output;
+// Traiter la soumission du formulaire
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $joueurControleur->modifier_joueur($numero_licence); // Appliquer les modifications
+}
+?>
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/modifier.css">
+    <title>Modifier un joueur</title>
+</head>
+<body>
+<div id="modifier-style">
+    <main>
+        <h1>Modifier un joueur</h1>
+        <form method="POST" action="<?= BASE_URL ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($numero_licence) ?>">
+
+            <div class="form-group">
+                <label for="numero_licence">Numéro de licence :</label>
+                <input type="text" id="numero_licence" name="numero_licence" value="<?= htmlspecialchars($joueur['numero_licence']) ?>" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($joueur['nom']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="prenom">Prénom :</label>
+                <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($joueur['prenom']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="date_naissance">Date de naissance :</label>
+                <input type="date" id="date_naissance" name="date_naissance" value="<?= htmlspecialchars($joueur['date_naissance']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="taille">Taille (en mètres) :</label>
+                <input type="number" id="taille" name="taille" step="0.01" min="1.00" max="2.50" value="<?= htmlspecialchars($joueur['taille']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="poids">Poids (en kg) :</label>
+                <input type="number" id="poids" name="poids" step="0.1" min="30" max="200" value="<?= htmlspecialchars($joueur['poids']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="statut">Statut :</label>
+                <select id="statut" name="statut" required>
+                    <option value="Actif" <?= ($joueur['statut'] == 'Actif') ? 'selected' : '' ?>>Actif</option>
+                    <option value="Blessé" <?= ($joueur['statut'] == 'Blessé') ? 'selected' : '' ?>>Blessé</option>
+                    <option value="Suspendu" <?= ($joueur['statut'] == 'Suspendu') ? 'selected' : '' ?>>Suspendu</option>
+                    <option value="Absent" <?= ($joueur['statut'] == 'Absent') ? 'selected' : '' ?>>Absent</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="position_preferee">Position préférée :</label>
+                <input type="text" id="position_preferee" name="position_preferee" value="<?= htmlspecialchars($joueur['position_preferee']) ?>" required>
+            </div>
+
+            <div class="form-group">
+                <label for="commentaire">Commentaire :</label>
+                <textarea id="commentaire" name="commentaire"><?= htmlspecialchars($joueur['commentaire']) ?></textarea>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Modifier</button>
+            </div>
+
+        </form>
+    </main>
+</div>
+</body>
+</html>
+
+<?php
+// Inclure le footer
 include __DIR__ . '/../Layouts/footer.php';
 ?>

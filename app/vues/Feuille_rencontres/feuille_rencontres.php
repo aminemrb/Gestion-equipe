@@ -18,9 +18,6 @@ $upcoming_rencontres = array_filter($rencontres, function($rencontre) {
     return $matchDateTime > $currentDateTime;
 });
 
-// Charger le template HTML
-$template = file_get_contents(__DIR__ . '/templates/feuille_rencontres.html');
-
 // Construire les lignes du tableau
 $rows = '';
 foreach ($upcoming_rencontres as $rencontre) {
@@ -46,15 +43,38 @@ foreach ($upcoming_rencontres as $rencontre) {
     ";
 }
 
-// Remplacer les placeholders dans le template
-$output = str_replace(
-    ['{{BASE_URL}}', '{{ROWS}}'],
-    [BASE_URL, $rows],
-    $template
-);
+// Afficher le HTML avec les données dynamiques
+?>
 
-// Afficher le résultat
-echo $output;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/liste.css">
+    <title>Feuille de Rencontre</title>
+</head>
+<body>
+<div id="liste">
+    <main>
+        <h1>Feuille de Rencontre</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>ID Rencontre</th>
+                <th>Équipe Adverse</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?= $rows ?>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>
 
+<?php
 include __DIR__ . '/../Layouts/footer.php';
 ?>

@@ -1,96 +1,111 @@
-/* Réinitialisation de quelques styles pour une base propre */
-body, h1, table, th, td, a {
+/* Style global du body */
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #f4f4f4;
 }
 
-/* Cible uniquement le contenu dans le main, pas le header */
+/* Cible le container principal avec l'ID liste */
 #liste {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    background-color: #f4f4f9;
-    color: #333;
-    margin: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Style du titre de la page */
 #liste h1 {
+    color: #333;
+    font-size: 26px;
     text-align: center;
-    color: #444;
     margin-bottom: 20px;
 }
 
-/* Boutons et liens */
+/* Style du lien pour ajouter une rencontre */
 #liste a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
     text-decoration: none;
-    color: #ffffff;
-    background-color: #007bff;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
+    border-radius: 5px;
 }
 
 #liste a:hover {
     background-color: #0056b3;
 }
 
-/* Bouton Supprimer */
-#liste .btn-supprimer {
-    background-color: #e74c3c;
-}
-
-#liste .btn-supprimer:hover {
-    background-color: #c0392b;
-}
-
-#liste a:disabled {
-    background-color: #cccccc;
-    pointer-events: none;
-}
-
-/* Tableau des joueurs */
+/* Style pour la table */
 #liste table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px auto;
-    background-color: #fff;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
-#liste thead {
-    background-color: #272727;
-    color: #fff;
-}
-
-#liste th, #liste td {
+#liste table th, #liste table td {
+    padding: 12px;
     text-align: left;
-    padding: 12px 15px;
     border-bottom: 1px solid #ddd;
 }
 
-#liste th {
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 0.05em;
+#liste table th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
 }
 
-#liste td {
-    font-size: 14px;
+#liste table td {
+    background-color: #f9f9f9;
 }
 
-#liste tr:last-child td {
-    border-bottom: none;
+/* Style pour les liens dans la table */
+#liste table td a {
+    color: #007BFF;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 5px;
 }
 
-/* Message d'absence de joueurs */
-#liste p {
-    text-align: center;
-    font-style: italic;
-    margin: 20px 0;
-    color: #777;
+#liste table td a:hover {
+    background-color: #f1f1f1;
 }
 
+/* Style pour les boutons de suppression */
+#liste .btn-supprimer {
+    background-color: #DC3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+#liste .btn-supprimer:hover {
+    background-color: #c82333;
+}
+
+/* Style pour les colonnes des joueurs sélectionnés (qui peuvent être longues) */
+#liste table td {
+    word-wrap: break-word; /* Assurez-vous que les longs mots ou noms se coupent correctement */
+}
+
+/* Pour les cellules contenant plusieurs joueurs sélectionnés, on les stylise pour qu'elles s'ajustent bien */
+#liste table td {
+    white-space: normal;
+}
+
+/* Style pour les liens d'ajout de résultat */
+#liste .ajouter-resultat {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+#liste .ajouter-resultat:hover {
+    background-color: #218838;
+}

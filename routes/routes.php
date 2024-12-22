@@ -22,7 +22,7 @@ $router->addRoute('/Rencontres/liste_rencontres', RencontreControleur::class, 'l
 $router->addRoute('/Rencontres/ajouter_rencontre', RencontreControleur::class, 'ajouter_rencontre');
 $router->addRoute('/Rencontres/modifier_rencontre/([^/]+)', RencontreControleur::class, 'modifier_rencontre');
 $router->addRoute('/Rencontres/supprimer_rencontre/([^/]+)', RencontreControleur::class, 'supprimer_rencontre');
-$router->addRoute('/Rencontres/ajouter_resultat', RencontreControleur::class, 'ajouter_rencontre');
+$router->addRoute('/Rencontres/ajouter_resultat', RencontreControleur::class, 'ajouter_resultat');
 
 //Routes pour la sélection des joueurs
 $router->addRoute('/Feuille_rencontres/feuille_rencontres', RencontreControleur::class, 'feuille_rencontres');
