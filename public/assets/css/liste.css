@@ -3,138 +3,197 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #121212; /* Fond sombre */
+    color: #eaeaea; /* Texte clair */
 }
 
 /* Container principal des rencontres */
 #liste {
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #1e1e1e; /* Fond légèrement plus clair */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
 }
 
 /* Titre de la page */
 #liste h1 {
-    color: #333;
-    font-size: 26px;
+    color: #f1f1f1;
+    font-size: 32px;
     text-align: center;
     margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Lien pour ajouter une rencontre */
+/* Bouton ajouter une rencontre */
 .btn-ajouter {
     display: inline-block;
-    padding: 10px 15px;
+    padding: 12px 20px;
     margin-bottom: 20px;
-    background-color: #007BFF;
+    background-color: #1e90ff;
     color: white;
-    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase;
     text-decoration: none;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 .btn-ajouter:hover {
-    background-color: #0056b3;
+    background-color: #187bcd;
 }
 
-/* Container de toutes les cartes de match */
+/* Conteneur des colonnes */
 .rencontres-container {
     display: flex;
-    flex-direction: column;
     gap: 20px;
-    justify-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-/* Style de chaque carte de match */
-.match-card {
-    background-color: #ffffff;
-    padding: 20px;
-    width: 80%;
-    max-width: 600px;
+/* Colonne des rencontres */
+.column {
+    flex: 1;
+    padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #252525; /* Gris foncé */
+}
+
+/* Titre des colonnes */
+.column h2 {
+    text-align: center;
+    color: #f1f1f1;
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Carte de match */
+.match-card {
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 0 auto; /* Centrer les cartes */
+    gap: 15px;
 }
 
-/* Header de la carte : Date, Heure, Lieu, et Résultat */
+/* Header : Date et lieu */
 .match-header {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
+    color: #b0b0b0;
 }
 
-.match-date-time {
-    color: #555;
-}
-
-.match-result {
-    font-weight: bold;
-    color: #28a745; /* Victoire */
-}
-
-/* Corps de la carte : équipes et score */
+/* Corps : équipes et score */
 .match-body {
+    text-align: center;
     display: flex;
-    justify-content: center; /* Centrer les éléments */
     align-items: center;
-    font-size: 16px;
-    color: #333;
+    justify-content: center;
+    gap: 20px;
 }
 
+/* Nom des équipes */
 .team-name {
+    font-size: 28px;
     font-weight: bold;
-    margin-right: 15px; /* Espacement entre l'équipe et le score */
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* Score */
 .score {
-    font-size: 24px;
+    font-size: 40px;
     font-weight: bold;
-    margin: 0 15px;
+    padding: 0 15px;
+    color: #28a745; /* Vert pour la victoire */
 }
 
-/* Footer de la carte : Actions et joueurs sélectionnés */
+/* Footer : boutons et sélection */
 .match-footer {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
     flex-direction: column;
     gap: 10px;
 }
 
+/* Boutons d'action */
 .actions a {
     text-decoration: none;
-    color: #007BFF;
-    padding: 8px;
+    color: white;
+    font-size: 14px;
+    padding: 8px 12px;
     border-radius: 5px;
-    background-color: #f0f0f0;
+    font-weight: bold;
+    background-color: #444;
+    text-align: center;
 }
 
 .actions a:hover {
-    background-color: #007BFF;
-    color: white;
+    background-color: #1e90ff;
 }
 
+/* Bouton supprimer */
 .btn-supprimer {
-    background-color: #DC3545;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-decoration: none;
+    background-color: #dc3545;
 }
 
 .btn-supprimer:hover {
     background-color: #c82333;
 }
 
+/* Section joueurs sélectionnés */
 .players-selected {
     font-size: 14px;
-    color: #555;
+    color: #b0b0b0;
 }
 
 .players-selected strong {
     font-weight: bold;
+}
+
+/* Boutons désactivés */
+.actions a.disabled {
+    background-color: #666;
+    pointer-events: none;
+}
+
+/* Animation légère au survol des cartes */
+.match-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9);
+}
+
+/* Bouton scorer/modifier fusionné */
+.btn-action {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-action:hover {
+    background-color: #218838;
+}
+
+/* Équipes et score bien alignés */
+.match-body .team-name,
+.match-body .score {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Légère ombre pour le contraste */
+}
+
+/* Effet dynamique au clic sur les boutons */
+.actions a:active {
+    transform: scale(0.98);
+}
+
+/* Pour petits écrans */
+@media screen and (max-width: 768px) {
+    .rencontres-container {
+        flex-direction: column;
+    }
 }

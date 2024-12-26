@@ -1,98 +1,82 @@
-/* Global Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+/* Container pour les tableaux */
+.table-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px; /* Espace entre les tableaux */
+    margin-bottom: 20px;
 }
 
-/* Main Layout */
-main {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.table-compo {
+    margin-left: 50px;
 }
 
-/* Title */
-main h1 {
-    font-size: 24px;
+.table-selection {
+    margin-right: 50px;
+}
+
+/* Style des tableaux */
+/* Couleurs spécifiques pour chaque type de poste */
+.gardien {
+    color: #f7d802;
+    background-color: #1e1e1e;
+    width: 20px;
+}
+
+.defenseur {
+    color: #2bbae3;
+    background-color: #1e1e1e;
+}
+
+.milieu {
+    color: #4fc82b;
+    background-color: #1e1e1e;
+}
+
+.attaquant {
+    color: #F72C75;
+    background-color: #1e1e1e;
+}
+
+.remplacant {
+    color: #cdcdcd;
+    background-color: #1e1e1e;
+}
+
+/* Bordures pour un meilleur rendu */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+
+select {
+    width: 100%;
+}
+
+h1 {
     text-align: center;
     margin-bottom: 20px;
-    color: #007BFF;
 }
 
-/* Fieldset Styling */
-fieldset {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
+form {
+    text-align: center;
 }
 
-/* Legend Styling */
-fieldset legend {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    padding: 0 10px;
-}
-
-/* Checkbox Container */
-fieldset div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-/* Checkbox Input */
-fieldset input[type="checkbox"] {
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-/* Checkbox Label */
-fieldset label {
-    font-size: 16px;
-    cursor: pointer;
-}
-
-/* Button Styling */
-button[type="submit"] {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #007BFF;
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
     border: none;
-    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-    main {
-        padding: 15px;
-    }
-
-    fieldset {
-        padding: 15px;
-    }
-
-    button[type="submit"] {
-        font-size: 14px;
-    }
+input[type="submit"]:hover {
+    background-color: #45a049;
 }

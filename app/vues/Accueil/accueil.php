@@ -1,6 +1,7 @@
 <?php
 include __DIR__ . '/../../config.php'; // Include config.php
-include __DIR__ . '/../Layouts/header.php';
+include __DIR__ . '/../Layouts/header.php'; // Include header.php
+
 ?>
 
     <!DOCTYPE html>
