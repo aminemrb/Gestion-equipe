@@ -1,14 +1,15 @@
-/* Styles généraux du site */
+/* Style global du body */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f7fc;
     margin: 0;
     padding: 0;
+    background-color: #121212; /* Fond sombre */
+    color: #eaeaea; /* Texte clair */
 }
 
 /* Header */
 .header-style {
-    background-color: #b3b3b3; /* Couleur du fond du header */
+    background-color: rgb(63 117 40); /* Couleur du fond du header */
     color: white;
     padding: 15px 30px; /* Espacement du header  */
     display: flex;
@@ -19,6 +20,7 @@ body {
 .header-style .logo {
     max-height: 50px; /* Hauteur du logo */
     width: auto;
+    filter: invert(80%);
 }
 
 /* Styles pour le menu */
@@ -40,7 +42,7 @@ nav li {
 }
 
 nav a {
-    color: #000000; /* Couleur des liens */
+    color: #dddddd; /* Couleur des liens */
     text-decoration: none; /* Enlever la décoration de texte */
     padding: 8px 15px; /* Ajouter de l'espace autour du texte */
     border-radius: 4px; /* Coins arrondis des boutons */

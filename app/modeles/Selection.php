@@ -69,4 +69,38 @@ class Selection {
         }
     }
 
+    public function updateNote($id_rencontre, $id_joueur, $note) {
+        if (empty($note)) {
+            $note = null;  // Remplace la note par NULL
+        }
+        $stmt = $this->db->prepare("
+        UPDATE selection
+        SET note = :note
+        WHERE id_rencontre = :id_rencontre AND numero_licence = :id_joueur
+    ");
+        $stmt->bindParam(':note', $note, PDO::PARAM_INT);
+        $stmt->bindParam(':id_rencontre', $id_rencontre, PDO::PARAM_INT);
+        $stmt->bindParam(':id_joueur', $id_joueur, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function getNotesByRencontre($id_rencontre) {
+        $stmt = $this->db->prepare("
+        SELECT numero_licence, note
+        FROM selection
+        WHERE id_rencontre = :id_rencontre
+    ");
+        $stmt->bindParam(':id_rencontre', $id_rencontre);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Formater sous forme de tableau clé-valeur [id_joueur => note]
+        $notes = [];
+        foreach ($result as $row) {
+            $notes[$row['numero_licence']] = $row['note'];
+        }
+        return $notes;
+    }
+
+
 }

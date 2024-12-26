@@ -1,11 +1,3 @@
-/* Style global du body */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #121212; /* Fond sombre */
-    color: #eaeaea; /* Texte clair */
-}
 
 /* Container principal des rencontres */
 #liste {

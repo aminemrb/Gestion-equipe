@@ -11,6 +11,16 @@ class RencontreControleur {
         $this->rencontreModel = new Rencontre(); // Créer une instance du modèle Rencontre
     }
 
+    // Récupérer les détails d'une rencontre par ID
+    public function getRencontreById($id_rencontre) {
+        try {
+            return $this->rencontreModel->getRencontreById($id_rencontre);
+        } catch (\Exception $e) {
+            error_log("Erreur lors de la récupération de la rencontre : " . $e->getMessage());
+            return null;
+        }
+    }
+
 
     // Afficher la liste des rencontres
     public function liste_rencontres() {
