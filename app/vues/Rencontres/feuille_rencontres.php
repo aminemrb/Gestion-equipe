@@ -40,7 +40,6 @@ foreach ($joueurs_selectionnes as $joueur) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postes_postes = $_POST['postes'] ?? [];
-    echo $_POST['postes'];
     $notes = $_POST['notes'] ?? [];
 
     try {

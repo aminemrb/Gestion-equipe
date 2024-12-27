@@ -140,4 +140,14 @@ class RencontreControleur {
             }
         }
     }
+
+    public function statistiquesRencontres() {
+        try {
+            return $this->rencontreModel->getStatistiquesRencontres();
+        } catch (\Exception $e) {
+            error_log("Erreur lors de la récupération des statistiques des rencontres : " . $e->getMessage());
+            return [];
+        }
+    }
+
 }

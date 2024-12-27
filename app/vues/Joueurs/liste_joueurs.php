@@ -19,7 +19,7 @@ if (!$joueurs || count($joueurs) === 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/football_manager/public/assets/css/liste.css">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/stats.css">
     <title>Liste des joueurs</title>
 </head>
 <body>
@@ -38,7 +38,7 @@ if (!$joueurs || count($joueurs) === 0) {
                 <th>Taille</th>
                 <th>Poids</th>
                 <th>Statut</th>
-                <th>Position Préférée</th>
+                <th>Podte Préférée</th>
                 <th>Commentaire</th>
                 <th>Actions</th>
             </tr>

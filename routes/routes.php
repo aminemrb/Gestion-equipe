@@ -5,7 +5,6 @@ use App\Controleurs\AuthControleur;
 use App\Controleurs\JoueurControleur;
 use App\Controleurs\RencontreControleur;
 use App\Controleurs\SelectionControleur;
-use App\Controleurs\StatsControleur;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -29,9 +28,6 @@ $router->addRoute('/Rencontre/feuille_rencontres', SelectionControleur::class, '
 $router->addRoute('/Accueil/accueil', AuthControleur::class, 'accueil');
 $router->addRoute('/Authentification/login', AuthControleur::class, 'login');
 $router->addRoute('/Authentification/logout', AuthControleur::class, 'logout');
-
-// Routes pour Statistiques
-$router->addRoute('/Statistiques', StatsControleur::class, 'stats');
 
 // Retourne l'instance du routeur pour usage dans index.php
 return $router;

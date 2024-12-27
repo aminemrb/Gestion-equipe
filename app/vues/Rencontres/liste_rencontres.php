@@ -3,9 +3,11 @@ include __DIR__ . '/../Layouts/header.php';
 
 use App\Controleurs\RencontreControleur;
 use App\Controleurs\SelectionControleur;
+use App\Controleurs\JoueurControleur;
 
 $rencontreControleur = new RencontreControleur();
 $selectionControleur = new SelectionControleur();
+$joueurControleur = new JoueurControleur();
 $rencontres = $rencontreControleur->liste_rencontres();
 
 // Fonction pour formater la date en français
@@ -23,7 +25,7 @@ function formatDate($date) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/football_manager/public/assets/css/liste.css">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/rencontres.css">
     <title>Liste des Rencontres</title>
 </head>
 <body>
@@ -74,32 +76,33 @@ function formatDate($date) {
                         </div>
 
                         <div class="match-footer">
-                            <!-- Boutons d'actions -->
                             <div class="actions">
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>"
-                                   class="btn-action">
-                                    Feuille de match
-                                </a>
-
                                 <!-- Si la sélection est faite et que le score n'est pas encore ajouté -->
                                 <?php if (!empty($joueurs_selectionnes)): ?>
+                                        <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>"
+                                           class="btn-action">
+                                            Feuille de match
+                                        </a>
                                         <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>"
                                            class="btn-action">
                                             Scorer
                                         </a>
+                                        <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?> "
+                                           class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer
+                                        </a>
+                                        <div class="players-selected">
+                                            <strong>Joueurs Sélectionnés:</strong>
+                                            <div id="joueurs-selectionnes-<?= $rencontre['id_rencontre'] ?>"><?= $joueurs ?></div>
+                                        </div>
                                 <?php else: ?>
-                                    <span>Faire la sélection</span>
+                                    <span>MATCH ANNULER (aucun joueur sélectionné)</span>
+                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?> "
+                                       class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer
+                                    </a>
                                 <?php endif; ?>
-
-                              <!--  <a href="<?= BASE_URL ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Modifier</a>-->
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?> "
-                                   class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
                             </div>
 
-                            <div class="players-selected">
-                                <strong>Joueurs Sélectionnés:</strong>
-                                <div id="joueurs-selectionnes-<?= $rencontre['id_rencontre'] ?>"><?= $joueurs ?></div>
-                            </div>
+
                         </div>
                     </div>
                 <?php endif; ?>
@@ -111,6 +114,7 @@ function formatDate($date) {
             <h2>Matchs à Venir</h2>
             <?php foreach ($rencontres as $rencontre): ?>
                 <?php
+                $nombre_joueurs = $joueurControleur->liste_joueurs_actifs();
                 $joueurs_selectionnes = $selectionControleur->getJoueursSelectionnes($rencontre['id_rencontre']);
                 $joueurs = empty($joueurs_selectionnes)
                     ? "Aucun joueur sélectionné"
@@ -151,9 +155,11 @@ function formatDate($date) {
                             <!-- Boutons d'actions -->
                             <div class="actions">
                                 <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>"
-                                   class="btn-action">
+                                   class="btn-action <?= $nombre_joueurs < 11 ? 'disabled' : '' ?>"
+                                   onclick="return <?= $nombre_joueurs < 11 ? 'alert(\'Vous devez avoir au moins 11 joueurs dans la base de données pour accéder à la feuille de match.\'); return false;' : 'true'; ?>">
                                     Feuille de match
                                 </a>
+
 
                                 <a href="<?= BASE_URL ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Modifier</a>
                                 <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?> "

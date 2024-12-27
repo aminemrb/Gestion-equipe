@@ -6,16 +6,41 @@ use App\Controleurs\RencontreControleur;
 $rencontreControleur = new RencontreControleur();
 $id_rencontre = $_GET['id_rencontre'] ?? null;
 
+// Vérification si l'ID est valide
 if (!$id_rencontre) {
     echo "ID de la rencontre non fourni.";
     exit;
 }
 
-$rencontre = $rencontreControleur->modifier_rencontre($id_rencontre);
+// Récupérer les informations actuelles de la rencontre
+$rencontre = $rencontreControleur->getRencontreById($id_rencontre);
 
 if (!$rencontre) {
     echo "Rencontre non trouvée.";
     exit;
+}
+
+// Traitement du formulaire après soumission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupérer les nouvelles valeurs
+    $equipe_adverse = $_POST['equipe_adverse'];
+    $date_rencontre = $_POST['date_rencontre'];
+    $heure_rencontre = $_POST['heure_rencontre'];
+    $lieu = $_POST['lieu'];
+
+    // Vérification que la nouvelle date et heure sont valides
+    $currentDateTime = new DateTime(); // Date et heure actuelles
+    $dateTimeRendezvous = new DateTime("$date_rencontre $heure_rencontre"); // Date + heure sélectionnées
+
+    if ($dateTimeRendezvous <= $currentDateTime) {
+        echo "<p style='color: red;'>Erreur : La date et l'heure de la rencontre doivent être supérieures à la date et l'heure actuelles.</p>";
+    } else {
+        // Modification de la rencontre si la date et l'heure sont valides
+        $rencontreControleur->modifier_rencontre($id_rencontre, $equipe_adverse, $date_rencontre, $heure_rencontre, $lieu);
+        echo "<p style='color: green;'>Rencontre modifiée avec succès !</p>";
+        // Rafraîchir les données
+        $rencontre = $rencontreControleur->get_rencontre($id_rencontre);
+    }
 }
 ?>
 
@@ -34,17 +59,28 @@ if (!$rencontre) {
         <form method="post" action="">
             <div class="form-group">
                 <label for="equipe_adverse">Équipe Adverse :</label>
-                <input type="text" id="equipe_adverse" name="equipe_adverse" value="<?= htmlspecialchars($rencontre['equipe_adverse']) ?>" required>
+                <input type="text" id="equipe_adverse" name="equipe_adverse"
+                       value="<?= htmlspecialchars($rencontre['equipe_adverse']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="date_rencontre">Date de la rencontre :</label>
-                <input type="date" id="date_rencontre" name="date_rencontre" value="<?= htmlspecialchars($rencontre['date_rencontre']) ?>" required>
+                <?php
+                // Date minimale = aujourd'hui
+                $minDate = date("Y-m-d");
+                ?>
+                <input type="date" id="date_rencontre" name="date_rencontre"
+                       value="<?= htmlspecialchars($rencontre['date_rencontre']) ?>" required min="<?= $minDate ?>">
             </div>
 
             <div class="form-group">
                 <label for="heure_rencontre">Heure de la rencontre :</label>
-                <input type="time" id="heure_rencontre" name="heure_rencontre" value="<?= htmlspecialchars($rencontre['heure_rencontre']) ?>" required>
+                <?php
+                // Heure minimale = maintenant + 1 minute (pour éviter les valeurs invalides si c'est aujourd'hui)
+                $minTime = date("H:i", strtotime("+1 minute"));
+                ?>
+                <input type="time" id="heure_rencontre" name="heure_rencontre"
+                       value="<?= htmlspecialchars($rencontre['heure_rencontre']) ?>" required>
             </div>
 
             <div class="form-group">

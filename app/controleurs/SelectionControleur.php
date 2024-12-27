@@ -25,9 +25,10 @@ class SelectionControleur {
     public function updatePostes($id_rencontre, $postes_postes) {
         try {
             foreach ($postes_postes as $numero_licence => $poste) {
-                if (!empty($poste)) {
-                    $this->selectionModel->updatePoste($id_rencontre, $numero_licence, $poste);
+                if (empty($poste)) {
+                    $poste = null;  // Remplace la note par NULL
                 }
+                $this->selectionModel->updatePoste($id_rencontre, $numero_licence, $poste);
             }
         } catch (\Exception $e) {
             error_log("Erreur lors de la mise à jour des postes : " . $e->getMessage());
