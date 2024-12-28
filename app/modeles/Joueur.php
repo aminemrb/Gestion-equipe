@@ -182,5 +182,48 @@ class Joueur {
         }
     }
 
+    public function getJoueursParPoste($id_rencontre, $poste) {
+        try {
+            // Définir les postes spécifiques correspondant à chaque poste générique
+            $postesMapping = [
+                'gardiens'    => ['GB'],                     // Gardiens
+                'defenseurs'  => ['DD', 'DG', 'DCG', 'DCD'], // Défenseurs
+                'milieux'     => ['MD', 'MCG', 'MCD'],       // Milieux
+                'attaquants'  => ['AD', 'AG', 'BU'],         // Attaquants
+                'remplacants' => ['R1', 'R2', 'R3', 'R4', 'R5'] // Remplaçants
+            ];
+
+            // Vérifie si le poste passé est valide
+            if (!array_key_exists($poste, $postesMapping)) {
+                throw new Exception("Poste non valide : " . htmlspecialchars($poste));
+            }
+
+            // Récupérer les postes spécifiques correspondant au poste générique
+            $postesSpecifiques = $postesMapping[$poste];
+            $placeholders = implode(',', array_fill(0, count($postesSpecifiques), '?'));
+
+            // Préparer et exécuter la requête
+            $stmt = $this->db->prepare("
+            SELECT j.*
+            FROM selection s
+            INNER JOIN joueur j ON s.numero_licence = j.numero_licence
+            WHERE s.id_rencontre = ?
+            AND j.poste IN ($placeholders)
+        ");
+
+            // Associer les paramètres dynamiquement
+            $params = array_merge([$id_rencontre], $postesSpecifiques);
+            $stmt->execute($params);
+
+            // Retourner les résultats
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (\Exception $e) {
+            error_log("Erreur lors de la récupération des joueurs personnalisés : " . $e->getMessage());
+            return [];
+        }
+    }
+
+
 
 }

@@ -50,6 +50,10 @@ class SelectionControleur {
         return $this->selectionModel->getNotesByRencontre($id_rencontre);
     }
 
+    public function getNbJoueursNotes($id_rencontre) {
+        return $this->selectionModel->getNbJoueursNotes($id_rencontre);
+    }
+
     public function validerSelection($id_rencontre, $postes_postes) {
         // Vérifier que tous les postes obligatoires sont remplis
         $postes_obligatoires = [

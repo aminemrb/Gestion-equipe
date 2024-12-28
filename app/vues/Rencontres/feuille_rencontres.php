@@ -5,60 +5,58 @@ use App\Controleurs\JoueurControleur;
 use App\Controleurs\SelectionControleur;
 use App\Controleurs\RencontreControleur;
 
-$selectionControleur = new SelectionControleur();
-$joueurControleur = new JoueurControleur();
-$rencontreControleur = new RencontreControleur();
+$controleurSelection = new SelectionControleur();
+$controleurJoueur = new JoueurControleur();
+$controleurRencontre = new RencontreControleur();
 
-$id_rencontre = $_GET['id_rencontre'] ?? null;
-if (!$id_rencontre) {
+$idRencontre = $_GET['id_rencontre'] ?? null;
+if (!$idRencontre) {
     echo "Aucune rencontre sélectionnée.";
     exit;
 }
 
-$rencontre = $rencontreControleur->getRencontreById($id_rencontre);
+$rencontre = $controleurRencontre->getRencontreById($idRencontre);
 if (!$rencontre) {
     echo "Rencontre non trouvée.";
     exit;
 }
 
-$date_rencontre = $rencontre['date_rencontre'];
-$heure_rencontre = $rencontre['heure_rencontre'];
-$matchPassed = estRencontrePasser($date_rencontre, $heure_rencontre);
+$dateRencontre = $rencontre['date_rencontre'];
+$heureRencontre = $rencontre['heure_rencontre'];
+$matchPasse = estRencontrePasse($dateRencontre, $heureRencontre);
 
-$notes_existantes = $selectionControleur->getNotesByRencontre($id_rencontre);
-$joueurs_selectionnes = $selectionControleur->getJoueursSelectionnes($id_rencontre);
-$postes_fixes = [
-    "GB", "DG", "DCG", "DCD", "DD",
-    "MD", "MCG", "MCD", "AD", "AG", "BU",
-    "R1", "R2", "R3", "R4", "R5"
-];
+$notesExistantes = $controleurSelection->getNotesByRencontre($idRencontre);
+$joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($idRencontre);
+$postesFixes = ["GB", "DG", "DCG", "DCD", "DD", "MD", "MCG", "MCD", "AD", "AG", "BU", "R1", "R2", "R3", "R4", "R5"];
 
-$postes_assignes = array_fill_keys($postes_fixes, null);
-foreach ($joueurs_selectionnes as $joueur) {
-    $postes_assignes[$joueur['poste']] = $joueur;
-}
+$postesAssignes = assignerPostesAuxJoueurs($joueursSelectionnes, $postesFixes);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $postes_postes = $_POST['postes'] ?? [];
+    traiterDemandePost($controleurSelection, $idRencontre, $postesFixes, $postesAssignes, $notesExistantes, $matchPasse);
+}
+
+$joueurs = $controleurJoueur->liste_joueurs_actifs();
+
+// Fonctions utilitaires
+function assignerPostesAuxJoueurs($joueursSelectionnes, $postesFixes) {
+    $postesAssignes = array_fill_keys($postesFixes, null);
+    foreach ($joueursSelectionnes as $joueur) {
+        $postesAssignes[$joueur['poste']] = $joueur;
+    }
+    return $postesAssignes;
+}
+
+function traiterDemandePost($controleurSelection, $idRencontre, $postesFixes, $postesAssignes, $notesExistantes, $matchPasse) {
+    $postesPostes = $_POST['postes'] ?? [];
     $notes = $_POST['notes'] ?? [];
 
     try {
-        // Enregistre les notes
-        if (!$matchPassed) { // On enregistre les notes uniquement après le match
-            $poste_titulaires = ["GB", "DG", "DCG", "DCD", "DD", "MD", "MCG", "MCD", "AD", "AG", "BU"];
-            foreach ($poste_titulaires as $poste) {
-                if (isset($postes_assignes[$poste]) && empty($notes[$postes_assignes[$poste]['numero_licence']])) {
-                    throw new \Exception("Tous les joueurs titulaires doivent être notés.");
-                }
-            }
-            $selectionControleur->updateNotes($id_rencontre, $notes);
+        if (!$matchPasse) {
+            validerNotes($postesFixes, $postesAssignes, $notes);
+            $controleurSelection->updateNotes($idRencontre, $notes);
             header("Location: " . $_SERVER['REQUEST_URI']);
-
-        }
-        if ($matchPassed) {
-            // Valide la sélection
-            $selectionControleur->validerSelection($id_rencontre, $postes_postes);
-            // Recharge la page après la mise à jour
+        } else {
+            $controleurSelection->validerSelection($idRencontre, $postesPostes);
             header("Location: " . $_SERVER['REQUEST_URI']);
             exit;
         }
@@ -67,43 +65,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
-$joueurs = $joueurControleur->liste_joueurs_actifs();
-
-function getPosteClass($poste) {
-    $gardien = ["GB"];
-    $defenseurs = ["DG", "DCG", "DCD", "DD"];
-    $milieux = ["MD", "MCG", "MCD"];
-    $attaquants = ["AD", "AG", "BU"];
-
-    if (in_array($poste, $gardien)) return "gardien";
-    if (in_array($poste, $defenseurs)) return "defenseur";
-    if (in_array($poste, $milieux)) return "milieu";
-    if (in_array($poste, $attaquants)) return "attaquant";
-
-    return "remplacant"; // Par défaut aucune classe
+function validerNotes($postesFixes, $postesAssignes, $notes) {
+    foreach ($postesFixes as $poste) {
+        if (isset($postesAssignes[$poste]) && empty($notes[$postesAssignes[$poste]['numero_licence']])) {
+            throw new \Exception("Tous les joueurs doivent être notés.");
+        }
+    }
 }
 
-function estRencontrePasser($date_rencontre, $heure_rencontre) {
+function estRencontrePasse($dateRencontre, $heureRencontre) {
     $currentDateTime = new DateTime();
-    $matchDateTime = new DateTime("$date_rencontre $heure_rencontre");
+    $matchDateTime = new DateTime("$dateRencontre $heureRencontre");
     return $matchDateTime > $currentDateTime;
+}
+
+function obtenirClassePoste($poste) {
+    $classes = [
+        "GB" => "gardien",
+        "DG" => "defenseur", "DCG" => "defenseur", "DCD" => "defenseur", "DD" => "defenseur",
+        "MD" => "milieu", "MCG" => "milieu", "MCD" => "milieu",
+        "AD" => "attaquant", "AG" => "attaquant", "BU" => "attaquant"
+    ];
+
+    return $classes[$poste] ?? "remplacant";
 }
 ?>
 
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Feuille de Match</title>
-        <link rel="stylesheet" href="/football_manager/public/assets/css/selection.css">
-    </head>
-    <body>
-    <main id="fdm">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Feuille de Match</title>
+    <link rel="stylesheet" href="/football_manager/public/assets/css/selection.css">
+</head>
+<body>
+<main id="fdm">
     <h1>Feuille de Match</h1>
 
     <form method="POST">
-        <input type="hidden" name="id_rencontre" value="<?php echo htmlspecialchars($id_rencontre); ?>">
+        <input type="hidden" name="id_rencontre" value="<?php echo htmlspecialchars($idRencontre); ?>">
         <div class="table-container">
             <table class="table-compo">
                 <thead>
@@ -111,26 +111,26 @@ function estRencontrePasser($date_rencontre, $heure_rencontre) {
                     <th>Poste</th>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <?php if (!$matchPassed): ?>
+                    <?php if (!$matchPasse): ?>
                         <th>Note</th>
                     <?php endif; ?>
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($postes_fixes as $poste): ?>
-                    <?php $classe = getPosteClass($poste); ?>
+                <?php foreach ($postesFixes as $poste): ?>
+                    <?php $classe = obtenirClassePoste($poste); ?>
                     <tr>
                         <td class="<?php echo $classe; ?>"><?php echo htmlspecialchars($poste); ?></td>
-                        <?php if (isset($postes_assignes[$poste])): ?>
-                            <td><?php echo htmlspecialchars($postes_assignes[$poste]['nom'] ?? '-'); ?></td>
-                            <td><?php echo htmlspecialchars($postes_assignes[$poste]['prenom'] ?? '-'); ?></td>
-                            <?php if (!$matchPassed): ?>
+                        <?php if (isset($postesAssignes[$poste])): ?>
+                            <td><?php echo htmlspecialchars($postesAssignes[$poste]['nom'] ?? '-'); ?></td>
+                            <td><?php echo htmlspecialchars($postesAssignes[$poste]['prenom'] ?? '-'); ?></td>
+                            <?php if (!$matchPasse): ?>
                                 <td>
-                                    <select name="notes[<?php echo $postes_assignes[$poste]['numero_licence']; ?>]">
+                                    <select name="notes[<?php echo $postesAssignes[$poste]['numero_licence']; ?>]">
                                         <option value="">-- Choisir --</option>
                                         <?php for ($i = 1; $i <= 5; $i++): ?>
                                             <option value="<?php echo $i; ?>"
-                                                <?php if (isset($notes_existantes[$postes_assignes[$poste]['numero_licence']]) && $notes_existantes[$postes_assignes[$poste]['numero_licence']] == $i): ?>
+                                                <?php if (isset($notesExistantes[$postesAssignes[$poste]['numero_licence']]) && $notesExistantes[$postesAssignes[$poste]['numero_licence']] == $i): ?>
                                                     selected
                                                 <?php endif; ?>>
                                                 <?php echo str_repeat("★", $i); ?>
@@ -146,7 +146,7 @@ function estRencontrePasser($date_rencontre, $heure_rencontre) {
                 <?php endforeach; ?>
                 </tbody>
             </table>
-            <?php if ($matchPassed): ?>
+            <?php if ($matchPasse): ?>
                 <table class="table-selection">
                     <thead>
                     <tr>
@@ -163,13 +163,13 @@ function estRencontrePasser($date_rencontre, $heure_rencontre) {
                             <td>
                                 <select class="postes" name="postes[<?php echo $joueur['numero_licence']; ?>]">
                                     <option value="">-- Choisir --</option>
-                                    <?php foreach ($postes_fixes as $poste): ?>
-                                        <?php $classe = getPosteClass($poste); ?>
+                                    <?php foreach ($postesFixes as $poste): ?>
+                                        <?php $classe = obtenirClassePoste($poste); ?>
                                         <?php
-                                        $is_selected = (isset($postes_assignes[$poste]) && $postes_assignes[$poste]['numero_licence'] == $joueur['numero_licence']);
+                                        $isSelected = (isset($postesAssignes[$poste]) && $postesAssignes[$poste]['numero_licence'] == $joueur['numero_licence']);
                                         ?>
                                         <option class="<?php echo $classe; ?>" value="<?php echo htmlspecialchars($poste); ?>"
-                                                <?php if ($is_selected): ?>selected<?php endif; ?>>
+                                                <?php if ($isSelected): ?>selected<?php endif; ?>>
                                             <?php echo htmlspecialchars($poste); ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -184,7 +184,6 @@ function estRencontrePasser($date_rencontre, $heure_rencontre) {
         <br>
         <input type="submit" value="Valider la sélection">
     </form>
-    </main>
-    </body>
-    </html>
-
+</main>
+</body>
+</html>

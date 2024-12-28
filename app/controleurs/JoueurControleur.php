@@ -171,4 +171,22 @@ class JoueurControleur {
         }
     }
 
+    public function getJoueursParPoste($id_rencontre) {
+        // Récupérer les joueurs en fonction des postes personnalisés
+        $gardiens    = $this->joueurModel->getJoueursParPoste($id_rencontre, 'gardiens');
+        $defenseurs  = $this->joueurModel->getJoueursParPoste($id_rencontre, 'defenseurs');
+        $milieux     = $this->joueurModel->getJoueursParPoste($id_rencontre, 'milieux');
+        $attaquants  = $this->joueurModel->getJoueursParPoste($id_rencontre, 'attaquants');
+        $remplacants = $this->joueurModel->getJoueursParPoste($id_rencontre, 'remplacants');
+
+        // Retourner les joueurs organisés par catégories
+        return [
+            'gardiens'    => $gardiens,
+            'defenseurs'  => $defenseurs,
+            'milieux'     => $milieux,
+            'attaquants'  => $attaquants,
+            'remplacants' => $remplacants
+        ];
+    }
+
 }

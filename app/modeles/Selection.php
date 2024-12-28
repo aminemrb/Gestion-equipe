@@ -102,5 +102,19 @@ class Selection {
         return $notes;
     }
 
+    public function getNbJoueursNotes($id_rencontre) {
+        // Récupérer les notes pour la rencontre donnée
+        $notes = $this->getNotesByRencontre($id_rencontre);
+
+        // Filtrer et compter les notes non nulles
+        $notesNonNulles = array_filter($notes, function($note) {
+            return $note !== null; // Exclure les notes nulles
+        });
+
+        // Retourner le nombre de notes non nulles
+        return count($notesNonNulles);
+    }
+
+
 
 }

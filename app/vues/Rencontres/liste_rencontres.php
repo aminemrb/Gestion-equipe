@@ -5,19 +5,42 @@ use App\Controleurs\RencontreControleur;
 use App\Controleurs\SelectionControleur;
 use App\Controleurs\JoueurControleur;
 
-$rencontreControleur = new RencontreControleur();
-$selectionControleur = new SelectionControleur();
-$joueurControleur = new JoueurControleur();
-$rencontres = $rencontreControleur->liste_rencontres();
+$controleurRencontre = new RencontreControleur();
+$controleurSelection = new SelectionControleur();
+$controleurJoueur = new JoueurControleur();
+$listeRencontres = $controleurRencontre->liste_rencontres();
 
-// Fonction pour formater la date en français
-function formatDate($date) {
-    setlocale(LC_TIME, 'fr_FR.UTF-8'); // S'assurer que la locale est en français
-    $dateObj = new DateTime($date);
-    return strftime('%A %d %B %Y', $dateObj->getTimestamp()); // Format "Lundi 18 Novembre 2024"
+// Fonction pour récupérer et filtrer les joueurs par poste
+function getJoueursParPoste($joueursSelectionnes) {
+    return [
+        'gardiens' => array_filter($joueursSelectionnes, fn($j) => $j['poste'] === 'Gardien'),
+        'defenseurs' => array_filter($joueursSelectionnes, fn($j) => $j['poste'] === 'Défenseur'),
+        'milieux' => array_filter($joueursSelectionnes, fn($j) => $j['poste'] === 'Milieu'),
+        'attaquants' => array_filter($joueursSelectionnes, fn($j) => $j['poste'] === 'Attaquant'),
+    ];
 }
 
+// Fonction pour formater la date en français
+function formaterDate($date) {
+    setlocale(LC_TIME, 'fr_FR.UTF-8');
+    $dateObj = new DateTime($date);
+    return strftime('%A %d %B %Y', $dateObj->getTimestamp());
+}
 
+// Fonction pour déterminer la couleur du score
+function couleurScore($scoreEquipe, $scoreAdverse) {
+    if ($scoreEquipe > $scoreAdverse) {
+        return 'green'; // Victoire
+    } elseif ($scoreEquipe < $scoreAdverse) {
+        return 'red'; // Défaite
+    }
+    return 'white'; // Match nul
+}
+
+// Fonction pour afficher les joueurs sous forme de texte
+function afficherJoueurs($joueurs) {
+    return empty($joueurs) ? 'Aucun joueur' : implode('<br>', array_map(fn($j) => htmlspecialchars($j['nom'] . ' ' . $j['prenom']), $joueurs));
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,28 +60,33 @@ function formatDate($date) {
         <!-- Colonne des matchs passés -->
         <div class="column">
             <h2>Matchs Passés</h2>
-            <?php foreach ($rencontres as $rencontre): ?>
+            <?php foreach ($listeRencontres as $rencontre): ?>
                 <?php
-                $joueurs_selectionnes = $selectionControleur->getJoueursSelectionnes($rencontre['id_rencontre']);
-                $joueurs = empty($joueurs_selectionnes)
-                    ? "Aucun joueur sélectionné"
-                    : implode('<br>', array_map(fn($j) => htmlspecialchars($j['nom'] . ' ' . $j['prenom']), $joueurs_selectionnes));
-                $resultat = $rencontre['resultat'] ?? 'N/A';
+                $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
+                $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
+                $remplacants = array_diff($joueursSelectionnes, array_merge($joueursParPoste['gardiens'], $joueursParPoste['defenseurs'], $joueursParPoste['milieux'], $joueursParPoste['attaquants']));
 
-                // Vérification si le score est null ou non défini
-                $score = (isset($rencontre['score_equipe'], $rencontre['score_adverse']) && $rencontre['score_equipe'] !== null && $rencontre['score_adverse'] !== null)
-                    ? "{$rencontre['score_equipe']}-{$rencontre['score_adverse']}"
-                    : null;
+                $resultat = $rencontre['resultat'] ?? 'N/A';
+                $scoreEquipe = $rencontre['score_equipe'] ?? null;
+                $scoreAdverse = $rencontre['score_adverse'] ?? null;
+                $couleurScore = couleurScore($scoreEquipe, $scoreAdverse);
+
+                $score = ($scoreEquipe !== null && $scoreAdverse !== null)
+                    ? "{$scoreEquipe}-{$scoreAdverse}"
+                    : 'N/A';
 
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
-                $isMatchFuture = $matchDateTime > $currentDateTime; // Vérifie si le match est à venir
+                $isMatchFutur = $matchDateTime > $currentDateTime;
+                $nbJoueursNotes = $controleurSelection->getNbJoueursNotes($rencontre['id_rencontre']);
+                $isJoueursNotes = ($nbJoueursNotes == count($joueursSelectionnes));
                 ?>
-                <?php if (!$isMatchFuture): ?>
+
+                <?php if (!$isMatchFutur): ?>
                     <div class="match-card">
                         <div class="match-header">
                             <div class="match-date-time">
-                                <span class="match-date"><strong><?= formatDate($rencontre['date_rencontre']) ?></strong> à </span>
+                                <span class="match-date"><strong><?= formaterDate($rencontre['date_rencontre']) ?></strong> à </span>
                                 <span class="match-time"><strong><?= htmlspecialchars($rencontre['heure_rencontre']) ?></strong> - </span>
                                 <span class="match-lieu"><?= htmlspecialchars($rencontre['lieu']) ?></span>
                             </div>
@@ -70,39 +98,28 @@ function formatDate($date) {
                         <div class="match-body">
                             <div class="team">
                                 <span class="team-name">Mon équipe</span>
-                                <span class="score"><?= $score ?? 'N/A' ?></span>
+                                <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'N/A' ?></span>
                                 <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
                             </div>
                         </div>
 
                         <div class="match-footer">
                             <div class="actions">
-                                <!-- Si la sélection est faite et que le score n'est pas encore ajouté -->
-                                <?php if (!empty($joueurs_selectionnes)): ?>
-                                        <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>"
-                                           class="btn-action">
-                                            Feuille de match
-                                        </a>
-                                        <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>"
-                                           class="btn-action">
-                                            Scorer
-                                        </a>
-                                        <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?> "
-                                           class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer
-                                        </a>
-                                        <div class="players-selected">
-                                            <strong>Joueurs Sélectionnés:</strong>
-                                            <div id="joueurs-selectionnes-<?= $rencontre['id_rencontre'] ?>"><?= $joueurs ?></div>
-                                        </div>
+                                <?php if (!empty($joueursSelectionnes)): ?>
+                                    <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
+                                    <?php if ($isJoueursNotes): ?>
+                                        <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Scorer</a>
+                                    <?php endif; ?>
+                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
+                                    <div class="players-selected">
+                                        <strong>Joueurs Sélectionnés:</strong>
+                                        <div id="joueurs-selectionnes-<?= $rencontre['id_rencontre'] ?>"><?= afficherJoueurs($joueursSelectionnes) ?></div>
+                                    </div>
                                 <?php else: ?>
-                                    <span>MATCH ANNULER (aucun joueur sélectionné)</span>
-                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?> "
-                                       class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer
-                                    </a>
+                                    <span>MATCH ANNULÉ (aucun joueur sélectionné)</span>
+                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
                                 <?php endif; ?>
                             </div>
-
-
                         </div>
                     </div>
                 <?php endif; ?>
@@ -112,29 +129,31 @@ function formatDate($date) {
         <!-- Colonne des matchs à venir -->
         <div class="column">
             <h2>Matchs à Venir</h2>
-            <?php foreach ($rencontres as $rencontre): ?>
+            <?php foreach ($listeRencontres as $rencontre): ?>
                 <?php
-                $nombre_joueurs = $joueurControleur->liste_joueurs_actifs();
-                $joueurs_selectionnes = $selectionControleur->getJoueursSelectionnes($rencontre['id_rencontre']);
-                $joueurs = empty($joueurs_selectionnes)
-                    ? "Aucun joueur sélectionné"
-                    : implode('<br>', array_map(fn($j) => htmlspecialchars($j['nom'] . ' ' . $j['prenom']), $joueurs_selectionnes));
-                $resultat = $rencontre['resultat'] ?? 'N/A';
+                $nombreJoueurs = $controleurJoueur->liste_joueurs_actifs();
+                $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
+                $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
+                $remplacants = array_diff($joueursSelectionnes, array_merge($joueursParPoste['gardiens'], $joueursParPoste['defenseurs'], $joueursParPoste['milieux'], $joueursParPoste['attaquants']));
 
-                // Vérification si le score est null ou non défini
-                $score = (isset($rencontre['score_equipe'], $rencontre['score_adverse']) && $rencontre['score_equipe'] !== null && $rencontre['score_adverse'] !== null)
-                    ? "{$rencontre['score_equipe']}-{$rencontre['score_adverse']}"
-                    : null;
+                $resultat = $rencontre['resultat'] ?? 'N/A';
+                $scoreEquipe = $rencontre['score_equipe'] ?? null;
+                $scoreAdverse = $rencontre['score_adverse'] ?? null;
+                $couleurScore = couleurScore($scoreEquipe, $scoreAdverse);
+
+                $score = ($scoreEquipe !== null && $scoreAdverse !== null)
+                    ? "{$scoreEquipe}-{$scoreAdverse}"
+                    : 'N/A';
 
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
-                $isMatchFuture = $matchDateTime > $currentDateTime; // Vérifie si le match est à venir
+                $isMatchFutur = $matchDateTime > $currentDateTime;
                 ?>
-                <?php if ($isMatchFuture): ?>
+                <?php if ($isMatchFutur): ?>
                     <div class="match-card">
                         <div class="match-header">
                             <div class="match-date-time">
-                                <span class="match-date"><strong><?= formatDate($rencontre['date_rencontre']) ?></strong> à </span>
+                                <span class="match-date"><strong><?= formaterDate($rencontre['date_rencontre']) ?></strong> à </span>
                                 <span class="match-time"><strong><?= htmlspecialchars($rencontre['heure_rencontre']) ?></strong> - </span>
                                 <span class="match-lieu"><?= htmlspecialchars($rencontre['lieu']) ?></span>
                             </div>
@@ -146,29 +165,48 @@ function formatDate($date) {
                         <div class="match-body">
                             <div class="team">
                                 <span class="team-name">Mon équipe</span>
-                                <span class="score"><?= $score ?? 'N/A' ?></span>
+                                <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'N/A' ?></span>
                                 <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
                             </div>
                         </div>
 
                         <div class="match-footer">
-                            <!-- Boutons d'actions -->
                             <div class="actions">
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>"
-                                   class="btn-action <?= $nombre_joueurs < 11 ? 'disabled' : '' ?>"
-                                   onclick="return <?= $nombre_joueurs < 11 ? 'alert(\'Vous devez avoir au moins 11 joueurs dans la base de données pour accéder à la feuille de match.\'); return false;' : 'true'; ?>">
-                                    Feuille de match
-                                </a>
-
-
+                                <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action <?= $nombreJoueurs < 11 ? 'disabled' : '' ?>"
+                                   onclick="return <?= $nombreJoueurs < 11 ? 'alert(\'Vous devez avoir au moins 11 joueurs dans la base de données pour accéder à la feuille de match.\'); return false;' : 'true'; ?>">Sélection</a>
                                 <a href="<?= BASE_URL ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Modifier</a>
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?> "
-                                   class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
+                                <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
                             </div>
 
-                            <div class="players-selected">
-                                <strong>Joueurs Sélectionnés:</strong>
-                                <div id="joueurs-selectionnes-<?= $rencontre['id_rencontre'] ?>"><?= $joueurs ?></div>
+                            <div class="team-composition">
+                                <div class="formation">
+                                    <h3>Formation 4-3-3</h3>
+                                    <div class="field">
+                                        <div class="line defense">
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs'][0]['nom'] ?? 'N/A') ?></div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs'][1]['nom'] ?? 'N/A') ?></div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs'][2]['nom'] ?? 'N/A') ?></div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs'][3]['nom'] ?? 'N/A') ?></div>
+                                        </div>
+                                        <div class="line midfield">
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux'][0]['nom'] ?? 'N/A') ?></div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux'][1]['nom'] ?? 'N/A') ?></div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux'][2]['nom'] ?? 'N/A') ?></div>
+                                        </div>
+                                        <div class="line forward">
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants'][0]['nom'] ?? 'N/A') ?></div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants'][1]['nom'] ?? 'N/A') ?></div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants'][2]['nom'] ?? 'N/A') ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="substitute-bench">
+                                    <h3>Banc de touche</h3>
+                                    <div class="bench">
+                                        <?= afficherJoueurs($remplacants); ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
