@@ -231,6 +231,11 @@
     background-color: #2ecc71;
 }
 
+/* Attaquants */
+.line.goal .player {
+    background-color: #b1acac;
+}
+
 /* Banc de touche */
 .substitute-bench {
     margin-top: 20px;

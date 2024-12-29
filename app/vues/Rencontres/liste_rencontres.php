@@ -10,16 +10,45 @@ $controleurSelection = new SelectionControleur();
 $controleurJoueur = new JoueurControleur();
 $listeRencontres = $controleurRencontre->liste_rencontres();
 
-// Fonction pour récupérer et filtrer les joueurs par poste
-function getJoueursParPoste($joueursSelectionnes) {
-    return [
-        'gardiens' => array_filter($joueursSelectionnes, fn($j) => $j['poste'] === 'Gardien'),
-        'defenseurs' => array_filter($joueursSelectionnes, fn($j) => $j['poste'] === 'Défenseur'),
-        'milieux' => array_filter($joueursSelectionnes, fn($j) => $j['poste'] === 'Milieu'),
-        'attaquants' => array_filter($joueursSelectionnes, fn($j) => $j['poste'] === 'Attaquant'),
+// Organiser les joueurs par poste
+// Organiser les joueurs par poste exact
+function getJoueursParPoste($joueurs) {
+    $postesMapping = [
+        'gardiens'    => ['GB'],
+        'defenseurs'  => ['DD', 'DG', 'DCG', 'DCD'], // Défenseurs spécifiques
+        'milieux'     => ['MD', 'MCG', 'MCD'],       // Milieux spécifiques
+        'attaquants'  => ['AD', 'AG', 'BU'],         // Attaquants spécifiques
+        'remplacants' => []                          // Pour tous les autres
     ];
-}
 
+    $joueursParPoste = [
+        'gardiens'    => [],
+        'defenseurs'  => [],
+        'milieux'     => [],
+        'attaquants'  => [],
+        'remplacants' => []
+    ];
+
+    foreach ($joueurs as $joueur) {
+        $poste = $joueur['poste'];
+        $ajoute = false;
+
+        // Assigner le joueur à sa catégorie en fonction du poste
+        foreach ($postesMapping as $categorie => $postes) {
+            if (in_array($poste, $postes)) {
+                $joueursParPoste[$categorie][$poste] = $joueur; // Clé = poste exact
+                $ajoute = true;
+                break;
+            }
+        }
+
+        if (!$ajoute) {
+            $joueursParPoste['remplacants'][] = $joueur;
+        }
+    }
+
+    return $joueursParPoste;
+}
 // Fonction pour formater la date en français
 function formaterDate($date) {
     setlocale(LC_TIME, 'fr_FR.UTF-8');
@@ -64,8 +93,6 @@ function afficherJoueurs($joueurs) {
                 <?php
                 $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
                 $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
-                $remplacants = array_diff($joueursSelectionnes, array_merge($joueursParPoste['gardiens'], $joueursParPoste['defenseurs'], $joueursParPoste['milieux'], $joueursParPoste['attaquants']));
-
                 $resultat = $rencontre['resultat'] ?? 'N/A';
                 $scoreEquipe = $rencontre['score_equipe'] ?? null;
                 $scoreAdverse = $rencontre['score_adverse'] ?? null;
@@ -106,15 +133,60 @@ function afficherJoueurs($joueurs) {
                         <div class="match-footer">
                             <div class="actions">
                                 <?php if (!empty($joueursSelectionnes)): ?>
+                                    <div class="team-composition">
+                                        <div class="formation">
+                                            <h3>Formation 4-3-3</h3>
+                                            <div class="field">
+                                                <!-- Attaque -->
+                                                <div class="line forward">
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?><br>AG</div>
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?><br>BU</div>
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?><br>AD</div>
+                                                </div>
+                                                <!-- Milieu -->
+                                                <div class="line midfield">
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?><br>MCG</div>
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?><br>MD</div>
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?><br>MCD</div>
+                                                </div>
+                                                <!-- Défense -->
+                                                <div class="line defense">
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?><br>DG</div>
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?><br>DCG</div>
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?><br>DCD</div>
+                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?><br>DD</div>
+                                                </div>
+                                                <!-- Gardien -->
+                                                <div class="line goal">
+                                                    <div class="player">
+                                                        <?= htmlspecialchars($joueursParPoste['gardiens']['GB']['nom'] ?? 'N/A') ?><br>GB
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <?php if(!$joueursParPoste['remplacants'] == []): ?>
+                                        <!-- Banc de touche -->
+                                        <div class="substitute-bench">
+                                            <h3>Remplaçant(s)</h3>
+                                            <div class="bench">
+                                                <?php foreach ($joueursParPoste['remplacants'] as $remplacant): ?>
+                                                    <div class="player">
+                                                        <?= htmlspecialchars($remplacant['nom'] ?? 'N/A') ?>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>
+
+                                <!-- Actions -->
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
                                     <?php if ($isJoueursNotes): ?>
                                         <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Scorer</a>
                                     <?php endif; ?>
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
-                                    <div class="players-selected">
-                                        <strong>Joueurs Sélectionnés:</strong>
-                                        <div id="joueurs-selectionnes-<?= $rencontre['id_rencontre'] ?>"><?= afficherJoueurs($joueursSelectionnes) ?></div>
-                                    </div>
                                 <?php else: ?>
                                     <span>MATCH ANNULÉ (aucun joueur sélectionné)</span>
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
@@ -131,10 +203,9 @@ function afficherJoueurs($joueurs) {
             <h2>Matchs à Venir</h2>
             <?php foreach ($listeRencontres as $rencontre): ?>
                 <?php
-                $nombreJoueurs = $controleurJoueur->liste_joueurs_actifs();
+                // Récupérer les joueurs sélectionnés pour la rencontre
                 $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
                 $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
-                $remplacants = array_diff($joueursSelectionnes, array_merge($joueursParPoste['gardiens'], $joueursParPoste['defenseurs'], $joueursParPoste['milieux'], $joueursParPoste['attaquants']));
 
                 $resultat = $rencontre['resultat'] ?? 'N/A';
                 $scoreEquipe = $rencontre['score_equipe'] ?? null;
@@ -171,42 +242,57 @@ function afficherJoueurs($joueurs) {
                         </div>
 
                         <div class="match-footer">
-                            <div class="actions">
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action <?= $nombreJoueurs < 11 ? 'disabled' : '' ?>"
-                                   onclick="return <?= $nombreJoueurs < 11 ? 'alert(\'Vous devez avoir au moins 11 joueurs dans la base de données pour accéder à la feuille de match.\'); return false;' : 'true'; ?>">Sélection</a>
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Modifier</a>
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
-                            </div>
-
                             <div class="team-composition">
                                 <div class="formation">
                                     <h3>Formation 4-3-3</h3>
                                     <div class="field">
-                                        <div class="line defense">
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs'][0]['nom'] ?? 'N/A') ?></div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs'][1]['nom'] ?? 'N/A') ?></div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs'][2]['nom'] ?? 'N/A') ?></div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs'][3]['nom'] ?? 'N/A') ?></div>
-                                        </div>
-                                        <div class="line midfield">
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux'][0]['nom'] ?? 'N/A') ?></div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux'][1]['nom'] ?? 'N/A') ?></div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux'][2]['nom'] ?? 'N/A') ?></div>
-                                        </div>
+                                        <!-- Attaque -->
                                         <div class="line forward">
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants'][0]['nom'] ?? 'N/A') ?></div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants'][1]['nom'] ?? 'N/A') ?></div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants'][2]['nom'] ?? 'N/A') ?></div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?><br>AG</div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?><br>BU</div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?><br>AD</div>
                                         </div>
+                                        <!-- Milieu -->
+                                        <div class="line midfield">
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?><br>MCG</div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?><br>MD</div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?><br>MCD</div>
+                                        </div>
+                                        <!-- Défense -->
+                                        <div class="line defense">
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?><br>DG</div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?><br>DCG</div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?><br>DCD</div>
+                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?><br>DD</div>
+                                        </div>
+                                        <!-- Gardien -->
+                                        <div class="line goal">
+                                                <div class="player">
+                                                    <?= htmlspecialchars($joueursParPoste['gardiens']['GB']['nom'] ?? 'N/A') ?><br>GB
+                                                </div>
+                                        </div>
+
                                     </div>
                                 </div>
 
+                                <!-- Banc de touche -->
                                 <div class="substitute-bench">
-                                    <h3>Banc de touche</h3>
+                                    <h3>Remplaçant(s)</h3>
                                     <div class="bench">
-                                        <?= afficherJoueurs($remplacants); ?>
+                                        <?php foreach ($joueursParPoste['remplacants'] as $remplacant): ?>
+                                            <div class="player">
+                                                <?= htmlspecialchars($remplacant['nom'] ?? 'N/A') ?>
+                                            </div>
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="actions">
+                                <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Sélection</a>
+                                <a href="<?= BASE_URL ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Modifier</a>
+                                <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
                             </div>
                         </div>
                     </div>
