@@ -19,14 +19,14 @@ if (!$joueurs || count($joueurs) === 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/football_manager/public/assets/css/stats.css">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/joueurs.css">
     <title>Liste des joueurs</title>
 </head>
 <body>
 <div id="liste">
     <main>
         <h1>Liste des joueurs</h1>
-        <a href="<?= BASE_URL ?>/vues/Joueurs/ajouter_joueur.php">Ajouter un joueur</a>
+        <a class="btn-ajouter" href="<?= BASE_URL ?>/vues/Joueurs/ajouter_joueur.php">Ajouter un joueur</a>
 
         <table border="1">
             <thead>
@@ -38,7 +38,7 @@ if (!$joueurs || count($joueurs) === 0) {
                 <th>Taille</th>
                 <th>Poids</th>
                 <th>Statut</th>
-                <th>Podte Préférée</th>
+                <th>Poste Préférée</th>
                 <th>Commentaire</th>
                 <th>Actions</th>
             </tr>
@@ -55,9 +55,9 @@ if (!$joueurs || count($joueurs) === 0) {
                     <td><?= htmlspecialchars($joueur['statut']) ?></td>
                     <td><?= htmlspecialchars($joueur['position_preferee']) ?></td>
                     <td><?= htmlspecialchars($joueur['commentaire']) ?></td>
-                    <td>
-                        <a href="<?= BASE_URL ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">Modifier</a>
-                        <a href="<?= BASE_URL ?>/vues/Joueurs/supprimer_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>"
+                    <td class="actions">
+                        <a class="btn-modifier" href="<?= BASE_URL ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">Modifier</a>
+                        <a class="btn-supprimer" href="<?= BASE_URL ?>/vues/Joueurs/supprimer_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>"
                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">Supprimer</a>
                     </td>
                 </tr>

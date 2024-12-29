@@ -38,8 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Modification de la rencontre si la date et l'heure sont valides
         $rencontreControleur->modifier_rencontre($id_rencontre, $equipe_adverse, $date_rencontre, $heure_rencontre, $lieu);
         echo "<p style='color: green;'>Rencontre modifiée avec succès !</p>";
-        // Rafraîchir les données
-        $rencontre = $rencontreControleur->get_rencontre($id_rencontre);
     }
 }
 ?>
@@ -49,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/football_manager/public/assets/css/modifier.css">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/formulaire.css">
     <title>Modifier une rencontre</title>
 </head>
 <body>

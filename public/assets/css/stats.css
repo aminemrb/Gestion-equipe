@@ -77,6 +77,11 @@ td {
     text-align: center;
 }
 
+tr:hover {
+    background-color: #a7b6b6;
+    color: #121212;
+}
+
 /* Quelques styles pour les couleurs de post, si nécessaire */
 .gardien {
     color: #f7d802;

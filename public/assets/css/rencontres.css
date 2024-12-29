@@ -155,7 +155,6 @@
 
 /* Bouton scorer/modifier fusionné */
 .btn-action {
-    background-color: #28a745;
     color: white;
     padding: 10px 15px;
     text-align: center;
@@ -184,6 +183,10 @@
 .team-composition {
     margin-top: 20px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 20px;
 }
 
 /* Conteneur du terrain de jeu */
@@ -253,6 +256,10 @@
 .bench {
     font-size: 14px;
     color: #ccc;
+    display: grid; /* Active la grille */
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes égales */
+    grid-template-rows: repeat(3, auto); /* 3 lignes automatiques */
+    gap: 10px; /* Espacement entre les éléments */
 }
 
 /* Pour petits écrans */

@@ -35,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/football_manager/public/assets/css/ajouter.css">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/formulaire.css">
     <title>Ajouter une rencontre</title>
 </head>
 <body>
-<main id="ajouter-style">
+<main>
     <h1>Ajouter une rencontre</h1>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
         <label for="equipe_adverse">Équipe Adverse :</label>

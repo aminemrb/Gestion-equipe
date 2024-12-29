@@ -10,8 +10,8 @@ $controleurSelection = new SelectionControleur();
 $controleurJoueur = new JoueurControleur();
 $listeRencontres = $controleurRencontre->liste_rencontres();
 
+
 // Organiser les joueurs par poste
-// Organiser les joueurs par poste exact
 function getJoueursParPoste($joueurs) {
     $postesMapping = [
         'gardiens'    => ['GB'],
@@ -49,6 +49,7 @@ function getJoueursParPoste($joueurs) {
 
     return $joueursParPoste;
 }
+
 // Fonction pour formater la date en français
 function formaterDate($date) {
     setlocale(LC_TIME, 'fr_FR.UTF-8');
@@ -64,11 +65,6 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
         return 'red'; // Défaite
     }
     return 'white'; // Match nul
-}
-
-// Fonction pour afficher les joueurs sous forme de texte
-function afficherJoueurs($joueurs) {
-    return empty($joueurs) ? 'Aucun joueur' : implode('<br>', array_map(fn($j) => htmlspecialchars($j['nom'] . ' ' . $j['prenom']), $joueurs));
 }
 ?>
 
@@ -91,8 +87,10 @@ function afficherJoueurs($joueurs) {
             <h2>Matchs Passés</h2>
             <?php foreach ($listeRencontres as $rencontre): ?>
                 <?php
+                // Récupérer les joueurs sélectionnés pour la rencontre
                 $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
                 $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
+
                 $resultat = $rencontre['resultat'] ?? 'N/A';
                 $scoreEquipe = $rencontre['score_equipe'] ?? null;
                 $scoreAdverse = $rencontre['score_adverse'] ?? null;
@@ -105,6 +103,7 @@ function afficherJoueurs($joueurs) {
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
                 $isMatchFutur = $matchDateTime > $currentDateTime;
+
                 $nbJoueursNotes = $controleurSelection->getNbJoueursNotes($rencontre['id_rencontre']);
                 $isJoueursNotes = ($nbJoueursNotes == count($joueursSelectionnes));
                 ?>
@@ -135,7 +134,7 @@ function afficherJoueurs($joueurs) {
                                 <?php if (!empty($joueursSelectionnes)): ?>
                                     <div class="team-composition">
                                         <div class="formation">
-                                            <h3>Formation 4-3-3</h3>
+                                            <h3>Formation</h3>
                                             <div class="field">
                                                 <!-- Attaque -->
                                                 <div class="line forward">
@@ -203,19 +202,6 @@ function afficherJoueurs($joueurs) {
             <h2>Matchs à Venir</h2>
             <?php foreach ($listeRencontres as $rencontre): ?>
                 <?php
-                // Récupérer les joueurs sélectionnés pour la rencontre
-                $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
-                $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
-
-                $resultat = $rencontre['resultat'] ?? 'N/A';
-                $scoreEquipe = $rencontre['score_equipe'] ?? null;
-                $scoreAdverse = $rencontre['score_adverse'] ?? null;
-                $couleurScore = couleurScore($scoreEquipe, $scoreAdverse);
-
-                $score = ($scoreEquipe !== null && $scoreAdverse !== null)
-                    ? "{$scoreEquipe}-{$scoreAdverse}"
-                    : 'N/A';
-
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
                 $isMatchFutur = $matchDateTime > $currentDateTime;
@@ -244,7 +230,7 @@ function afficherJoueurs($joueurs) {
                         <div class="match-footer">
                             <div class="team-composition">
                                 <div class="formation">
-                                    <h3>Formation 4-3-3</h3>
+                                    <h3>Formation</h3>
                                     <div class="field">
                                         <!-- Attaque -->
                                         <div class="line forward">

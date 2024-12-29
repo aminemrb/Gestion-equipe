@@ -16,5 +16,11 @@ class Utilisateur {
         $stmt->execute(['email' => $email]);
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
+
+    public function getNomPrenom($id) {
+        $stmt = $this->pdo->prepare("SELECT prenom, nom FROM utilisateur WHERE id_utilisateur = :id");
+        $stmt->execute(['id_utilisateur' => $id]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
 }
 ?>

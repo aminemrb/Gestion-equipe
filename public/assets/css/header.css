@@ -1,6 +1,6 @@
 /* Style global du body */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #121212; /* Fond sombre */
@@ -52,10 +52,6 @@ nav a {
 
 nav a:hover {
     color: #ffffff; /* Couleur du texte au survol */
-}
-
-nav a:active {
-    background-color: #2980b9; /* Couleur de fond lorsque le lien est cliqué */
 }
 
 /* Styles pour les petits écrans (mobile-first) */

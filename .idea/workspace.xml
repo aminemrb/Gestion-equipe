@@ -5,11 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5794ee69-df9b-480f-aeff-2575946002dc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/assets/css/formulaire.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controleurs/JoueurControleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controleurs/JoueurControleur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modeles/Joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Joueur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Router.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/modeles/Utilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Utilisateur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Accueil/accueil.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Accueil/accueil.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Authentification/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Authentification/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Feuille_rencontres/formulaire_selection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Feuille_rencontres/traiter_selection.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/ajouter_joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/ajouter_joueur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/modifier_joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/modifier_joueur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_rencontre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_resultat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_resultat.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/modifier_rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/modifier_rencontre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/ajouter.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/modifier.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/css/rencontres.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/rencontres.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/stats.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/stats.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/routes.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +134,8 @@
       <workItem from="1735213712949" duration="14396000" />
       <workItem from="1735288179200" duration="17720000" />
       <workItem from="1735416166764" duration="7629000" />
-      <workItem from="1735463605432" duration="3218000" />
+      <workItem from="1735463605432" duration="6634000" />
+      <workItem from="1735489752935" duration="6419000" />
     </task>
     <servers />
   </component>

@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../../vendor/autoload.php';
 include __DIR__ . '/../../config.php'; // Inclure le fichier config
 
@@ -23,19 +24,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
-    <link rel="stylesheet" href="/public/assets/css/header.css">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/login.css">
 </head>
 <body>
-<h2>Connexion</h2>
-<?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
-<form method="post" action="">
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="email" required>
+    <div>
+        <h2>Connexion</h2>
+        <?php if (!empty($error)) echo "<p style='color:red;'>$error</p>"; ?>
+        <form method="post" action="">
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
 
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="password" required>
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required>
 
-    <button type="submit">Se connecter</button>
-</form>
+            <button type="submit">Se connecter</button>
+        </form>
+    </div>
 </body>
 </html>
