@@ -202,6 +202,9 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
             <h2>Matchs à Venir</h2>
             <?php foreach ($listeRencontres as $rencontre): ?>
                 <?php
+                $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
+                $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
+
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
                 $isMatchFutur = $matchDateTime > $currentDateTime;
@@ -228,6 +231,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                         </div>
 
                         <div class="match-footer">
+                            <?php if (!empty($joueursSelectionnes)): ?>
                             <div class="team-composition">
                                 <div class="formation">
                                     <h3>Formation</h3>
@@ -260,7 +264,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                                     </div>
                                 </div>
-
+                                <?php if(!$joueursParPoste['remplacants'] == []): ?>
                                 <!-- Banc de touche -->
                                 <div class="substitute-bench">
                                     <h3>Remplaçant(s)</h3>
@@ -272,7 +276,9 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                             </div>
+                            <?php endif; ?>
 
                             <!-- Actions -->
                             <div class="actions">
