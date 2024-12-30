@@ -47,8 +47,6 @@
 .column {
     flex: 1;
     padding: 15px;
-    border-radius: 8px;
-    background-color: #252525; /* Gris foncé */
 }
 
 /* Titre des colonnes */
@@ -65,10 +63,11 @@
     background-color: #2c2c2c;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 12px rgba(24, 255, 0, 0.8);
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-bottom: 5%;
 }
 
 /* Header : Date et lieu */
@@ -147,12 +146,6 @@
     pointer-events: none;
 }
 
-/* Animation légère au survol des cartes */
-.match-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9);
-}
-
 /* Bouton scorer/modifier fusionné */
 .btn-action {
     color: white;
@@ -177,9 +170,7 @@
     transform: scale(0.98);
 }
 
-
 /* Compositions*/
-/* Conteneur principal de la composition */
 .team-composition {
     margin-top: 20px;
     text-align: center;
@@ -196,47 +187,65 @@
     gap: 10px;
     justify-content: center;
     align-items: center;
+    margin-bottom: 13px;
 }
 
 /* Ligne de défenseurs, milieux et attaquants */
 .line {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
 }
 
 /* Positionnement des joueurs sur le terrain */
 .player {
+    margin-top: 30%;
     width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #444;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
     display: flex;
     justify-content: center;
-    align-items: center;
-    color: white;
+    align-items: center; /* Centrer le texte verticalement */
+    color: #000000;
     font-size: 12px;
     text-align: center;
+    font-weight: bold;
+    margin-bottom: -3px; /* Ajuste la position verticale */
+
 }
 
-/* Défenseurs */
-.line.defense .player {
-    background-color: #e74c3c;
+/* Ajout des étiquettes de poste */
+.poste {
+    font-size: 10px; /* Taille du texte */
+    background-color: #000000; /* Couleur de fond */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 3px 5px; /* Ajuste l'espace interne */
+    position: absolute; /* Permet de superposer l'étiquette */
+    z-index: 1; /* S'assure que l'étiquette est au-dessus de .player */
 }
 
-/* Milieux */
-.line.midfield .player {
-    background-color: #f39c12;
+.poste.def {
+    color: #2bbae3; /* Couleur du texte */
+    border: 1px solid #2bbae3; /* Contour de couleur */
+    transform: translateX(48%); /* Centre réellement en ajustant le décalage */
 }
 
-/* Attaquants */
-.line.forward .player {
-    background-color: #2ecc71;
+.poste.att {
+    color: #F72C75; /* Couleur du texte */
+    border: 1px solid #F72C75; /* Contour de couleur */
+    transform: translateX(70%); /* Centre réellement en ajustant le décalage */
 }
 
-/* Attaquants */
-.line.goal .player {
-    background-color: #b1acac;
+.poste.mil {
+    color: #4fc82b; /* Couleur du texte */
+    border: 1px solid #4fc82b; /* Contour de couleur */
+    transform: translateX(50%); /* Centre réellement en ajustant le décalage */
+}
+
+.poste.goal {
+    color: #f7d802;
+    border: 1px solid #f7d802; /* Contour de couleur */
+    transform: translateX(70%); /* Centre réellement en ajustant le décalage */
 }
 
 /* Banc de touche */

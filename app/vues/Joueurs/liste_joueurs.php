@@ -25,7 +25,7 @@ if (!$joueurs || count($joueurs) === 0) {
 <body>
 <div id="liste">
     <main>
-        <h1>Liste des joueurs</h1>
+        <h1>Gestion des joueurs</h1>
         <a class="btn-ajouter" href="<?= BASE_URL ?>/vues/Joueurs/ajouter_joueur.php">Ajouter un joueur</a>
 
         <table border="1">

@@ -84,7 +84,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 </head>
 <body>
 <main id="liste">
-    <h1>Liste des Rencontres</h1>
+    <h1>Gestion des rencontres</h1>
     <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_rencontre.php" class="btn-ajouter">Ajouter une rencontre</a>
 
     <div class="rencontres-container">
@@ -97,14 +97,14 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                 $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
                 $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
 
-                $resultat = $rencontre['resultat'] ?? 'N/A';
+                $resultat = $rencontre['resultat'] ?? '';
                 $scoreEquipe = $rencontre['score_equipe'] ?? null;
                 $scoreAdverse = $rencontre['score_adverse'] ?? null;
                 $couleurScore = couleurScore($scoreEquipe, $scoreAdverse);
 
                 $score = ($scoreEquipe !== null && $scoreAdverse !== null)
-                    ? "{$scoreEquipe}-{$scoreAdverse}"
-                    : 'N/A';
+                    ? "{$scoreEquipe} - {$scoreAdverse}"
+                    : 'VS';
 
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
@@ -123,14 +123,14 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                 <span class="match-lieu"><?= htmlspecialchars($rencontre['lieu']) ?></span>
                             </div>
                             <div class="match-result">
-                                <span><?= $resultat ?></span>
+                                <span style="color: <?= $couleurScore ?>;"><?= $resultat ?></span>
                             </div>
                         </div>
 
                         <div class="match-body">
                             <div class="team">
                                 <span class="team-name"><?=$nomEquipe?></span>
-                                <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'VS' ?></span>
+                                <span class="score" style="color: <?= $couleurScore ?>;"><?=$score?></span>
                                 <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
                             </div>
                         </div>
@@ -144,30 +144,65 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                             <div class="field">
                                                 <!-- Attaque -->
                                                 <div class="line forward">
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?><br>AG</div>
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?><br>BU</div>
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?><br>AD</div>
-                                                </div>
-                                                <!-- Milieu -->
-                                                <div class="line midfield">
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?><br>MCG</div>
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?><br>MD</div>
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?><br>MCD</div>
-                                                </div>
-                                                <!-- Défense -->
-                                                <div class="line defense">
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?><br>DG</div>
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?><br>DCG</div>
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?><br>DCD</div>
-                                                    <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?><br>DD</div>
-                                                </div>
-                                                <!-- Gardien -->
-                                                <div class="line goal">
-                                                    <div class="player">
-                                                        <?= htmlspecialchars($joueursParPoste['gardiens']['GB']['nom'] ?? 'N/A') ?><br>GB
+                                                    <div class="poste-container">
+                                                        <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste att">AG</div>
+                                                    </div>
+                                                    <div class="poste-container">
+                                                        <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste att">BU</div>
+                                                    </div>
+                                                    <div class="poste-container">
+                                                        <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste att">AD</div>
                                                     </div>
                                                 </div>
 
+                                                <!-- Milieu -->
+                                                <div class="line midfield">
+                                                    <div class="poste-container">
+                                                        <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste mil">MCG</div>
+                                                    </div>
+                                                    <div class="poste-container">
+                                                        <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste mil">MD</div>
+                                                    </div>
+                                                    <div class="poste-container">
+                                                        <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste mil">MCD</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Défense -->
+                                                <div class="line defense">
+                                                    <div class="poste-container">
+                                                        <div class="player DG"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste def">DG</div>
+                                                    </div>
+                                                    <div class="poste-container">
+                                                        <div class="player DCG"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste def">DCG</div>
+                                                    </div>
+                                                    <div class="poste-container">
+                                                        <div class="player DCD"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste def">DCD</div>
+                                                    </div>
+                                                    <div class="poste-container">
+                                                        <div class="player DD"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="poste def">DD</div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Gardien -->
+                                                <div class="line goal">
+                                                    <div class="poste-container">
+                                                        <div class="player">
+                                                            <?= htmlspecialchars($joueursParPoste['gardiens']['GB']['nom'] ?? 'N/A') ?>
+                                                        </div>
+                                                        <div class="poste goal">GB</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -231,7 +266,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                         <div class="match-body">
                             <div class="team">
                                 <span class="team-name"><?=$nomEquipe?></span>
-                                <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'VS' ?></span>
+                                <span class="score" style="color: <?= $couleurScore ?>;"><?=$score?></span>
                                 <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
                             </div>
                         </div>
@@ -244,30 +279,65 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                     <div class="field">
                                         <!-- Attaque -->
                                         <div class="line forward">
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?><br>AG</div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?><br>BU</div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?><br>AD</div>
-                                        </div>
-                                        <!-- Milieu -->
-                                        <div class="line midfield">
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?><br>MCG</div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?><br>MD</div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?><br>MCD</div>
-                                        </div>
-                                        <!-- Défense -->
-                                        <div class="line defense">
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?><br>DG</div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?><br>DCG</div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?><br>DCD</div>
-                                            <div class="player"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?><br>DD</div>
-                                        </div>
-                                        <!-- Gardien -->
-                                        <div class="line goal">
-                                                <div class="player">
-                                                    <?= htmlspecialchars($joueursParPoste['gardiens']['GB']['nom'] ?? 'N/A') ?><br>GB
-                                                </div>
+                                            <div class="poste-container">
+                                                <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste att">AG</div>
+                                            </div>
+                                            <div class="poste-container">
+                                                <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste att">BU</div>
+                                            </div>
+                                            <div class="poste-container">
+                                                <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste att">AD</div>
+                                            </div>
                                         </div>
 
+                                        <!-- Milieu -->
+                                        <div class="line midfield">
+                                            <div class="poste-container">
+                                                <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste mil">MCG</div>
+                                            </div>
+                                            <div class="poste-container">
+                                                <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste mil">MD</div>
+                                            </div>
+                                            <div class="poste-container">
+                                                <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste mil">MCD</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Défense -->
+                                        <div class="line defense">
+                                            <div class="poste-container">
+                                                <div class="player DG"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste def">DG</div>
+                                            </div>
+                                            <div class="poste-container">
+                                                <div class="player DCG"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste def">DCG</div>
+                                            </div>
+                                            <div class="poste-container">
+                                                <div class="player DCD"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste def">DCD</div>
+                                            </div>
+                                            <div class="poste-container">
+                                                <div class="player DD"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="poste def">DD</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Gardien -->
+                                        <div class="line goal">
+                                            <div class="poste-container">
+                                                <div class="player">
+                                                        <?= htmlspecialchars($joueursParPoste['gardiens']['GB']['nom'] ?? 'N/A') ?>
+                                                </div>
+                                                <div class="poste goal">GB</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <?php if(!$joueursParPoste['remplacants'] == []): ?>

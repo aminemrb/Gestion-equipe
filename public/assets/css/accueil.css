@@ -76,17 +76,12 @@ button {
     width: 200px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
     align-self: center;
 }
 
 button:hover {
     background-color: #3F7528;
     transform: scale(1.02);
-}
-
-button:active {
-    background-color: #356320;
 }
 
 /* Messages (succès, erreur) */
