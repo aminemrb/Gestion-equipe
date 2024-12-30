@@ -7,6 +7,13 @@ body {
     color: #eaeaea; /* Texte clair */
 }
 
+footer {
+    background-color: rgb(63 117 40); /* Couleur du fond du header */
+    color: #eaeaea; /* Couleur du texte du footer */
+    padding: 20px 0; /* Espacement du footer */
+    text-align: center; /* Centrage du texte */
+}
+
 /* Header */
 .header-style {
     background-color: rgb(63 117 40); /* Couleur du fond du header */

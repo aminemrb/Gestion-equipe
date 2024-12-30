@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Bienvenue <?= isset($_SESSION['email']) ? htmlspecialchars($fullName) : "Sur Football Manager" ?>
         </h1>
         <?php if (isset($_SESSION['email'])): ?>
-        <p>Nom de votre équipe : <?= htmlspecialchars($infosUtilisateur['nom_equipe']) ?></p>
+        <p>Vous entrainez actuellement <strong><?= htmlspecialchars($infosUtilisateur['nom_equipe'])?></strong></p>
         <?php endif; ?>
         <p>Vous pouvez ici gérer vos informations personnelles et votre équipe pour améliorer votre expérience de jeu.</p>
     </div>
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (isset($_SESSION['email'])): ?>
     <!-- Formulaire pour modifier les informations -->
     <div class="update-form">
-        <h2>Modifier vos informations</h2>
+        <h2>Qui êtes-vous ?</h2>
         <?php if ($message): ?>
             <p class="message"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label for="nom_equipe">Nom de l'équipe :</label>
+                <label for="nom_equipe">Changer d'équipe</label>
                 <input type="text" id="nom_equipe" name="nom_equipe" value="<?= htmlspecialchars($infosUtilisateur['nom_equipe']) ?>" required>
             </div>
 

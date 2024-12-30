@@ -4,11 +4,17 @@ include __DIR__ . '/../Layouts/header.php';
 use App\Controleurs\RencontreControleur;
 use App\Controleurs\SelectionControleur;
 use App\Controleurs\JoueurControleur;
+use App\Controleurs\UtilisateurControleur;
 
 $controleurRencontre = new RencontreControleur();
 $controleurSelection = new SelectionControleur();
 $controleurJoueur = new JoueurControleur();
+$utilisateurControleur = new UtilisateurControleur();
 $listeRencontres = $controleurRencontre->liste_rencontres();
+
+
+$infosUtilisateur = $utilisateurControleur->getInfosUtilisateur();
+$nomEquipe = htmlspecialchars($infosUtilisateur['nom_equipe']);
 
 
 // Organiser les joueurs par poste
@@ -123,7 +129,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                         <div class="match-body">
                             <div class="team">
-                                <span class="team-name">Mon équipe</span>
+                                <span class="team-name"><?=$nomEquipe?></span>
                                 <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'VS' ?></span>
                                 <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
                             </div>
@@ -224,7 +230,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                         <div class="match-body">
                             <div class="team">
-                                <span class="team-name">Mon équipe</span>
+                                <span class="team-name"><?=$nomEquipe?></span>
                                 <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'VS' ?></span>
                                 <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
                             </div>
