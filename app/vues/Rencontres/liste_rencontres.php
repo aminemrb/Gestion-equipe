@@ -124,7 +124,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                         <div class="match-body">
                             <div class="team">
                                 <span class="team-name">Mon équipe</span>
-                                <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'N/A' ?></span>
+                                <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'VS' ?></span>
                                 <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
                             </div>
                         </div>
@@ -225,7 +225,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                         <div class="match-body">
                             <div class="team">
                                 <span class="team-name">Mon équipe</span>
-                                <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'N/A' ?></span>
+                                <span class="score" style="color: <?= $couleurScore ?>;"><?= $score ?? 'VS' ?></span>
                                 <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
                             </div>
                         </div>
