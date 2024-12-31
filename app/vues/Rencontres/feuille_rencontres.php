@@ -152,6 +152,7 @@ function obtenirClassePoste($poste) {
                     <tr>
                         <th>Nom</th>
                         <th>Prénom</th>
+                        <th>Position préférée</th>
                         <th>Poste</th>
                     </tr>
                     </thead>
@@ -160,6 +161,7 @@ function obtenirClassePoste($poste) {
                         <tr>
                             <td><?php echo htmlspecialchars($joueur['nom']); ?></td>
                             <td><?php echo htmlspecialchars($joueur['prenom']); ?></td>
+                            <td><?php echo htmlspecialchars($joueur['position_preferee']); ?></td>
                             <td>
                                 <select class="postes" name="postes[<?php echo $joueur['numero_licence']; ?>]">
                                     <option value="">-- Choisir --</option>

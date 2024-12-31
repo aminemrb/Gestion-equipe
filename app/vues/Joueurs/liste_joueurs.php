@@ -20,6 +20,7 @@ if (!$joueurs || count($joueurs) === 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/football_manager/public/assets/css/joueurs.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Liste des joueurs</title>
 </head>
 <body>
@@ -56,9 +57,14 @@ if (!$joueurs || count($joueurs) === 0) {
                     <td><?= htmlspecialchars($joueur['position_preferee']) ?></td>
                     <td><?= htmlspecialchars($joueur['commentaire']) ?></td>
                     <td class="actions">
-                        <a class="btn-modifier" href="<?= BASE_URL ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">Modifier</a>
+                        <a class="btn-modifier" href="<?= BASE_URL ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">
+                            <i class="fas fa-edit"></i> <!-- Icône de modification -->
+                        </a>
+
                         <a class="btn-supprimer" href="<?= BASE_URL ?>/vues/Joueurs/supprimer_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>"
-                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">Supprimer</a>
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">
+                            <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
+                        </a>
                     </td>
                 </tr>
             <?php endforeach; ?>

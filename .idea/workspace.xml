@@ -7,9 +7,9 @@
     <list default="true" id="5794ee69-df9b-480f-aeff-2575946002dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/feuille_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/feuille_rencontres.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/accueil.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/accueil.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/joueurs.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/joueurs.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/css/rencontres.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/rencontres.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +120,8 @@
       <workItem from="1735416166764" duration="7629000" />
       <workItem from="1735463605432" duration="6634000" />
       <workItem from="1735489752935" duration="6419000" />
-      <workItem from="1735558581541" duration="13369000" />
+      <workItem from="1735558581541" duration="14441000" />
+      <workItem from="1735670431663" duration="8248000" />
     </task>
     <servers />
   </component>

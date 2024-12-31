@@ -69,8 +69,10 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
         return 'green'; // Victoire
     } elseif ($scoreEquipe < $scoreAdverse) {
         return 'red'; // Défaite
+    }elseif ($scoreEquipe == $scoreAdverse && $scoreEquipe !== null && $scoreAdverse !== null) {
+        return 'white'; // Match nul
     }
-    return 'white'; // Match nul
+    return '#1E1E1E';
 }
 ?>
 
@@ -80,6 +82,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/football_manager/public/assets/css/rencontres.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>Liste des Rencontres</title>
 </head>
 <body>
@@ -104,7 +107,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                 $score = ($scoreEquipe !== null && $scoreAdverse !== null)
                     ? "{$scoreEquipe} - {$scoreAdverse}"
-                    : 'VS';
+                    : '-';
 
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
@@ -115,7 +118,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                 ?>
 
                 <?php if (!$isMatchFutur): ?>
-                    <div class="match-card">
+                    <div class="match-card" style="box-shadow: 0 0 10px <?= $couleurScore ?>">
                         <div class="match-header">
                             <div class="match-date-time">
                                 <span class="match-date"><strong><?= formaterDate($rencontre['date_rencontre']) ?></strong> à </span>
@@ -123,7 +126,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                 <span class="match-lieu"><?= htmlspecialchars($rencontre['lieu']) ?></span>
                             </div>
                             <div class="match-result">
-                                <span style="color: <?= $couleurScore ?>;"><?= $resultat ?></span>
+                                <strong><span style="color: <?= $couleurScore ?>;"><?= $resultat ?></span></strong>
                             </div>
                         </div>
 
@@ -140,7 +143,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                 <?php if (!empty($joueursSelectionnes)): ?>
                                     <div class="team-composition">
                                         <div class="formation">
-                                            <h3>Formation</h3>
+                                            <h3 style="margin: -1px 0 -1px 0;">Formation</h3>
                                             <div class="field">
                                                 <!-- Attaque -->
                                                 <div class="line forward">
@@ -224,13 +227,16 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                 <!-- Actions -->
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
                                     <?php if ($isJoueursNotes): ?>
-                                        <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Scorer</a>
+                                        <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Score</a>
                                     <?php endif; ?>
-                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
-                                <?php else: ?>
+                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
+                                        <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
+                                    </a>
+                                    <?php else: ?>
                                     <span>MATCH ANNULÉ (aucun joueur sélectionné)</span>
-                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
-                                <?php endif; ?>
+                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
+                                        <i class="fas fa-trash-alt" style="margin-top: 20px"></i> <!-- Icône de suppression -->
+                                    </a>                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -275,7 +281,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                             <?php if (!empty($joueursSelectionnes)): ?>
                             <div class="team-composition">
                                 <div class="formation">
-                                    <h3>Formation</h3>
+                                    <h3 style="margin: -1px 0 -1px 0;">Formation</h3>
                                     <div class="field">
                                         <!-- Attaque -->
                                         <div class="line forward">
@@ -359,8 +365,12 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                             <!-- Actions -->
                             <div class="actions">
                                 <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Sélection</a>
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Modifier</a>
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">Supprimer</a>
+                                <a href="<?= BASE_URL ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">
+                                    <i class="fas fa-edit"></i> <!-- Icône de modification -->
+                                </a>
+                                <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
+                                    <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -1,12 +1,3 @@
-/* Styles généraux */
-main {
-    font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #e0e0e0;
-    margin: 0;
-    padding: 0;
-}
-
 h1 {
     color: #f1f1f1;
     font-size: 32px;
@@ -16,37 +7,40 @@ h1 {
     letter-spacing: 1px;
 }
 
-#liste a {
-    background-color: #333333;
-    color: white;
-    padding: 8px 10px;
+.btn-ajouter {
     text-align: center;
-    border-radius: 5px;
-    font-weight: bold;
-    text-decoration: none;
-    margin: 10px auto;
-}
-#liste .btn-ajouter {
+    background-color: #333333;
     display: inline-block;
     padding: 12px 20px;
-    margin-bottom: 20px;
-    background-color: #4fc82b;
     color: white;
     font-size: 16px;
-    text-transform: uppercase;
     text-decoration: none;
-    border-radius: 5px;
+    font-weight: bold;
+    margin: 20px 0 30px 420px;
+}
+
+.btn-modifier, .btn-supprimer {
+    font-size: 13px;
+    text-align: center;
+    background-color: #a7b6b6;
+    display: inline-block;
+    padding: 7px 7px;
+    margin: 2px 2px;
+    color: #000000;
+    text-decoration: none;
     font-weight: bold;
 }
 
-#liste .btn-modifier:hover {
+.btn-modifier:hover {
+    background-color: #218838;
+    color: white;
+}
+.btn-ajouter:hover {
     background-color: #218838;
 }
-#liste .btn-ajouter:hover {
-    background-color: #218838;
-}
-#liste .btn-supprimer:hover {
+.btn-supprimer:hover {
     background-color: #c82333;
+    color: white;
 }
 
 /* Conteneur principal */
@@ -78,7 +72,7 @@ thead th {
 }
 
 th, td {
-    padding: 10px;
+    padding: 4px;
     text-align: center;
 }
 
@@ -106,7 +100,6 @@ td:last-child {
 }
 
 td a {
-    margin-right: 10px;
 }
 
 /* Responsive */
