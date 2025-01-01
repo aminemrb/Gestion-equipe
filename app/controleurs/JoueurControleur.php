@@ -96,6 +96,11 @@ class JoueurControleur {
                 return;
             }
 
+            if ($taille < 1.00 || $taille > 2.50) {
+                echo"La taille doit être comprise entre 1.00 mètre et 2.50 mètres.";
+                return;
+            }
+
             // Modifier le joueur via le modèle
             try {
                 $this->joueurModel->modifierJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
@@ -119,30 +124,56 @@ class JoueurControleur {
     // Supprimer un joueur
     public function supprimer_joueur($numero_licence) {
         try {
-            $this->joueurModel->supprimerJoueur($numero_licence);
-            // Redirection vers la liste des joueurs après succès
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit;
+            if ($this->joueurModel->estJoueurSelectionneEnCours($numero_licence)) {
+                echo "<p>Le joueur ne peut pas être supprimé car il est dans une selection en cours.
+                        Le score n'a pas encore été défini.</p>";
+            } else {
+                $this->joueurModel->supprimerJoueur($numero_licence);
+                // Redirection vers la liste des joueurs après succès
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
+            }
         } catch (\Exception $e) {
             echo "Erreur lors de la suppression du joueur : " . $e->getMessage();
         }
     }
 
-    // Incrémenter le nombre de rencontres jouées
-    public function incrementer_rencontres_jouees($numero_licence) {
+    public function nombreTitularisation($numero_licence) {
         try {
-            $this->joueurModel->incrementerRencontresJouees($numero_licence);
+            // Appel au modèle pour récupérer le nombre de notes
+            return $this->joueurModel->getNombreTitularisationParJoueur($numero_licence);
         } catch (\Exception $e) {
-            echo "Erreur lors de l'incrémentation des rencontres jouées : " . $e->getMessage();
+            // Gérer les erreurs
+            error_log("Erreur lors de la récupération du nombre de notes : " . $e->getMessage());
+            return 0; // Retourne 0 en cas d'erreur
         }
     }
 
-    // Décrémenter le nombre de rencontres jouées
-    public function decrementer_rencontres_jouees($numero_licence) {
+    public function nombreRemplacementsJoueur($numero_licence) {
         try {
-            $this->joueurModel->decrementerRencontresJouees($numero_licence);
+            return $this->joueurModel->getNombreRemplacementsJoueur($numero_licence);
         } catch (\Exception $e) {
-            echo "Erreur lors de la décrémentation des rencontres jouées : " . $e->getMessage();
+            error_log("Erreur lors de la récupération des remplacements : " . $e->getMessage());
+            return 0; // Retourne 0 en cas d'erreur
         }
     }
+
+    public function moyenneNotesJoueur($numero_licence) {
+        try {
+            return $this->joueurModel->getMoyenneNotesJoueur($numero_licence);
+        } catch (\Exception $e) {
+            error_log("Erreur lors de la récupération de la moyenne des notes : " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public function pourcentageVictoiresJoueur($numero_licence) {
+        try {
+            return $this->joueurModel->getPourcentageVictoiresJoueur($numero_licence);
+        } catch (\Exception $e) {
+            error_log("Erreur lors de la récupération du pourcentage de victoires : " . $e->getMessage());
+            return 0;
+        }
+    }
+
 }

@@ -1,116 +1,134 @@
-<?php include __DIR__ . '/../Layouts/header.php'; ?>
 <?php
-require_once 'config.php'; 
-session_start();
+include __DIR__ . '/../Layouts/header.php';
+use App\Controleurs\JoueurControleur;
+use App\Controleurs\RencontreControleur;
 
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+$rencontreControleur = new RencontreControleur();
+$stats_rencontres = $rencontreControleur->statistiquesRencontres();
+
+$stats_gagnes = $stats_rencontres['victoires_pourcentage']/100;
+$stats_perdus = $stats_rencontres['defaites_pourcentage']/100 + $stats_gagnes;
+$stats_nuls = $stats_rencontres['nuls_pourcentage']/100 + $stats_perdus;
+
+// Vérification si des statistiques existent
+if (empty($stats_rencontres)) {
+    echo "<p>Aucune rencontre trouvée.</p>";
     exit;
 }
 
-$query = $pdo->query("
-    SELECT
-        COUNT(*) AS total_matchs,
-        SUM(CASE WHEN resultat = 'victoire' THEN 1 ELSE 0 END) AS victoires,
-        SUM(CASE WHEN resultat = 'defaite' THEN 1 ELSE 0 END) AS defaites,
-        SUM(CASE WHEN resultat = 'nul' THEN 1 ELSE 0 END) AS nuls
-    FROM rencontres
-");
-$stats_equipe = $query->fetch(PDO::FETCH_ASSOC);
+$joueurControleur = new JoueurControleur();
+$joueurs = $joueurControleur->liste_joueurs();
 
-$total_matchs = $stats_equipe['total_matchs'] ?: 1; // Évite la division par zéro
-$pourcentage_victoires = round(($stats_equipe['victoires'] / $total_matchs) * 100, 2);
-$pourcentage_defaites = round(($stats_equipe['defaites'] / $total_matchs) * 100, 2);
-$pourcentage_nuls = round(($stats_equipe['nuls'] / $total_matchs) * 100, 2);
+// Vérification si des joueurs existent
+if (!$joueurs || count($joueurs) === 0) {
+    echo "<p>Aucun joueur trouvé.</p>";
+    exit;
+}
 
-$query = $pdo->query("
-    SELECT
-        joueurs.nom,
-        joueurs.prenom,
-        joueurs.statut,
-        joueurs.poste_prefere,
-        COUNT(CASE WHEN participations.role = 'titulaire' THEN 1 ELSE NULL END) AS titularisations,
-        COUNT(CASE WHEN participations.role = 'remplaçant' THEN 1 ELSE NULL END) AS remplacements,
-        AVG(evaluations.note) AS moyenne_notes,
-        COUNT(participations.match_id) AS total_matchs_participes,
-        SUM(CASE WHEN rencontres.resultat = 'victoire' THEN 1 ELSE 0 END) AS victoires_participation,
-        MAX(COALESCE((
-            SELECT COUNT(*)
-            FROM participations p2
-            WHERE p2.joueur_id = participations.joueur_id
-              AND p2.match_id IN (SELECT id FROM rencontres WHERE rencontres.date >= participations.date)
-        ), 0)) AS matchs_consecutifs
-    FROM joueurs
-    LEFT JOIN participations ON joueurs.id = participations.joueur_id
-    LEFT JOIN rencontres ON participations.match_id = rencontres.id
-    LEFT JOIN evaluations ON participations.id = evaluations.participation_id
-    GROUP BY joueurs.id
-");
-$stats_joueurs = $query->fetchAll(PDO::FETCH_ASSOC);
+// Récupérer le nombre de notes pour chaque joueur
+$nb_notes = [];
+$nb_remplacements = [];
+$moyenne_notes = [];
+$pourcentage_victoires = [];
+foreach ($joueurs as $joueur) {
+    $nb_notes[$joueur['numero_licence']] = $joueurControleur->nombreTitularisation($joueur['numero_licence']);
+    $nb_remplacements[$joueur['numero_licence']] = $joueurControleur->nombreRemplacementsJoueur($joueur['numero_licence']);
+    $moyenne_notes[$joueur['numero_licence']] = $joueurControleur->moyenneNotesJoueur($joueur['numero_licence']);
+    $pourcentage_victoires[$joueur['numero_licence']] = $joueurControleur->pourcentageVictoiresJoueur($joueur['numero_licence']);
+
+}
+
+
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Statistiques de l'équipe</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f4f4f4;
-            text-align: left;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/stats.css">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/charts.min.css">
+    <title>Liste des joueurs</title>
 </head>
 <body>
-    <h1>Statistiques de l'équipe</h1>
-    <a href="index.php">Retour au menu principal</a>
+<div id="stats">
+    <main>
+        <h2>Statistiques des Rencontres</h2>
 
-    <h2>Statistiques globales</h2>
-    <p>Total de matchs : <?php echo $stats_equipe['total_matchs']; ?></p>
-    <p>Victoires : <?php echo $stats_equipe['victoires']; ?> (<?php echo $pourcentage_victoires; ?>%)</p>
-    <p>Défaites : <?php echo $stats_equipe['defaites']; ?> (<?php echo $pourcentage_defaites; ?>%)</p>
-    <p>Matchs nuls : <?php echo $stats_equipe['nuls']; ?> (<?php echo $pourcentage_nuls; ?>%)</p>
+        <div id="my-chart">
+            <table class="charts-css pie hide-data">
+                <caption>Statistiques des matchs</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Matchs</th>
+                    <th scope="col">Pourcentage</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row"> Matchs gagnés </th>
+                    <td style="--start: 0; --end: <?=$stats_gagnes?>; --color: #35b135;">
+                        <span class="data"><?= htmlspecialchars($stats_rencontres['victoires_pourcentage']) ?>%</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"> Matchs perdus </th>
+                    <td style="--start: <?=$stats_gagnes?>; --end:<?=$stats_perdus?> ; --color: #da3939;">
+                        <span class="data"><?= htmlspecialchars($stats_rencontres['defaites_pourcentage']) ?>%</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"> Matchs nuls </th>
+                    <td style="--start: <?=$stats_perdus?>; --end: <?=$stats_nuls?>; --color: #d8c9c9;">
+                        <span class="data"> <?= htmlspecialchars($stats_rencontres['nuls_pourcentage']) ?>%</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-    <h2>Statistiques des joueurs</h2>
-    <table>
-        <thead>
+            <div class="stats_matchs">
+                <p><span style="color: #35b135;">&#9608;&#9608;&#9608;&#9608;</span> Matchs gagnés : <?= htmlspecialchars($stats_rencontres['victoires']) ?></p>
+                <p><span style="color: #da3939;">&#9608;&#9608;&#9608;&#9608;</span> Matchs perdus : <?= htmlspecialchars($stats_rencontres['defaites']) ?></p>
+                <p><span style="color: #d8c9c9;">&#9608;&#9608;&#9608;&#9608;</span> Matchs nuls : <?= htmlspecialchars($stats_rencontres['nuls']) ?></p></br>
+                <p class="total">Nombre total de matchs : <?= htmlspecialchars($stats_rencontres['total_matchs']) ?></p>
+            </div>
+        </div>
+
+        <h2>Statistiques des joueurs</h2>
+
+        <table class="stats_joueurs">
+            <thead>
             <tr>
+                <th>Prénom</th>
                 <th>Nom</th>
                 <th>Statut</th>
-                <th>Poste préféré</th>
-                <th>Titularisations</th>
-                <th>Remplacements</th>
-                <th>Moyenne des évaluations</th>
-                <th>Total matchs joués</th>
-                <th>% Victoires</th>
-                <th>Matchs consécutifs</th>
+                <th>Poste Préférée</th>
+                <th>Titularisation</th>
+                <th>Remplaçant</th>
+                <th>Moyenne</th>
+                <th>Victoires</th>
             </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($stats_joueurs as $joueur): ?>
+            </thead>
+            <tbody>
+            <?php foreach ($joueurs as $joueur) : ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($joueur['nom'] . ' ' . $joueur['prenom']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['statut']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['poste_prefere']); ?></td>
-                    <td><?php echo $joueur['titularisations']; ?></td>
-                    <td><?php echo $joueur['remplacements']; ?></td>
-                    <td><?php echo round($joueur['moyenne_notes'], 2); ?></td>
-                    <td><?php echo $joueur['total_matchs_participes']; ?></td>
-                    <td><?php echo round(($joueur['victoires_participation'] / max($joueur['total_matchs_participes'], 1)) * 100, 2); ?>%</td>
-                    <td><?php echo $joueur['matchs_consecutifs']; ?></td>
+                    <td><?= htmlspecialchars($joueur['prenom']) ?></td>
+                    <td><?= htmlspecialchars($joueur['nom']) ?></td>
+                    <td><?= htmlspecialchars($joueur['statut']) ?></td>
+                    <td><?= htmlspecialchars($joueur['position_preferee']) ?></td>
+                    <td>
+                        <?= htmlspecialchars($nb_notes[$joueur['numero_licence']]['nombre_notes']) ?>
+                    </td>
+                    <td><?= htmlspecialchars($nb_remplacements[$joueur['numero_licence']] ?? 0) ?></td>
+                    <td><?= htmlspecialchars($moyenne_notes[$joueur['numero_licence']] ?? 0) ?>/5</td>
+                    <td><?= htmlspecialchars($pourcentage_victoires[$joueur['numero_licence']] ?? 0) ?>%</td>
                 </tr>
             <?php endforeach; ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </main>
+</div>
 </body>
 </html>
-
 
 <?php include __DIR__ . '/../Layouts/footer.php'; ?>

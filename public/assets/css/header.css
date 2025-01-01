@@ -1,0 +1,86 @@
+/* Style global du body */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212; /* Fond sombre */
+    color: #eaeaea; /* Texte clair */
+}
+
+footer {
+    background-color: rgba(63, 117, 40, 0.65); /* Couleur du fond du header */
+    color: #eaeaea; /* Couleur du texte du footer */
+    padding: 20px 0; /* Espacement du footer */
+    text-align: center; /* Centrage du texte */
+}
+
+/* Header */
+.header-style {
+    background-color: rgba(63, 117, 40, 0.65); /* Couleur du fond du header */
+    color: white;
+    padding: 15px 30px; /* Espacement du header  */
+    display: flex;
+    justify-content: space-between; /* Espacement entre l'image et le menu */
+    align-items: center; /* Centrage vertical des éléments */
+}
+
+.header-style .logo {
+    max-height: 50px; /* Hauteur du logo */
+    width: auto;
+    filter: invert(80%);
+}
+
+/* Styles pour le menu */
+nav {
+    padding: 10px 20px; /* Espacement du menu */
+}
+
+nav ul {
+    list-style: none; /* Supprimer les puces des éléments de la liste */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Affichage en ligne des éléments */
+    justify-content: flex-end; /* Aligner le menu à droite */
+    gap: 20px; /* Espacement entre les éléments du menu */
+}
+
+nav li {
+    margin: 0; /* Enlever les marges par défaut des éléments de liste */
+}
+
+nav a {
+    color: #dddddd; /* Couleur des liens */
+    text-decoration: none; /* Enlever la décoration de texte */
+    padding: 8px 15px; /* Ajouter de l'espace autour du texte */
+    border-radius: 4px; /* Coins arrondis des boutons */
+    font-size: 1rem; /* Taille de police */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Animation de l'effet de survol */
+}
+
+nav a:hover {
+    color: #ffffff; /* Couleur du texte au survol */
+}
+
+/* Styles pour les petits écrans (mobile-first) */
+@media (max-width: 768px) {
+    .header-style {
+        flex-direction: column; /* Empiler l'image et le menu sur mobile */
+        align-items: center; /* Centrer l'image et le menu */
+        text-align: center; /* Centrer le texte du menu */
+    }
+
+    nav ul {
+        flex-direction: column; /* Afficher les éléments du menu en colonne */
+        align-items: center; /* Centrer les éléments dans le menu */
+        gap: 10px; /* Espacement réduit pour les éléments sur mobile */
+    }
+
+    nav a {
+        padding: 12px 20px; /* Plus d'espace pour les éléments de menu sur mobile */
+        font-size: 1.2rem; /* Augmenter la taille de la police pour les petits écrans */
+    }
+
+    nav {
+        padding: 15px 20px; /* Plus d'espace dans le menu pour les petits écrans */
+    }
+}

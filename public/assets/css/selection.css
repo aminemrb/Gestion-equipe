@@ -1,0 +1,123 @@
+#fdm {
+    padding: 20px;
+    background-color: #1e1e1e; /* Fond légèrement plus clair */
+    border-radius: 8px;
+    margin: 20px;
+}
+
+/* Titre de la page */
+#fdm h1 {
+    color: #f1f1f1;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* Container pour les tableaux */
+.table-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px; /* Espace entre les tableaux */
+    font-size: smaller;
+}
+
+.table-compo {
+    margin-left: 100px;
+}
+
+.table-selection {
+    margin-right: 100px;
+}
+
+thead th {
+    background-color: #a7b6b6;
+    color: #336B6B;
+}
+
+/* Style des tableaux */
+/* Couleurs spécifiques pour chaque type de poste */
+.gardien {
+    color: #f7d802;
+    background-color: #1e1e1e;
+    width: 20px;
+}
+
+.defenseur {
+    color: #2bbae3;
+    background-color: #1e1e1e;
+}
+
+.milieu {
+    color: #4fc82b;
+    background-color: #1e1e1e;
+}
+
+.attaquant {
+    color: #F72C75;
+    background-color: #1e1e1e;
+}
+
+.remplacant {
+    color: #cdcdcd;
+    background-color: #1e1e1e;
+}
+
+/* Bordures pour un meilleur rendu */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 4px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+
+select.postes {
+    background-color: #000000;  /* Fond du select */
+    font-size: 14px;  /* Taille du texte du select */
+    color: white;
+    border: 1px solid #ccc;  /* Bordure pour l'apparence */
+}
+select:has(option.gardien:checked) {
+    color: #f7d802;
+}
+select:has(option.defenseur:checked) {
+    color: #2bbae3;
+}
+select:has(option.milieu:checked) {
+    color: #4fc82b;
+}
+select:has(option.attaquant:checked) {
+    color: #F72C75;
+}
+select.postes option {
+    font-size: 14px;  /* Taille du texte de chaque option */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    text-align: center;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}

@@ -1,21 +1,34 @@
-<?php include __DIR__ . '/../Layouts/header.php';
+<?php
+include __DIR__ . '/../Layouts/header.php';
 use App\Controleurs\JoueurControleur;
 
-// Créer une instance du contrôleur
+// Initialisation
 $joueurControleur = new JoueurControleur();
-
-// Récupérer tous les joueurs
 $joueurs = $joueurControleur->liste_joueurs();
+
+// Vérification si des joueurs existent
+if (!$joueurs || count($joueurs) === 0) {
+    echo "<p>Aucun joueur trouvé.</p>";
+    include __DIR__ . '/../Layouts/footer.php';
+    exit;
+}
 ?>
 
-<main>
-    <h1>Liste des joueurs</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/joueurs.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Liste des joueurs</title>
+</head>
+<body>
+<div id="liste">
+    <main>
+        <h1>Gestion des joueurs</h1>
+        <a class="btn-ajouter" href="<?= BASE_URL ?>/vues/Joueurs/ajouter_joueur.php">Ajouter un joueur</a>
 
-    <a href="<?php echo BASE_URL; ?>/vues/Joueurs/ajouter_joueur.php">Ajouter un joueur</a>
-
-    <?php if (empty($joueurs)): ?>
-        <p>Aucun joueur trouvé dans la base de données.</p>
-    <?php else: ?>
         <table border="1">
             <thead>
             <tr>
@@ -26,33 +39,40 @@ $joueurs = $joueurControleur->liste_joueurs();
                 <th>Taille</th>
                 <th>Poids</th>
                 <th>Statut</th>
-                <th>Position Préférée</th>
+                <th>Poste Préférée</th>
                 <th>Commentaire</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($joueurs as $joueur): ?>
+            <?php foreach ($joueurs as $joueur) : ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($joueur['numero_licence']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['nom']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['prenom']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['date_naissance']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['taille']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['poids']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['statut']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['position_preferee']); ?></td>
-                    <td><?php echo htmlspecialchars($joueur['commentaire']); ?></td>
-                    <td>
-                        <a href="<?php echo BASE_URL; ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?php echo $joueur['numero_licence']; ?>">Modifier</a>
-                        <a href="<?php echo BASE_URL; ?>/vues/Joueurs/supprimer_joueur.php?numero_licence=<?php echo $joueur['numero_licence']; ?>
-                        " onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">Supprimer</a>
+                    <td><?= htmlspecialchars($joueur['numero_licence']) ?></td>
+                    <td><?= htmlspecialchars($joueur['nom']) ?></td>
+                    <td><?= htmlspecialchars($joueur['prenom']) ?></td>
+                    <td><?= htmlspecialchars($joueur['date_naissance']) ?></td>
+                    <td><?= htmlspecialchars($joueur['taille']) ?> m</td>
+                    <td><?= htmlspecialchars($joueur['poids']) ?> kg</td>
+                    <td><?= htmlspecialchars($joueur['statut']) ?></td>
+                    <td><?= htmlspecialchars($joueur['position_preferee']) ?></td>
+                    <td><?= htmlspecialchars($joueur['commentaire']) ?></td>
+                    <td class="actions">
+                        <a class="btn-modifier" href="<?= BASE_URL ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">
+                            <i class="fas fa-edit"></i> <!-- Icône de modification -->
+                        </a>
+
+                        <a class="btn-supprimer" href="<?= BASE_URL ?>/vues/Joueurs/supprimer_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>"
+                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">
+                            <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
+                        </a>
                     </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
-    <?php endif; ?>
-</main>
+    </main>
+</div>
+</body>
+</html>
 
 <?php include __DIR__ . '/../Layouts/footer.php'; ?>

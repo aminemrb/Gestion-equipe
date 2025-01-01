@@ -1,0 +1,141 @@
+#stats {
+    padding: 20px;
+    background-color: #1e1e1e; /* Fond légèrement plus clair */
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 95%; /* Limite la largeur à 95% pour éviter un trop grand écart avec les bords */
+    overflow-x: auto; /* Permet un défilement horizontal si le contenu dépasse */
+}
+
+/* Titre des statistiques */
+#stats h2 {
+    color: #f1f1f1;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Tableaux */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0; /* Marges au-dessus et en-dessous des tableaux */
+}
+
+/* Tableaux des rencontres */
+table.rencontres {
+    margin-bottom: 100px; /* Ajoute de l'espace sous le tableau des rencontres */
+}
+
+/* Style des cellules */
+th, td {
+    padding: 8px 12px; /* Plus d'espace pour un tableau aéré */
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+/* En-têtes de tableau */
+thead th {
+    background-color: #a7b6b6;
+    color: #336B6B;
+}
+
+/* Colonne spécifique pour les rencontres */
+table.rencontres th:nth-child(1), table.rencontres td:nth-child(1) {
+    width: 20%; /* Colonne "Nombre de matchs joués" plus large */
+}
+
+table.rencontres th:nth-child(2), table.rencontres td:nth-child(2),
+table.rencontres th:nth-child(3), table.rencontres td:nth-child(3),
+table.rencontres th:nth-child(4), table.rencontres td:nth-child(4) {
+    width: 15%; /* Colonne "Matchs gagnés", "Matchs perdus", "Matchs nuls" plus petites */
+}
+
+/* Réduction des colonnes de joueurs pour que ce soit plus compact */
+th:nth-child(5), td:nth-child(5), /* Titularisation */
+th:nth-child(6), td:nth-child(6), /* Remplaçant */
+th:nth-child(7), td:nth-child(7), /* Moyenne */
+th:nth-child(8), td:nth-child(8) { /* Victoires */
+    width: 10%;
+}
+
+/* Bordures pour un meilleur rendu */
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+table.stats_joueurs{
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+/* S'assurer que les cellules ont le bon alignement */
+td {
+    text-align: center;
+}
+
+tr:hover {
+    background-color: #a7b6b6;
+    color: #121212;
+}
+
+/* Quelques styles pour les couleurs de post, si nécessaire */
+.gardien {
+    color: #f7d802;
+}
+
+.defenseur {
+    color: #2bbae3;
+}
+
+.milieu {
+    color: #4fc82b;
+}
+
+.attaquant {
+    color: #F72C75;
+}
+
+.remplacant {
+    color: #cdcdcd;
+}
+
+/* Ajout d'un peu de style aux boutons */
+input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#my-chart {
+    margin-left: 30%;
+    margin-right: 30%;
+    display: flex;
+    margin-bottom: 70px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#my-chart .pie {
+    width: 40%;
+}
+
+#my-chart .legend {
+    --legend-border-width: 2px;
+    --legend-border-style: solid;
+    --legend-border-color: brown;
+}
+
+.total{
+    font-weight: bold;
+}

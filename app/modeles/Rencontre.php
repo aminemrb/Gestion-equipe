@@ -19,17 +19,21 @@ class Rencontre {
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourner tous les résultats sous forme de tableau associatif
     }
 
+
     // Ajouter une rencontre
     public function ajouterRencontre($equipe_adverse, $date_rencontre, $heure_rencontre, $lieu, $resultat = null) {
         try {
-            $stmt = $this->db->prepare("INSERT INTO rencontre (equipe_adverse, date_rencontre, heure_rencontre, lieu, resultat) 
-                                        VALUES (:equipe_adverse, :date_rencontre, :heure_rencontre, :lieu, :resultat)");
+            // Définir les scores comme null au lieu de 0
+            $stmt = $this->db->prepare("INSERT INTO rencontre (equipe_adverse, date_rencontre, heure_rencontre, lieu, score_equipe, score_adverse, resultat) 
+                                    VALUES (:equipe_adverse, :date_rencontre, :heure_rencontre, :lieu, :score_equipe, :score_adverse, :resultat)");
 
             // Lier les paramètres aux valeurs
             $stmt->bindParam(':equipe_adverse', $equipe_adverse);
             $stmt->bindParam(':date_rencontre', $date_rencontre);
             $stmt->bindParam(':heure_rencontre', $heure_rencontre);
             $stmt->bindParam(':lieu', $lieu);
+            $stmt->bindValue(':score_equipe', null, PDO::PARAM_NULL); // Score de l'équipe est null
+            $stmt->bindValue(':score_adverse', null, PDO::PARAM_NULL); // Score de l'équipe adverse est null
             $stmt->bindParam(':resultat', $resultat);
 
             // Exécuter la requête
@@ -73,6 +77,12 @@ class Rencontre {
         }
     }
 
+    public function mettreAJourResultat($id_rencontre, $score_equipe, $score_adverse, $resultat) {
+        $sql = "UPDATE rencontre SET score_equipe = ?, score_adverse = ?, resultat = ? WHERE id_rencontre = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$score_equipe, $score_adverse, $resultat, $id_rencontre]);
+    }
+
     // Récupérer une rencontre par son ID
     public function getRencontreById($id_rencontre) {
         try {
@@ -84,4 +94,46 @@ class Rencontre {
             throw new \Exception("Erreur lors de la récupération de la rencontre : " . $e->getMessage());
         }
     }
+    public function getStatistiquesRencontres() {
+        try {
+            // Requête SQL pour obtenir le nombre de victoires, défaites et nuls
+            $sql = "
+            SELECT
+                COUNT(CASE WHEN r.resultat = 'Victoire' THEN 1 END) AS victoires,
+                COUNT(CASE WHEN r.resultat = 'Défaite' THEN 1 END) AS defaites,
+                COUNT(CASE WHEN r.resultat = 'Nul' THEN 1 END) AS nuls,
+                COUNT(*) AS total_matchs
+            FROM rencontre r
+            WHERE r.resultat IS NOT NULL;
+        ";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch();
+
+            // Calcul des pourcentages
+            if ($result['total_matchs'] > 0) {
+                $victoires_pourcentage = round(($result['victoires'] / $result['total_matchs']) * 100, 2);
+                $defaites_pourcentage = round(($result['defaites'] / $result['total_matchs']) * 100, 2);
+                $nuls_pourcentage = round(($result['nuls'] / $result['total_matchs']) * 100, 2);
+            } else {
+                $victoires_pourcentage = $defaites_pourcentage = $nuls_pourcentage = 0;
+            }
+
+            // Retourner les statistiques
+            return [
+                'total_matchs' => $result['total_matchs'],
+                'victoires_pourcentage' => $victoires_pourcentage,
+                'victoires' => $result['victoires'],
+                'defaites_pourcentage' => $defaites_pourcentage,
+                'defaites' => $result['defaites'],
+                'nuls_pourcentage' => $nuls_pourcentage,
+                'nuls' => $result['nuls']
+            ];
+        } catch (\PDOException $e) {
+            error_log("Erreur lors de la récupération des statistiques des rencontres : " . $e->getMessage());
+            return [];
+        }
+    }
+
 }
