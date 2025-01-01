@@ -16,6 +16,8 @@ if ($id_rencontre) {
     echo "ID de la rencontre non fourni.";
     exit;
 }
+
+
 ?>
 
 <main>

@@ -182,4 +182,18 @@ class Joueur {
         }
     }
 
+    public function estJoueurSelectionneEnCours($numero_licence) {
+        $stmt = $this->db->prepare("
+       SELECT COUNT(*)
+        FROM selection s
+        JOIN rencontre r ON s.id_rencontre = r.id_rencontre
+        WHERE s.numero_licence = :numero_licence
+        AND CONCAT(r.date_rencontre, ' ', r.heure_rencontre) < NOW()
+        AND r.resultat IS NULL
+    ");
+        $stmt->bindParam(':numero_licence', $numero_licence, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+
 }

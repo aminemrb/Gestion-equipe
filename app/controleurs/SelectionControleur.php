@@ -69,5 +69,16 @@ class SelectionControleur {
         $this->updatePostes($id_rencontre, $postes_postes);
     }
 
+    public function verifierEtSupprimerSelection($id_rencontre) {
+        $joueursSelectionnes = $this->getJoueursSelectionnes($id_rencontre);
+        $joueursTitulaires = array_filter($joueursSelectionnes, function($joueur) {
+            return strpos($joueur['poste'], 'R') !== 0;
+        });
+
+        if (count($joueursTitulaires) != 11) {
+            $this->selectionModel->supprimerSelection($id_rencontre);
+        }
+    }
+
 
 }

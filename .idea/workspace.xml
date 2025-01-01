@@ -6,11 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="5794ee69-df9b-480f-aeff-2575946002dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/feuille_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/feuille_rencontres.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controleurs/JoueurControleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controleurs/JoueurControleur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controleurs/SelectionControleur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/controleurs/SelectionControleur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/modeles/Joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Joueur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/modeles/Selection.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Selection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/supprimer_joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/supprimer_joueur.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/joueurs.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/joueurs.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/rencontres.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/rencontres.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/supprimer_rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/supprimer_rencontre.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +124,8 @@
       <workItem from="1735463605432" duration="6634000" />
       <workItem from="1735489752935" duration="6419000" />
       <workItem from="1735558581541" duration="14441000" />
-      <workItem from="1735670431663" duration="8248000" />
+      <workItem from="1735670431663" duration="9506000" />
+      <workItem from="1735751326792" duration="5921000" />
     </task>
     <servers />
   </component>

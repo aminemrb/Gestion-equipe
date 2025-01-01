@@ -115,6 +115,14 @@ class Selection {
         return count($notesNonNulles);
     }
 
-
+    public function supprimerSelection($id_rencontre) {
+        try {
+            $stmt = $this->db->prepare("DELETE FROM selection WHERE id_rencontre = :id_rencontre");
+            $stmt->bindParam(':id_rencontre', $id_rencontre, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            error_log("Erreur lors de la suppression de la sélection : " . $e->getMessage());
+        }
+    }
 
 }

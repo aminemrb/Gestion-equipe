@@ -74,6 +74,8 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
     }
     return '#1E1E1E';
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -148,7 +150,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                                 <!-- Attaque -->
                                                 <div class="line forward">
                                                     <div class="poste-container">
-                                                        <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?></div>
+                                                        <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? null) ?></div>
                                                         <div class="poste att">AG</div>
                                                     </div>
                                                     <div class="poste-container">
@@ -250,11 +252,18 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
             <?php foreach ($listeRencontres as $rencontre): ?>
                 <?php
                 $joueursSelectionnes = $controleurSelection->getJoueursSelectionnes($rencontre['id_rencontre']);
-                $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
+                $joueursTitulaires = array_filter($joueursSelectionnes, function($joueur) {
+                    return strpos($joueur['poste'], 'R') !== 0;
+                });
 
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
                 $isMatchFutur = $matchDateTime > $currentDateTime;
+
+                if ($isMatchFutur && count($joueursTitulaires) < 11) {
+                    $controleurSelection->verifierEtSupprimerSelection($rencontre['id_rencontre']);
+                }
+                $joueursParPoste = getJoueursParPoste($joueursSelectionnes);
                 ?>
                 <?php if ($isMatchFutur): ?>
                     <div class="match-card">
@@ -279,7 +288,8 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                         <div class="match-footer">
                             <?php if (!empty($joueursSelectionnes)): ?>
-                            <div class="team-composition">
+
+                                <div class="team-composition">
                                 <div class="formation">
                                     <h3 style="margin: -1px 0 -1px 0;">Formation</h3>
                                     <div class="field">

@@ -124,10 +124,15 @@ class JoueurControleur {
     // Supprimer un joueur
     public function supprimer_joueur($numero_licence) {
         try {
-            $this->joueurModel->supprimerJoueur($numero_licence);
-            // Redirection vers la liste des joueurs après succès
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit;
+            if ($this->joueurModel->estJoueurSelectionneEnCours($numero_licence)) {
+                echo "<p>Le joueur ne peut pas être supprimé car il est dans une selection en cours.
+                        Le score n'a pas encore été défini.</p>";
+            } else {
+                $this->joueurModel->supprimerJoueur($numero_licence);
+                // Redirection vers la liste des joueurs après succès
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                exit;
+            }
         } catch (\Exception $e) {
             echo "Erreur lors de la suppression du joueur : " . $e->getMessage();
         }
