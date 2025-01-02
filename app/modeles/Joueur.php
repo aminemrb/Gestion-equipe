@@ -2,7 +2,8 @@
 namespace App\Modeles;
 
 use PDO;
-use Config\Database;
+use App\Config\Database;
+use DateTime;
 
 class Joueur {
     private $db;
@@ -98,89 +99,112 @@ class Joueur {
         }
     }
 
-    public function getNombreTitularisationParJoueur($numero_licence) {
+    public function getStatistiquesJoueur($numero_licence) {
         try {
-            // Préparer et exécuter la requête
-            $stmt = $this->db->prepare("SELECT COUNT(*) AS nombre_notes 
-            FROM selection 
-            WHERE numero_licence = :numero_licence 
-              AND poste NOT IN ('R1', 'R2', 'R3', 'R4', 'R5') 
-              AND note IS NOT NULL
-            ");
-            $stmt->bindParam(':numero_licence', $numero_licence);
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (\Exception $e) {
-            throw new \Exception("Erreur lors de la récupération du nombre de notes : " . $e->getMessage());
-        }
-    }
-
-    public function getNombreRemplacementsJoueur($numero_licence) {
-        try {
-            $sql = "SELECT COUNT(*) AS nombre_remplacements 
-                FROM selection 
-                WHERE numero_licence = :numero_licence 
-                  AND poste LIKE 'R%'";
-
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':numero_licence', $numero_licence);
-            $stmt->execute();
-            $result = $stmt->fetch();
-
-            return $result['nombre_remplacements'] ?? 0;
-        } catch (\PDOException $e) {
-            error_log("Erreur lors de la récupération des remplacements : " . $e->getMessage());
-            return 0; // Retourne 0 en cas d'erreur
-        }
-    }
-    public function getMoyenneNotesJoueur($numero_licence) {
-        try {
-            $sql = "SELECT AVG(note) AS moyenne_notes 
-                FROM selection 
-                WHERE numero_licence = :numero_licence 
-                  AND note IS NOT NULL";
-
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':numero_licence', $numero_licence, \PDO::PARAM_STR);
-            $stmt->execute();
-            $result = $stmt->fetch();
-
-            // Retourner la moyenne ou 0 si aucune note n'existe
-            return $result['moyenne_notes'] !== null ? round($result['moyenne_notes'], 2) : 0;
-        } catch (\PDOException $e) {
-            error_log("Erreur lors de la récupération de la moyenne des notes : " . $e->getMessage());
-            return 0;
-        }
-    }
-
-    public function getPourcentageVictoiresJoueur($numero_licence) {
-        try {
+            // Requête SQL pour récupérer les statistiques de base
             $sql = "
-            SELECT 
-                COUNT(CASE WHEN r.resultat = 'Victoire' THEN 1 END) AS victoires,
-                COUNT(*) AS total_matchs
-            FROM selection s
-            INNER JOIN rencontre r ON s.id_rencontre = r.id_rencontre
-            WHERE s.numero_licence = :numero_licence
-            AND r.resultat IS NOT NULL; -- Exclure les matchs sans résultat
+        SELECT 
+            -- Nombre de titularisations
+            COUNT(CASE WHEN s.poste NOT IN ('R1', 'R2', 'R3', 'R4', 'R5') AND s.note IS NOT NULL THEN 1 END) AS titularisations,
+
+            -- Nombre de remplacements
+            COUNT(CASE WHEN s.poste LIKE 'R%' THEN 1 END) AS remplacements,
+
+            -- Moyenne des notes
+            AVG(CASE WHEN s.note IS NOT NULL THEN s.note END) AS moyenne_notes,
+
+            -- Nombre de victoires
+            COUNT(CASE WHEN r.resultat = 'Victoire' THEN 1 END) AS victoires,
+
+            -- Nombre total de matchs
+            COUNT(r.id_rencontre) AS total_matchs
+        FROM selection s
+        LEFT JOIN rencontre r ON s.id_rencontre = r.id_rencontre
+        WHERE s.numero_licence = :numero_licence
         ";
 
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':numero_licence', $numero_licence, \PDO::PARAM_STR);
             $stmt->execute();
-            $result = $stmt->fetch();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Calculer le pourcentage de victoires
-            if ($result['total_matchs'] > 0) {
-                return round(($result['victoires'] / $result['total_matchs']) * 100, 2);
-            } else {
-                return 0; // Aucun match joué
-            }
+            $result['pourcentage_victoires'] = $result['total_matchs'] > 0
+                ? round(($result['victoires'] / $result['total_matchs']) * 100, 2)
+                : 0;
+
+            // Requête pour les sélections consécutives
+            $sql_consecutive = "
+    SELECT CONCAT(r.date_rencontre, ' ', r.heure_rencontre) AS datetime_rencontre
+    FROM selection s
+    INNER JOIN rencontre r ON s.id_rencontre = r.id_rencontre
+    WHERE s.numero_licence = :numero_licence
+    AND r.resultat IS NOT NULL
+    ORDER BY r.date_rencontre ASC, r.heure_rencontre ASC
+";
+
+
+            $stmt_consecutive = $this->db->prepare($sql_consecutive);
+            $stmt_consecutive->bindParam(':numero_licence', $numero_licence, \PDO::PARAM_STR);
+            $stmt_consecutive->execute();
+            $dates = $stmt_consecutive->fetchAll(PDO::FETCH_COLUMN);
+
+            // Calculer les sélections consécutives
+            $consecutive_count = $this->calculerSelectionsConsecutives($dates);
+
+            // Retourner les résultats avec la nouvelle statistique
+            return [
+                'titularisations' => $result['titularisations'] ?? 0,
+                'remplacements' => $result['remplacements'] ?? 0,
+                'moyenne_notes' => $result['moyenne_notes'] !== null ? round($result['moyenne_notes'], 2) : 0,
+                'pourcentage_victoires' => $result['pourcentage_victoires'],
+                'selections_consecutives' => $consecutive_count
+            ];
+
         } catch (\PDOException $e) {
-            error_log("Erreur lors de la récupération du pourcentage de victoires : " . $e->getMessage());
-            return 0;
+            error_log("Erreur lors de la récupération des statistiques : " . $e->getMessage());
+            return [
+                'titularisations' => 0,
+                'remplacements' => 0,
+                'moyenne_notes' => 0,
+                'pourcentage_victoires' => 0,
+                'selections_consecutives' => 0
+            ];
         }
     }
+    private function calculerSelectionsConsecutives(array $dates_heures) {
+        if (empty($dates_heures)) {
+            return 0;
+        }
+
+        // Trier les dates et heures combinées
+        sort($dates_heures);
+
+        $max_consecutive = 1;
+        $current_consecutive = 1;
+
+        for ($i = 1; $i < count($dates_heures); $i++) {
+            // Créer des objets DateTime pour comparer
+            $prev_datetime = new DateTime($dates_heures[$i - 1]);
+            $current_datetime = new DateTime($dates_heures[$i]);
+
+            // Vérifie si les dates sont consécutives (intervalle de 7 jours ou moins)
+            $interval = $prev_datetime->diff($current_datetime);
+
+            // On compare ici l'intervalle en jours. Tu peux ajuster selon tes besoins.
+            if ($interval->days <= 7) {
+                $current_consecutive++;
+            } else {
+                $current_consecutive = 1;
+            }
+
+            $max_consecutive = max($max_consecutive, $current_consecutive);
+        }
+
+        return $max_consecutive;
+    }
+
+
 
     public function estJoueurSelectionneEnCours($numero_licence) {
         $stmt = $this->db->prepare("

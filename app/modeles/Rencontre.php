@@ -2,7 +2,7 @@
 namespace App\Modeles;
 
 use PDO;
-use Config\Database;
+use App\Config\Database;
 
 class Rencontre {
     private $db;

@@ -138,42 +138,20 @@ class JoueurControleur {
         }
     }
 
-    public function nombreTitularisation($numero_licence) {
+    public function getStatistiquesJoueur($numero_licence) {
         try {
-            // Appel au modèle pour récupérer le nombre de notes
-            return $this->joueurModel->getNombreTitularisationParJoueur($numero_licence);
+            return $this->joueurModel->getStatistiquesJoueur($numero_licence);
         } catch (\Exception $e) {
-            // Gérer les erreurs
-            error_log("Erreur lors de la récupération du nombre de notes : " . $e->getMessage());
-            return 0; // Retourne 0 en cas d'erreur
+            error_log("Erreur lors de la récupération des statistiques du joueur : " . $e->getMessage());
+            return [
+                'titularisations' => 0,
+                'remplacements' => 0,
+                'moyenne_notes' => 0,
+                'pourcentage_victoires' => 0,
+                'selections_consecutives' => 0
+            ];
         }
     }
 
-    public function nombreRemplacementsJoueur($numero_licence) {
-        try {
-            return $this->joueurModel->getNombreRemplacementsJoueur($numero_licence);
-        } catch (\Exception $e) {
-            error_log("Erreur lors de la récupération des remplacements : " . $e->getMessage());
-            return 0; // Retourne 0 en cas d'erreur
-        }
-    }
-
-    public function moyenneNotesJoueur($numero_licence) {
-        try {
-            return $this->joueurModel->getMoyenneNotesJoueur($numero_licence);
-        } catch (\Exception $e) {
-            error_log("Erreur lors de la récupération de la moyenne des notes : " . $e->getMessage());
-            return 0;
-        }
-    }
-
-    public function pourcentageVictoiresJoueur($numero_licence) {
-        try {
-            return $this->joueurModel->getPourcentageVictoiresJoueur($numero_licence);
-        } catch (\Exception $e) {
-            error_log("Erreur lors de la récupération du pourcentage de victoires : " . $e->getMessage());
-            return 0;
-        }
-    }
 
 }

@@ -2,7 +2,7 @@
 
 namespace App\Modeles;
 
-use Config\Database;
+use App\Config\Database;
 
 class Utilisateur {
     private $pdo;
