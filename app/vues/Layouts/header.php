@@ -19,7 +19,7 @@ if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
     <title>Football Manager</title>
 </head>
 <body>
-<header class="header-style">
+<header class="header-menu">
     <!-- Ajouter l'image à gauche -->
     <img src="/football_manager/public/assets/images/fm.svg" alt="Logo" class="logo">
 
@@ -32,5 +32,7 @@ if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
     }
     ?>
 </header>
+</body>
+</html>
 
 

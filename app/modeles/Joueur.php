@@ -142,8 +142,6 @@ class Joueur {
     AND r.resultat IS NOT NULL
     ORDER BY r.date_rencontre ASC, r.heure_rencontre ASC
 ";
-
-
             $stmt_consecutive = $this->db->prepare($sql_consecutive);
             $stmt_consecutive->bindParam(':numero_licence', $numero_licence, \PDO::PARAM_STR);
             $stmt_consecutive->execute();

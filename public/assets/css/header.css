@@ -8,15 +8,18 @@ body {
 }
 
 footer {
-    background-color: rgba(63, 117, 40, 0.65); /* Couleur du fond du header */
+    border-top: 1px solid rgba(255, 255, 255, 0.45); /* Bordure en haut du footer */
+    background-color: rgba(63, 117, 40, 0.22); /* Couleur du fond du footer */
     color: #eaeaea; /* Couleur du texte du footer */
     padding: 20px 0; /* Espacement du footer */
     text-align: center; /* Centrage du texte */
 }
 
+
 /* Header */
-.header-style {
-    background-color: rgba(63, 117, 40, 0.65); /* Couleur du fond du header */
+.header-menu {
+    background-color: rgba(63, 117, 40, 0.30); /* Couleur du fond du header */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45); /* Bordure en haut du footer */
     color: white;
     padding: 15px 30px; /* Espacement du header  */
     display: flex;
@@ -24,18 +27,18 @@ footer {
     align-items: center; /* Centrage vertical des éléments */
 }
 
-.header-style .logo {
+.logo {
     max-height: 50px; /* Hauteur du logo */
     width: auto;
     filter: invert(80%);
 }
 
-/* Styles pour le menu */
-nav {
+/* Styles pour le menu dans le header */
+ nav {
     padding: 10px 20px; /* Espacement du menu */
 }
 
-nav ul {
+.header-menu nav ul {
     list-style: none; /* Supprimer les puces des éléments de la liste */
     padding: 0;
     margin: 0;
@@ -44,12 +47,21 @@ nav ul {
     gap: 20px; /* Espacement entre les éléments du menu */
 }
 
+.footer-menu nav ul {
+    list-style: none; /* Supprimer les puces des éléments de la liste */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Affichage en ligne des éléments */
+    gap: 20px; /* Espacement entre les éléments du menu */
+    justify-content: center;
+}
+
 nav li {
     margin: 0; /* Enlever les marges par défaut des éléments de liste */
 }
 
 nav a {
-    color: #dddddd; /* Couleur des liens */
+    color: rgba(255, 255, 255, 0.68); /* Couleur des liens */
     text-decoration: none; /* Enlever la décoration de texte */
     padding: 8px 15px; /* Ajouter de l'espace autour du texte */
     border-radius: 4px; /* Coins arrondis des boutons */
@@ -60,6 +72,7 @@ nav a {
 nav a:hover {
     color: #ffffff; /* Couleur du texte au survol */
 }
+
 
 /* Styles pour les petits écrans (mobile-first) */
 @media (max-width: 768px) {

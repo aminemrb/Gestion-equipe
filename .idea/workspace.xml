@@ -6,16 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5794ee69-df9b-480f-aeff-2575946002dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modeles/Evaluation.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/modeles/Joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Joueur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modeles/Rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Rencontre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modeles/Selection.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Selection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modeles/Utilisateur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/modeles/Utilisateur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Statistiques/stats.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Statistiques/stats.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/AuthTest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/JoueurTest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/RencontreTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Layouts/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/footer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/accueil.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/accueil.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/images/fm.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +124,10 @@
       <workItem from="1735558581541" duration="14441000" />
       <workItem from="1735670431663" duration="9506000" />
       <workItem from="1735751326792" duration="5921000" />
-      <workItem from="1735821717502" duration="2943000" />
+      <workItem from="1735821717502" duration="3598000" />
+      <workItem from="1735842351234" duration="7000" />
+      <workItem from="1735917785806" duration="2577000" />
+      <workItem from="1735920657289" duration="2182000" />
     </task>
     <servers />
   </component>
