@@ -105,7 +105,7 @@ class Joueur {
             $sql = "
         SELECT 
             -- Nombre de titularisations
-            COUNT(CASE WHEN s.poste NOT IN ('R1', 'R2', 'R3', 'R4', 'R5') AND s.note IS NOT NULL THEN 1 END) AS titularisations,
+            COUNT(CASE WHEN s.poste NOT IN ('R1', 'R2', 'R3', 'R4', 'R5') THEN 1 END) AS titularisations,
 
             -- Nombre de remplacements
             COUNT(CASE WHEN s.poste LIKE 'R%' THEN 1 END) AS remplacements,
@@ -121,6 +121,7 @@ class Joueur {
         FROM selection s
         LEFT JOIN rencontre r ON s.id_rencontre = r.id_rencontre
         WHERE s.numero_licence = :numero_licence
+        AND CONCAT(r.date_rencontre, ' ', r.heure_rencontre) < NOW()
         ";
 
             $stmt = $this->db->prepare($sql);

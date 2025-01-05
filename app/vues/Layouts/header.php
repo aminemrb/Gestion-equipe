@@ -21,7 +21,7 @@ if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
 <body>
 <header class="header-menu">
     <!-- Ajouter l'image à gauche -->
-    <img src="/football_manager/public/assets/images/fm.svg" alt="Logo" class="logo">
+    <img src="/football_manager/public/assets/images/logo.png" alt="Logo" class="logo">
 
     <?php
     // Inclusion du menu en fonction de l'état de connexion
