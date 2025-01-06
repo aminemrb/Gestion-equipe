@@ -13,7 +13,7 @@ class Selection {
 
     public function getJoueursSelectionnes($id_rencontre) {
         $stmt = $this->db->prepare("
-            SELECT j.*, s.poste
+            SELECT j.*, s.poste, s.note
             FROM joueur j
             JOIN selection s ON j.numero_licence = s.numero_licence
             WHERE s.id_rencontre = :id_rencontre

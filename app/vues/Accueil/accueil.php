@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
     <div class="welcome-container">
         <h1>
-            Bienvenue <?= isset($_SESSION['email']) ? htmlspecialchars($fullName) : "Sur Football Manager" ?>
+            Bienvenue <?= isset($_SESSION['email']) ? htmlspecialchars($fullName) : "sur Football Management" ?>
         </h1>
         <?php if (isset($_SESSION['email'])): ?>
         <p>Vous entrainez actuellement <strong><?= htmlspecialchars($infosUtilisateur['nom_equipe'])?></strong></p>

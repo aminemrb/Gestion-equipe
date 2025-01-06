@@ -134,30 +134,12 @@ class Joueur {
                 ? round(($result['victoires'] / $result['total_matchs']) * 100, 2)
                 : 0;
 
-            // Requête pour les sélections consécutives
-            $sql_consecutive = "
-    SELECT CONCAT(r.date_rencontre, ' ', r.heure_rencontre) AS datetime_rencontre
-    FROM selection s
-    INNER JOIN rencontre r ON s.id_rencontre = r.id_rencontre
-    WHERE s.numero_licence = :numero_licence
-    AND r.resultat IS NOT NULL
-    ORDER BY r.date_rencontre ASC, r.heure_rencontre ASC
-";
-            $stmt_consecutive = $this->db->prepare($sql_consecutive);
-            $stmt_consecutive->bindParam(':numero_licence', $numero_licence, \PDO::PARAM_STR);
-            $stmt_consecutive->execute();
-            $dates = $stmt_consecutive->fetchAll(PDO::FETCH_COLUMN);
-
-            // Calculer les sélections consécutives
-            $consecutive_count = $this->calculerSelectionsConsecutives($dates);
-
             // Retourner les résultats avec la nouvelle statistique
             return [
                 'titularisations' => $result['titularisations'] ?? 0,
                 'remplacements' => $result['remplacements'] ?? 0,
                 'moyenne_notes' => $result['moyenne_notes'] !== null ? round($result['moyenne_notes'], 2) : 0,
                 'pourcentage_victoires' => $result['pourcentage_victoires'],
-                'selections_consecutives' => $consecutive_count
             ];
 
         } catch (\PDOException $e) {
@@ -167,43 +149,9 @@ class Joueur {
                 'remplacements' => 0,
                 'moyenne_notes' => 0,
                 'pourcentage_victoires' => 0,
-                'selections_consecutives' => 0
             ];
         }
     }
-    private function calculerSelectionsConsecutives(array $dates_heures) {
-        if (empty($dates_heures)) {
-            return 0;
-        }
-
-        // Trier les dates et heures combinées
-        sort($dates_heures);
-
-        $max_consecutive = 1;
-        $current_consecutive = 1;
-
-        for ($i = 1; $i < count($dates_heures); $i++) {
-            // Créer des objets DateTime pour comparer
-            $prev_datetime = new DateTime($dates_heures[$i - 1]);
-            $current_datetime = new DateTime($dates_heures[$i]);
-
-            // Vérifie si les dates sont consécutives (intervalle de 7 jours ou moins)
-            $interval = $prev_datetime->diff($current_datetime);
-
-            // On compare ici l'intervalle en jours. Tu peux ajuster selon tes besoins.
-            if ($interval->days <= 7) {
-                $current_consecutive++;
-            } else {
-                $current_consecutive = 1;
-            }
-
-            $max_consecutive = max($max_consecutive, $current_consecutive);
-        }
-
-        return $max_consecutive;
-    }
-
-
 
     public function estJoueurSelectionneEnCours($numero_licence) {
         $stmt = $this->db->prepare("
@@ -212,7 +160,6 @@ class Joueur {
         JOIN rencontre r ON s.id_rencontre = r.id_rencontre
         WHERE s.numero_licence = :numero_licence
         AND CONCAT(r.date_rencontre, ' ', r.heure_rencontre) < NOW()
-        AND r.resultat IS NULL
     ");
         $stmt->bindParam(':numero_licence', $numero_licence, PDO::PARAM_INT);
         $stmt->execute();

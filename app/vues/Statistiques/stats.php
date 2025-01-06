@@ -98,7 +98,6 @@ foreach ($joueurs as $joueur) {
                 <th>Poste Préféré</th>
                 <th>Titularisations</th>
                 <th>Remplaçant</th>
-                <th>Consecutives</th>
                 <th>Moyenne</th>
                 <th>Victoires</th>
             </tr>
@@ -114,7 +113,6 @@ foreach ($joueurs as $joueur) {
                     <td><?= htmlspecialchars($joueur['position_preferee']) ?></td>
                     <td><?= htmlspecialchars($stats['titularisations'] ?? 0) ?></td>
                     <td><?= htmlspecialchars($stats['remplacements'] ?? 0) ?></td>
-                    <td><?= htmlspecialchars($stats['selections_consecutives'] ?? 0) ?></td>
                     <td><?= htmlspecialchars($stats['moyenne_notes'] ?? 0) ?>/5</td>
                     <td><?= htmlspecialchars($stats['pourcentage_victoires'] ?? 0) ?>%</td>
                 </tr>

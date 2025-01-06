@@ -125,8 +125,7 @@ class JoueurControleur {
     public function supprimer_joueur($numero_licence) {
         try {
             if ($this->joueurModel->estJoueurSelectionneEnCours($numero_licence)) {
-                echo "<p>Le joueur ne peut pas être supprimé car il est dans une selection en cours.
-                        Le score n'a pas encore été défini.</p>";
+                echo "<p>Le joueur ne peut pas être supprimé car il est dans une selection en cours.</p>";
             } else {
                 $this->joueurModel->supprimerJoueur($numero_licence);
                 // Redirection vers la liste des joueurs après succès
@@ -148,7 +147,6 @@ class JoueurControleur {
                 'remplacements' => 0,
                 'moyenne_notes' => 0,
                 'pourcentage_victoires' => 0,
-                'selections_consecutives' => 0
             ];
         }
     }

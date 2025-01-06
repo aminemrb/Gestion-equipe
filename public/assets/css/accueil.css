@@ -11,13 +11,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Texte d'accueil */
-.welcome-message {
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 30px;
-    color: #4CAF50;
-}
 .update-form {
     background-color: #1e1e1e;
     border-radius: 8px;
@@ -32,10 +25,8 @@ h1 {
     gap: 10px;
 }
 
-
 .form-group label {
     font-size: 16px;
-    color: #4CAF50;
     font-weight: bold;
     margin-bottom: 5px;
 }

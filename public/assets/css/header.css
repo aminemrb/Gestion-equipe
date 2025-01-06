@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+
 /* Style global du body */
 body {
     font-family: 'Poppins', sans-serif;
@@ -9,7 +11,7 @@ body {
 
 footer {
     border-top: 1px solid rgba(255, 255, 255, 0.45); /* Bordure en haut du footer */
-    background-color: rgba(63, 117, 40, 0.22); /* Couleur du fond du footer */
+    background-color: #1f3c60b8; /* Couleur du fond du header */
     color: #eaeaea; /* Couleur du texte du footer */
     padding: 20px 0; /* Espacement du footer */
     text-align: center; /* Centrage du texte */
@@ -18,7 +20,7 @@ footer {
 
 /* Header */
 .header-menu {
-    background-color: rgba(63, 117, 40, 0.30); /* Couleur du fond du header */
+    background-color: #1f3c60b8; /* Couleur du fond du header */
     border-bottom: 1px solid rgba(255, 255, 255, 0.45); /* Bordure en haut du footer */
     color: white;
     padding: 15px 30px; /* Espacement du header  */
@@ -30,7 +32,6 @@ footer {
 .logo {
     max-height: 70px; /* Hauteur du logo */
     width: auto;
-    filter: invert(80%);
 }
 
 /* Styles pour le menu dans le header */
@@ -61,11 +62,11 @@ nav li {
 }
 
 nav a {
-    color: rgba(255, 255, 255, 0.68); /* Couleur des liens */
+    color: rgba(255, 255, 255); /* Couleur des liens */
     text-decoration: none; /* Enlever la décoration de texte */
     padding: 8px 15px; /* Ajouter de l'espace autour du texte */
     border-radius: 4px; /* Coins arrondis des boutons */
-    font-size: 1rem; /* Taille de police */
+    font-size: 1.1rem; /* Taille de police */
     transition: background-color 0.3s ease, color 0.3s ease; /* Animation de l'effet de survol */
 }
 

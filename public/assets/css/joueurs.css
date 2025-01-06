@@ -8,15 +8,15 @@ h1 {
 }
 
 .btn-ajouter {
-    text-align: center;
     background-color: #333333;
-    display: inline-block;
     padding: 12px 20px;
     color: white;
     font-size: 16px;
     text-decoration: none;
     font-weight: bold;
-    margin: 20px 0 30px 420px;
+}
+.btn-ajouter:hover {
+    background-color: #218838;
 }
 
 .btn-modifier, .btn-supprimer {
@@ -34,9 +34,6 @@ h1 {
 .btn-modifier:hover {
     background-color: #218838;
     color: white;
-}
-.btn-ajouter:hover {
-    background-color: #218838;
 }
 .btn-supprimer:hover {
     background-color: #c82333;
@@ -97,9 +94,6 @@ tr:hover {
 /* Actions */
 td:last-child {
     white-space: nowrap;
-}
-
-td a {
 }
 
 /* Responsive */
