@@ -47,24 +47,24 @@ input[type="password"] {
 input[type="email"]:focus,
 input[type="password"]:focus {
     outline: none;
-    border-color: #52c522;
-    box-shadow: 0 0 8px rgba(82, 197, 34, 0.6);
+    border-color: #1f3c60b8;
+    box-shadow: 0 0 8px rgba(31, 60, 96, 0.72);
 }
 
 button {
     width: 100%;
     padding: 12px;
-    background-color: #468e28;
+    background-color: #1f3c60b8;
+    color: white;
     border: none;
     border-radius: 6px;
-    color: #121212;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color: #3F7528;
+    background-color: rgba(35, 80, 136, 0.72);
     transform: scale(1.02);
 }
 
