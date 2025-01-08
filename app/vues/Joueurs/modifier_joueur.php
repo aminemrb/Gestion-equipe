@@ -26,7 +26,12 @@ if (!$joueur) {
 
 // Traiter la soumission du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $joueurControleur->modifier_joueur($numero_licence); // Appliquer les modifications
+    $commentaire = $_POST['commentaire'] ?? '';
+    if (preg_match('/^[A-Za-z0-9À-ÿ\s\'\-.,!?]+$/', $commentaire)) {
+        $joueurControleur->modifier_joueur($numero_licence); // Appliquer les modifications
+    } else {
+        echo "<p>Le commentaire contient des caractères non valides.</p>";
+    }
 }
 ?>
 
@@ -51,13 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-group">
                 <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($joueur['nom']) ?>" required>
-            </div>
+                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($joueur['nom']) ?>" pattern="[A-Za-zÀ-ÿ]+"  required>            </div>
 
             <div class="form-group">
                 <label for="prenom">Prénom :</label>
-                <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($joueur['prenom']) ?>" required>
-            </div>
+                <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($joueur['prenom']) ?>"  pattern="[A-Za-zÀ-ÿ]+" required>            </div>
 
             <div class="form-group">
                 <label for="date_naissance">Date de naissance :</label>
@@ -71,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-group">
                 <label for="poids">Poids (en kg) :</label>
-                <input type="number" id="poids" name="poids" step="0.1" min="30" max="200" value="<?= htmlspecialchars($joueur['poids']) ?>" required>
+                <input type="number" id="poids" name="poids" step="0.1" min="15" max="300" value="<?= htmlspecialchars($joueur['poids']) ?>" required>
             </div>
 
             <div class="form-group">

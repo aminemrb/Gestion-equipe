@@ -51,13 +51,13 @@ function traiterDemandePost($controleurSelection, $idRencontre, $postesFixes, $p
     $notes = $_POST['notes'] ?? [];
 
     try {
-        if (!$matchPasse) {
-            validerNotes($postesFixes, $postesAssignes, $notes);
+        if ($matchPasse) {
             $controleurSelection->updateNotes($idRencontre, $notes);
-            header("Location: " . $_SERVER['REQUEST_URI']);
+            header("Location: liste_rencontres.php");
+            exit;
         } else {
             $controleurSelection->validerSelection($idRencontre, $postesPostes);
-            header("Location: " . $_SERVER['REQUEST_URI']);
+            header("Location: liste_rencontres.php");
             exit;
         }
     } catch (\Exception $e) {
@@ -65,18 +65,10 @@ function traiterDemandePost($controleurSelection, $idRencontre, $postesFixes, $p
     }
 }
 
-function validerNotes($postesFixes, $postesAssignes, $notes) {
-    foreach ($postesFixes as $poste) {
-        if (isset($postesAssignes[$poste]) && empty($notes[$postesAssignes[$poste]['numero_licence']])) {
-            throw new \Exception("Tous les joueurs doivent être notés.");
-        }
-    }
-}
-
 function estRencontrePasse($dateRencontre, $heureRencontre) {
     $currentDateTime = new DateTime();
     $matchDateTime = new DateTime("$dateRencontre $heureRencontre");
-    return $matchDateTime > $currentDateTime;
+    return $matchDateTime < $currentDateTime;
 }
 
 function obtenirClassePoste($poste) {
@@ -111,7 +103,7 @@ function obtenirClassePoste($poste) {
                     <th>Poste</th>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <?php if (!$matchPasse): ?>
+                    <?php if ($matchPasse): ?>
                         <th>Note</th>
                     <?php endif; ?>
                 </tr>
@@ -124,7 +116,7 @@ function obtenirClassePoste($poste) {
                         <?php if (isset($postesAssignes[$poste])): ?>
                             <td><?php echo htmlspecialchars($postesAssignes[$poste]['nom'] ?? '-'); ?></td>
                             <td><?php echo htmlspecialchars($postesAssignes[$poste]['prenom'] ?? '-'); ?></td>
-                            <?php if (!$matchPasse): ?>
+                            <?php if ($matchPasse): ?>
                                 <td>
                                     <select name="notes[<?php echo $postesAssignes[$poste]['numero_licence']; ?>]">
                                         <option value="">-- Choisir --</option>
@@ -146,7 +138,7 @@ function obtenirClassePoste($poste) {
                 <?php endforeach; ?>
                 </tbody>
             </table>
-            <?php if ($matchPasse): ?>
+            <?php if (!$matchPasse): ?>
                 <table class="table-selection">
                     <thead>
                     <tr>

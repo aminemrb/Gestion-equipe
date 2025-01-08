@@ -60,8 +60,8 @@ class JoueurControleur {
                 return;
              }
 
-            if ($poids !== null && ($poids < 30 || $poids > 200)) { // Vérifie un poids raisonnable
-                echo "Le poids doit être compris entre 30 kg et 200 kg.";
+            if ($poids !== null && ($poids < 15 || $poids > 300)) { // Vérifie un poids raisonnable
+                echo "Le poids doit être compris entre 15 kg et 300 kg.";
                 return;
             }
 
@@ -69,7 +69,7 @@ class JoueurControleur {
             try {
                 $this->joueurModel->ajouterJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
                 // Redirection vers la liste des joueurs après succès
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header("Location: liste_joueurs.php");
                 exit;
             } catch (\Exception $e) {
                 echo "Erreur lors de l'ajout du joueur : " . $e->getMessage();
@@ -105,7 +105,7 @@ class JoueurControleur {
             try {
                 $this->joueurModel->modifierJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
                 // Redirection vers la liste des joueurs après succès
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header("Location: liste_joueurs.php");
                 exit;
             } catch (\Exception $e) {
                 echo "Erreur lors de la modification du joueur : " . $e->getMessage();
@@ -124,12 +124,12 @@ class JoueurControleur {
     // Supprimer un joueur
     public function supprimer_joueur($numero_licence) {
         try {
-            if ($this->joueurModel->estJoueurSelectionneEnCours($numero_licence)) {
-                echo "<p>Le joueur ne peut pas être supprimé car il est dans une selection en cours.</p>";
+            if ($this->joueurModel->estJoueurSelectionne($numero_licence)) {
+                echo "<p style='color: red'>Le joueur ne peut pas être supprimé car il est dans une selection en cours.</p>";
             } else {
                 $this->joueurModel->supprimerJoueur($numero_licence);
                 // Redirection vers la liste des joueurs après succès
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header("Location: liste_joueurs.php");
                 exit;
             }
         } catch (\Exception $e) {

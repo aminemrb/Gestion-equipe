@@ -186,13 +186,15 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                                     </div>
                                                     <div class="poste-container">
                                                         <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['milieux']['MD']['note'] ?? 0)) ?>
-                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['milieux']['MD']['note'])) ?></div></div>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['milieux']['MD']['note'])) ?></div>
+                                                        </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?></div>
-                                                        <div class="poste mil">MD</div>
+                                                        <div class="poste mil">MCD</div>
                                                     </div>
                                                     <div class="poste-container">
                                                         <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['milieux']['MCD']['note'] ?? 0)) ?>
-                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['milieux']['MCD']['note'])) ?></div></div>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['milieux']['MCD']['note'])) ?></div>
+                                                        </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste mil">MCD</div>
                                                     </div>
@@ -262,9 +264,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                                 <!-- Actions -->
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
-                                    <?php if ($isJoueursNotes): ?>
                                         <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Score</a>
-                                    <?php endif; ?>
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                         <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
                                     </a>
@@ -272,7 +272,8 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                     <span>MATCH ANNULÉ (aucun joueur sélectionné)</span>
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                         <i class="fas fa-trash-alt" style="margin-top: 20px"></i> <!-- Icône de suppression -->
-                                    </a>                                <?php endif; ?>
+                                    </a>
+                                    <?php endif; ?>
                             </div>
                         </div>
                     </div>

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Bienvenue <?= isset($_SESSION['email']) ? htmlspecialchars($fullName) : "sur Football Management" ?>
         </h1>
         <?php if (isset($_SESSION['email'])): ?>
-        <p>Vous entrainez actuellement <strong><?= htmlspecialchars($infosUtilisateur['nom_equipe'])?></strong></p>
+        <p>Vous entrainez actuellement <strong style="color: #4CAF50"><?= htmlspecialchars($infosUtilisateur['nom_equipe'])?></strong></p>
         <?php endif; ?>
         <p>Vous pouvez ici gérer vos informations personnelles et votre équipe pour améliorer votre expérience de jeu.</p>
     </div>
@@ -50,17 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST" action="">
             <div class="form-group">
                 <label for="prenom">Prénom :</label>
-                <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($infosUtilisateur['prenom']) ?>" required>
+                <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($infosUtilisateur['prenom']) ?>" pattern="[A-Za-zÀ-ÿ]+" required>
             </div>
 
             <div class="form-group">
                 <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($infosUtilisateur['nom']) ?>" required>
+                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($infosUtilisateur['nom']) ?>" pattern="[A-Za-zÀ-ÿ]+" required>
             </div>
 
             <div class="form-group">
                 <label for="nom_equipe">Changer d'équipe</label>
-                <input type="text" id="nom_equipe" name="nom_equipe" value="<?= htmlspecialchars($infosUtilisateur['nom_equipe']) ?>" required>
+                <input type="text" id="nom_equipe" name="nom_equipe" value="<?= htmlspecialchars($infosUtilisateur['nom_equipe']) ?>" pattern="[A-Za-zÀ-ÿ]+" required>
             </div>
 
             <button type="submit">Enregistrer</button>
