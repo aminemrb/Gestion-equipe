@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div id="ajouter-style">
     <main>
         <h1>Ajouter un joueur</h1>
-        <form method="POST" action="<?= BASE_URL ?>/vues/Joueurs/ajouter_joueur.php">
+        <form method="POST" action="">
 
             <div class="form-group">
                 <label for="numero_licence">Numéro de licence :</label>

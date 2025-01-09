@@ -69,7 +69,7 @@ class JoueurControleur {
             try {
                 $this->joueurModel->ajouterJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
                 // Redirection vers la liste des joueurs après succès
-                header("Location: liste_joueurs.php");
+                header("Location: /football_manager/joueurs");
                 exit;
             } catch (\Exception $e) {
                 echo "Erreur lors de l'ajout du joueur : " . $e->getMessage();
@@ -105,7 +105,7 @@ class JoueurControleur {
             try {
                 $this->joueurModel->modifierJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
                 // Redirection vers la liste des joueurs après succès
-                header("Location: liste_joueurs.php");
+                header("Location: /football_manager/joueurs");
                 exit;
             } catch (\Exception $e) {
                 echo "Erreur lors de la modification du joueur : " . $e->getMessage();
@@ -129,7 +129,7 @@ class JoueurControleur {
             } else {
                 $this->joueurModel->supprimerJoueur($numero_licence);
                 // Redirection vers la liste des joueurs après succès
-                header("Location: liste_joueurs.php");
+                header("Location: /football_manager/joueurs");
                 exit;
             }
         } catch (\Exception $e) {

@@ -28,7 +28,7 @@ if (!$joueurs || count($joueurs) === 0) {
     <main>
         <h1>Gestion des joueurs</h1>
         <div style="text-align: center; margin-top: 10px">
-            <a class="btn-ajouter" href="<?= BASE_URL ?>/vues/Joueurs/ajouter_joueur.php">Ajouter un joueur</a>
+            <a class="btn-ajouter" href="/football_manager/joueurs/ajouter">Ajouter un joueur</a>
         </div>
 
         <table border="1">
@@ -59,11 +59,11 @@ if (!$joueurs || count($joueurs) === 0) {
                     <td><?= htmlspecialchars($joueur['position_preferee']) ?></td>
                     <td><?= htmlspecialchars($joueur['commentaire']) ?></td>
                     <td class="actions">
-                        <a class="btn-modifier" href="<?= BASE_URL ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">
+                        <a class="btn-modifier" href="/football_manager/joueurs/modifier?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">
                             <i class="fas fa-edit"></i> <!-- Icône de modification -->
                         </a>
 
-                        <a class="btn-supprimer" href="<?= BASE_URL ?>/vues/Joueurs/supprimer_joueur.php?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>"
+                        <a class="btn-supprimer" href="/football_manager/joueurs/supprimer?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>"
                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">
                             <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
                         </a>

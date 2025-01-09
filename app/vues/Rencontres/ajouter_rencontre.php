@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <main>
     <h1>Ajouter une rencontre</h1>
-    <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+    <form method="POST" action="">
         <label for="equipe_adverse">Équipe Adverse :</label>
         <input type="text" id="equipe_adverse" name="equipe_adverse" pattern="[A-Za-zÀ-ÿ]+" required>
 
