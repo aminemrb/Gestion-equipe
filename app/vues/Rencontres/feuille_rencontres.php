@@ -53,11 +53,11 @@ function traiterDemandePost($controleurSelection, $idRencontre, $postesFixes, $p
     try {
         if ($matchPasse) {
             $controleurSelection->updateNotes($idRencontre, $notes);
-            header("Location: liste_rencontres.php");
+            header("Location: /football_manager/rencontres");
             exit;
         } else {
             $controleurSelection->validerSelection($idRencontre, $postesPostes);
-            header("Location: liste_rencontres.php");
+            header("Location: /football_manager/rencontres");
             exit;
         }
     } catch (\Exception $e) {

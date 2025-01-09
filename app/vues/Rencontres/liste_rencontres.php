@@ -90,7 +90,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 <body>
 <main id="liste">
     <h1>Gestion des rencontres</h1>
-    <div style="text-align: center;"><a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_rencontre.php" class="btn-ajouter">Ajouter une rencontre</a></div>
+    <div style="text-align: center;"><a href="/football_manager/rencontres/ajouter" class="btn-ajouter">Ajouter une rencontre</a></div>
 
     <div class="rencontres-container">
         <!-- Colonne des matchs passés -->
@@ -263,14 +263,14 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                     </div>
 
                                 <!-- Actions -->
-                                    <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
-                                        <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Score</a>
-                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
+                                    <a href="/football_manager/rencontres/feuille_de_rencontre?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
+                                        <a href="/football_manager/rencontres/resultat?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Score</a>
+                                    <a href="/football_manager/rencontres/supprimer?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                         <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
                                     </a>
                                     <?php else: ?>
                                     <span>MATCH ANNULÉ (aucun joueur sélectionné)</span>
-                                    <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
+                                    <a href="football_manager/rencontres/supprimer?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                         <i class="fas fa-trash-alt" style="margin-top: 20px"></i> <!-- Icône de suppression -->
                                     </a>
                                     <?php endif; ?>
