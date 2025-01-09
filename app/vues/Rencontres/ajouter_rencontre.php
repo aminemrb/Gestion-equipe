@@ -23,8 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Appeler la fonction pour ajouter la rencontre
         $rencontreControleur->ajouter_rencontre();
-        header("Location: /football_manager/app/vues/Rencontres/liste_rencontres.php");
-        exit;
     }
 }
 ?>
@@ -43,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h1>Ajouter une rencontre</h1>
     <form method="POST" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
         <label for="equipe_adverse">Équipe Adverse :</label>
-        <input type="text" id="equipe_adverse" name="equipe_adverse" required>
+        <input type="text" id="equipe_adverse" name="equipe_adverse" pattern="[A-Za-zÀ-ÿ]+" required>
 
         <label for="date_rencontre">Date de la rencontre :</label>
         <?php

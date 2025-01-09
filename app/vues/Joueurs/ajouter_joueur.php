@@ -9,8 +9,13 @@ $joueurControleur = new JoueurControleur();
 
 // Traiter la soumission du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Appeler la méthode du contrôleur pour ajouter un joueur
-    $joueurControleur->ajouter_joueur();
+    $commentaire = $_POST['commentaire'] ?? '';
+    if (preg_match('/^[A-Za-z0-9À-ÿ\s\'\-.,!?]+$/', $commentaire)) {
+        // Appeler la méthode du contrôleur pour ajouter un joueur
+        $joueurControleur->ajouter_joueur();
+    } else {
+        echo "<p>Le commentaire contient des caractères non valides.</p>";
+    }
 }
 ?>
 
@@ -35,12 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-group">
                 <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" required>
+                <input type="text" id="nom" name="nom" pattern="[A-Za-zÀ-ÿ]+" required>
             </div>
 
             <div class="form-group">
                 <label for="prenom">Prénom :</label>
-                <input type="text" id="prenom" name="prenom" required>
+                <input type="text" id="prenom" name="prenom" pattern="[A-Za-zÀ-ÿ '-]+" required>
             </div>
 
             <div class="form-group">
@@ -55,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-group">
                 <label for="poids">Poids (en kg) :</label>
-                <input type="number" id="poids" name="poids" step="0.1" min="30" max="200" required>
+                <input type="number" id="poids" name="poids" step="0.1" min="15" max="300" required>
             </div>
 
             <div class="form-group">
@@ -86,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-group">
                 <label for="commentaire">Commentaire :</label>
-                <textarea id="commentaire" name="commentaire"></textarea>
+                <textarea id="commentaire" name="commentaire" ></textarea>
             </div>
 
             <div class="form-group">

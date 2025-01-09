@@ -58,7 +58,7 @@ function getJoueursParPoste($joueurs) {
 
 // Fonction pour formater la date en français
 function formaterDate($date) {
-    setlocale(LC_TIME, 'fr_FR.UTF-8');
+    setlocale(LC_ALL, 'fr_FR.utf8', 'fr_FR','fr','fr','fra','fr_FR@euro');
     $dateObj = new DateTime($date);
     return strftime('%A %d %B %Y', $dateObj->getTimestamp());
 }
@@ -66,7 +66,7 @@ function formaterDate($date) {
 // Fonction pour déterminer la couleur du score
 function couleurScore($scoreEquipe, $scoreAdverse) {
     if ($scoreEquipe > $scoreAdverse) {
-        return 'green'; // Victoire
+        return '#2dbc2d'; // Victoire
     } elseif ($scoreEquipe < $scoreAdverse) {
         return 'red'; // Défaite
     }elseif ($scoreEquipe == $scoreAdverse && $scoreEquipe !== null && $scoreAdverse !== null) {
@@ -90,7 +90,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 <body>
 <main id="liste">
     <h1>Gestion des rencontres</h1>
-    <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_rencontre.php" class="btn-ajouter">Ajouter une rencontre</a>
+    <div style="text-align: center;"><a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_rencontre.php" class="btn-ajouter">Ajouter une rencontre</a></div>
 
     <div class="rencontres-container">
         <!-- Colonne des matchs passés -->
@@ -120,7 +120,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                 ?>
 
                 <?php if (!$isMatchFutur): ?>
-                    <div class="match-card" style="box-shadow: 0 0 10px <?= $couleurScore ?>">
+                    <div class="match-card" style="box-shadow: 0px 0px 0px 2px  <?= $couleurScore ?>">
                         <div class="match-header">
                             <div class="match-date-time">
                                 <span class="match-date"><strong><?= formaterDate($rencontre['date_rencontre']) ?></strong> à </span>
@@ -134,9 +134,9 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                         <div class="match-body">
                             <div class="team">
-                                <span class="team-name"><?=$nomEquipe?></span>
-                                <span class="score" style="color: <?= $couleurScore ?>;"><?=$score?></span>
-                                <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
+                                <div class="team-name team-end"><?=$nomEquipe?></div>
+                                <span class="score" style="background-color: <?= $couleurScore ?>;"><?=$score?></span>
+                                <div class="team-name team-left"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></div>
                             </div>
                         </div>
 
@@ -150,14 +150,25 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                                 <!-- Attaque -->
                                                 <div class="line forward">
                                                     <div class="poste-container">
+                                                        <div class="note">
+                                                            <div><?= htmlspecialchars(str_repeat("★",$joueursParPoste['attaquants']['AG']['note'])) ?></div>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['attaquants']['AG']['note'])) ?></div>
+                                                        </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? null) ?></div>
                                                         <div class="poste att">AG</div>
                                                     </div>
                                                     <div class="poste-container">
+                                                        <div class="note">
+                                                            <?= htmlspecialchars(str_repeat("★",$joueursParPoste['attaquants']['BU']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['attaquants']['BU']['note'])) ?></div>
+                                                        </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste att">BU</div>
                                                     </div>
                                                     <div class="poste-container">
+                                                        <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['attaquants']['AD']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['attaquants']['AD']['note'])) ?></div>
+                                                        </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste att">AD</div>
                                                     </div>
@@ -166,14 +177,24 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                                 <!-- Milieu -->
                                                 <div class="line midfield">
                                                     <div class="poste-container">
+                                                        <div class="note">
+                                                            <?= htmlspecialchars(str_repeat("★",$joueursParPoste['milieux']['MCG']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['milieux']['MCG']['note'])) ?></div>
+                                                        </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste mil">MCG</div>
                                                     </div>
                                                     <div class="poste-container">
+                                                        <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['milieux']['MD']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['milieux']['MD']['note'])) ?></div>
+                                                        </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?></div>
-                                                        <div class="poste mil">MD</div>
+                                                        <div class="poste mil">MCD</div>
                                                     </div>
                                                     <div class="poste-container">
+                                                        <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['milieux']['MCD']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['milieux']['MCD']['note'])) ?></div>
+                                                        </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste mil">MCD</div>
                                                     </div>
@@ -182,18 +203,26 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                                 <!-- Défense -->
                                                 <div class="line defense">
                                                     <div class="poste-container">
+                                                        <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['defenseurs']['DG']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['defenseurs']['DG']['note'])) ?></div></div>
                                                         <div class="player DG"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste def">DG</div>
                                                     </div>
                                                     <div class="poste-container">
+                                                        <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['defenseurs']['DCG']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['defenseurs']['DCG']['note'])) ?></div></div>
                                                         <div class="player DCG"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste def">DCG</div>
                                                     </div>
                                                     <div class="poste-container">
+                                                        <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['defenseurs']['DCD']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['defenseurs']['DCD']['note'])) ?></div></div>
                                                         <div class="player DCD"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste def">DCD</div>
                                                     </div>
                                                     <div class="poste-container">
+                                                        <div class="note"><?= htmlspecialchars( str_repeat("★", $joueursParPoste['defenseurs']['DD']['note'] ?? 0)); ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['defenseurs']['DD']['note'])) ?></div></div>
                                                         <div class="player DD"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?></div>
                                                         <div class="poste def">DD</div>
                                                     </div>
@@ -202,6 +231,8 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                                 <!-- Gardien -->
                                                 <div class="line goal">
                                                     <div class="poste-container">
+                                                        <div class="note"><?= htmlspecialchars(str_repeat("★",$joueursParPoste['gardiens']['GB']['note'] ?? 0)) ?>
+                                                            <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['gardiens']['GB']['note'])) ?></div></div>
                                                         <div class="player">
                                                             <?= htmlspecialchars($joueursParPoste['gardiens']['GB']['nom'] ?? 'N/A') ?>
                                                         </div>
@@ -217,9 +248,14 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                             <h3>Remplaçant(s)</h3>
                                             <div class="bench">
                                                 <?php foreach ($joueursParPoste['remplacants'] as $remplacant): ?>
+                                                <div>
+                                                    <div class="note"><?= htmlspecialchars(str_repeat("★",$remplacant['note'] ?? 0)) ?>
+                                                        <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$remplacant['note'])) ?></div>
+                                                    </div>
                                                     <div class="player">
                                                         <?= htmlspecialchars($remplacant['nom'] ?? 'N/A') ?>
                                                     </div>
+                                                </div>
                                                 <?php endforeach; ?>
                                             </div>
                                         </div>
@@ -228,9 +264,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                                 <!-- Actions -->
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Evaluations</a>
-                                    <?php if ($isJoueursNotes): ?>
                                         <a href="<?= BASE_URL ?>/vues/Rencontres/ajouter_resultat.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Score</a>
-                                    <?php endif; ?>
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                         <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
                                     </a>
@@ -238,7 +272,8 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                     <span>MATCH ANNULÉ (aucun joueur sélectionné)</span>
                                     <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                         <i class="fas fa-trash-alt" style="margin-top: 20px"></i> <!-- Icône de suppression -->
-                                    </a>                                <?php endif; ?>
+                                    </a>
+                                    <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -280,9 +315,9 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                         <div class="match-body">
                             <div class="team">
-                                <span class="team-name"><?=$nomEquipe?></span>
+                                <div class="team-name team-end"><?=$nomEquipe?></div>
                                 <span class="score" style="color: <?= $couleurScore ?>;"><?=$score?></span>
-                                <span class="team-name"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></span>
+                                <div class="team-name team-left"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></div>
                             </div>
                         </div>
 
@@ -296,15 +331,15 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                         <!-- Attaque -->
                                         <div class="line forward">
                                             <div class="poste-container">
-                                                <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player player-a-venir"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste att">AG</div>
                                             </div>
                                             <div class="poste-container">
-                                                <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player player-a-venir"><?= htmlspecialchars($joueursParPoste['attaquants']['BU']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste att">BU</div>
                                             </div>
                                             <div class="poste-container">
-                                                <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player player-a-venir"><?= htmlspecialchars($joueursParPoste['attaquants']['AD']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste att">AD</div>
                                             </div>
                                         </div>
@@ -312,15 +347,15 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                         <!-- Milieu -->
                                         <div class="line midfield">
                                             <div class="poste-container">
-                                                <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player player-a-venir"><?= htmlspecialchars($joueursParPoste['milieux']['MCG']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste mil">MCG</div>
                                             </div>
                                             <div class="poste-container">
-                                                <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player player-a-venir"><?= htmlspecialchars($joueursParPoste['milieux']['MD']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste mil">MD</div>
                                             </div>
                                             <div class="poste-container">
-                                                <div class="player"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player player-a-venir"><?= htmlspecialchars($joueursParPoste['milieux']['MCD']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste mil">MCD</div>
                                             </div>
                                         </div>
@@ -328,19 +363,19 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                         <!-- Défense -->
                                         <div class="line defense">
                                             <div class="poste-container">
-                                                <div class="player DG"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player DG player-a-venir"><?= htmlspecialchars($joueursParPoste['defenseurs']['DG']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste def">DG</div>
                                             </div>
                                             <div class="poste-container">
-                                                <div class="player DCG"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player DCG player-a-venir"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCG']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste def">DCG</div>
                                             </div>
                                             <div class="poste-container">
-                                                <div class="player DCD"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player DCD player-a-venir"><?= htmlspecialchars($joueursParPoste['defenseurs']['DCD']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste def">DCD</div>
                                             </div>
                                             <div class="poste-container">
-                                                <div class="player DD"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?></div>
+                                                <div class="player DD player-a-venir"><?= htmlspecialchars($joueursParPoste['defenseurs']['DD']['nom'] ?? 'N/A') ?></div>
                                                 <div class="poste def">DD</div>
                                             </div>
                                         </div>
@@ -348,7 +383,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                         <!-- Gardien -->
                                         <div class="line goal">
                                             <div class="poste-container">
-                                                <div class="player">
+                                                <div class="player player-a-venir">
                                                         <?= htmlspecialchars($joueursParPoste['gardiens']['GB']['nom'] ?? 'N/A') ?>
                                                 </div>
                                                 <div class="poste goal">GB</div>

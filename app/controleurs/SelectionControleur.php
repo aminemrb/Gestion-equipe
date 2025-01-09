@@ -79,6 +79,4 @@ class SelectionControleur {
             $this->selectionModel->supprimerSelection($id_rencontre);
         }
     }
-
-
 }

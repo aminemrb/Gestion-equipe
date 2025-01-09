@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <main>
-    <h1>Ajouter Résultat</h1>
+    <h1>Résultat</h1>
     <form method="post" action="">
         <!-- Champ caché pour l'ID de la rencontre -->
         <input type="hidden" name="id_rencontre" value="<?= htmlspecialchars($id_rencontre) ?>">
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Champ pour le score adverse -->
         <div>
-            <label for="score_adverse">Score de l'équipe adverse:</label>
+            <label for="score_adverse"> Score <?=htmlspecialchars($rencontre['equipe_adverse']) ?></label>
             <input type="number" id="score_adverse" name="score_adverse" min="0" value="<?= $score_adverse !== null ? htmlspecialchars($score_adverse) : '' ?>" required>
         </div>
 

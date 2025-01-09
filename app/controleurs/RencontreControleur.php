@@ -53,7 +53,7 @@ class RencontreControleur {
             try {
                 $this->rencontreModel->ajouterRencontre($equipe_adverse, $date_rencontre, $heure_rencontre, $lieu);
                 // Redirection vers la liste des rencontres après succès
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header("Location: liste_rencontres.php");
                 exit;
             } catch (\Exception $e) {
                 echo "Erreur lors de l'ajout de la rencontre : " . $e->getMessage();
@@ -80,7 +80,7 @@ class RencontreControleur {
             try {
                 $this->rencontreModel->modifierRencontre($id_rencontre, $equipe_adverse, $date_rencontre, $heure_rencontre, $lieu);
                 // Redirection vers la liste des rencontres après succès
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header("Location: liste_rencontres.php");
                 exit;
             } catch (\Exception $e) {
                 echo "Erreur lors de la modification de la rencontre : " . $e->getMessage();
@@ -101,7 +101,7 @@ class RencontreControleur {
         try {
             $this->rencontreModel->supprimerRencontre($id_rencontre);
             // Redirection vers la liste des rencontres après succès
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            header("Location: liste_rencontres.php");
             exit;
         } catch (\Exception $e) {
             echo "Erreur lors de la suppression de la rencontre : " . $e->getMessage();
@@ -123,7 +123,7 @@ class RencontreControleur {
 
             try {
                 $this->rencontreModel->mettreAJourResultat($id_rencontre, $score_equipe, $score_adverse, $resultat);
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header("Location: liste_rencontres.php");
                 exit;
             } catch (\Exception $e) {
                 echo "Erreur lors de l'ajout du résultat : " . $e->getMessage();

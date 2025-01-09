@@ -3,8 +3,7 @@
 namespace App\Controleurs;
 
 use App\Modeles\Utilisateur;
-use Config\Database;
-
+use App\Config\Database;
 class AuthControleur {
     private $db;
 

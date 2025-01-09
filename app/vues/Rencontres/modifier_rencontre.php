@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label for="equipe_adverse">Équipe Adverse :</label>
                 <input type="text" id="equipe_adverse" name="equipe_adverse"
-                       value="<?= htmlspecialchars($rencontre['equipe_adverse']) ?>" required>
+                       value="<?= htmlspecialchars($rencontre['equipe_adverse']) ?>"  pattern="[A-Za-zÀ-ÿ]+" required>
             </div>
 
             <div class="form-group">
