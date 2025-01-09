@@ -21,8 +21,6 @@ class AuthControleur {
             $_SESSION['email'] = $utilisateur['email'];
             header('Location: ' . BASE_URL . '/vues/Accueil/accueil.php');
             exit;
-        } else {
-            echo "Identifiants invalides.";
         }
     }
 

@@ -1,5 +1,14 @@
+
+
 <?php
 include __DIR__ . '/../Layouts/header.php';
+?>
+
+<main>
+    <h1>Suppression du joueur : Licence "<?=htmlspecialchars($_GET['numero_licence']) ?>"</h1>
+</main>
+
+<?php
 use App\Controleurs\JoueurControleur;
 
 $controleurJoueur = new JoueurControleur();
@@ -12,9 +21,3 @@ if ($numero_licence) {
     echo "Numéro de licence non fourni.";
     exit;
 }
-?>
-    <main>
-        <h1>Suppression du joueur</h1>
-    </main>
-
-<?php include __DIR__ . '/../Layouts/footer.php'; ?>
