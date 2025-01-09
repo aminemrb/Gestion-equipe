@@ -409,11 +409,11 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
 
                             <!-- Actions -->
                             <div class="actions">
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/feuille_rencontres.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Sélection</a>
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/modifier_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">
+                                <a href="/football_manager/rencontres/feuille_de_rencontre?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">Sélection</a>
+                                <a href="/football_manager/rencontres/modifier?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-action">
                                     <i class="fas fa-edit"></i> <!-- Icône de modification -->
                                 </a>
-                                <a href="<?= BASE_URL ?>/vues/Rencontres/supprimer_rencontre.php?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
+                                <a href="/football_manager/rencontres/supprimer?id_rencontre=<?= $rencontre['id_rencontre'] ?>" class="btn-supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rencontre ?');">
                                     <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
                                 </a>
                             </div>

@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5794ee69-df9b-480f-aeff-2575946002dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/ajouter_joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/ajouter_joueur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Layouts/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Layouts/menu_deconnecter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/menu_deconnecter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_rencontre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/feuille_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/feuille_rencontres.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
@@ -47,22 +41,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;PHP Script.migration_passwords.php.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Amine&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/amine/football_manager&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "PHP Script.migration_passwords.php.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/amine/football_manager",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "web.server",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\football_manager\app\vues\Rencontres" />

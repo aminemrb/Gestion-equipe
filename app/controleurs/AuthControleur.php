@@ -19,18 +19,16 @@ class AuthControleur {
             session_start();
             $_SESSION['utilisateur_id'] = $utilisateur['id_utilisateur'];
             $_SESSION['email'] = $utilisateur['email'];
-            header('Location: ' . BASE_URL . '/vues/Accueil/accueil.php');
+            header("Location: /football_manager/accueil");
             exit;
         }
     }
-
-
-
+    
     public function logout() {
         session_start();
         session_unset();
         session_destroy();
-        header('Location: ' . BASE_URL . '/vues/Accueil/accueil.php');
+        header("Location: /football_manager/accueil");
         exit;
     }
 }
