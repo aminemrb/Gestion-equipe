@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../config/database.php'; // Inclure votre fichier de configuration
+require_once __DIR__ . '/../app/config/database.php'; // Inclure votre fichier de configuration
 
 try {
-    $pdo = Config\Database::getInstance();
+    $pdo = App\Config\Database::getInstance();
 
     // Récupérer tous les utilisateurs
     $query = $pdo->query("SELECT id_utilisateur, mot_de_passe FROM utilisateur");
