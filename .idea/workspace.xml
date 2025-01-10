@@ -6,14 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5794ee69-df9b-480f-aeff-2575946002dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/ajouter_joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/ajouter_joueur.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/liste_joueurs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/auth.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Joueurs/modifier_joueur.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Joueurs/modifier_joueur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/vues/Layouts/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/header.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/vues/Layouts/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/menu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Layouts/menu_deconnecter.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Layouts/menu_deconnecter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_rencontre.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/ajouter_rencontre.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/feuille_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/feuille_rencontres.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/vues/Rencontres/liste_rencontres.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +55,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;web.server&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -141,6 +137,7 @@
       <workItem from="1736250685070" duration="1182000" />
       <workItem from="1736333950802" duration="9603000" />
       <workItem from="1736434325792" duration="2115000" />
+      <workItem from="1736503121596" duration="9035000" />
     </task>
     <servers />
   </component>

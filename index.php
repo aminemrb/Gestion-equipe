@@ -13,7 +13,6 @@ if (strpos($uri, $projectBase) === 0) {
 // Routage des pages
 switch ($uri) {
     case '':
-
     // gestion de l'accueil
     case 'accueil':
         require __DIR__ . '/app/vues/Accueil/accueil.php';
