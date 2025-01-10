@@ -8,8 +8,12 @@ class UtilisateurControleur {
     private $utilisateurModel;
 
     public function __construct() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $this->utilisateurModel = new Utilisateur(); // Créer une instance du modèle Utilisateur
     }
+
 
     public function getInfosUtilisateur() {
         // Vérifier si l'utilisateur est connecté
@@ -26,7 +30,7 @@ class UtilisateurControleur {
                 return [
                     'prenom' => '',
                     'nom' => '',
-                    'nom_equipe' => 'Mon équipe',
+                    'nom_equipe' => '',
                 ];
             }
         } else {
@@ -34,7 +38,7 @@ class UtilisateurControleur {
             return [
                 'prenom' => '',
                 'nom' => '',
-                'nom_equipe' => 'Mon équipe',
+                'nom_equipe' => '',
             ];
         }
     }
@@ -72,6 +76,7 @@ class UtilisateurControleur {
                 return "Aucun utilisateur connecté.";
             }
         }
+        return "";
     }
 
 }

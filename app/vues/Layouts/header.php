@@ -4,8 +4,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/../../config.php'; // Chargement de la configuration
 require_once __DIR__ . '/../../auth/auth.php'; // Chargement des fonctions d'authentification
 
-// Vérification de l'utilisateur connecté, sauf sur certaines pages spécifiques (par ex. accueil.php)
-if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
+if (basename($_SERVER['REQUEST_URI']) !== 'accueil') {
     verifierUtilisateurConnecte();
 }
 ?>
@@ -20,7 +19,6 @@ if (basename($_SERVER['PHP_SELF']) !== 'accueil.php') {
 </head>
 <body>
 <header class="header-menu">
-    <!-- Ajouter l'image à gauche -->
     <img src="/football_manager/public/assets/images/logo.png" alt="Logo" class="logo">
 
     <?php

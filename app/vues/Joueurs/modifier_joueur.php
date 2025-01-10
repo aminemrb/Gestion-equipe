@@ -23,16 +23,8 @@ if (!$joueur) {
     include __DIR__ . '/../Layouts/footer.php';
     exit;
 }
+echo $_SERVER['REQUEST_METHOD'];
 
-// Traiter la soumission du formulaire
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $commentaire = $_POST['commentaire'] ?? '';
-    if (preg_match('/^[A-Za-z0-9À-ÿ\s\'\-.,!?]+$/', $commentaire)) {
-        $joueurControleur->modifier_joueur($numero_licence); // Appliquer les modifications
-    } else {
-        echo "<p>Le commentaire contient des caractères non valides.</p>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
