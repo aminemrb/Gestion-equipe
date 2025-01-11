@@ -8,9 +8,7 @@ $joueurs = $joueurControleur->liste_joueurs();
 
 // Vérification si des joueurs existent
 if (!$joueurs || count($joueurs) === 0) {
-    echo "<p>Aucun joueur trouvé.</p>";
-    include __DIR__ . '/../Layouts/footer.php';
-    exit;
+    echo "<p style='color: red;text-align: center' >Aucun joueur trouvé.</p>";
 }
 ?>
 
