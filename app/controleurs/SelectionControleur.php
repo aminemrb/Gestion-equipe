@@ -13,6 +13,7 @@ class SelectionControleur {
         $this->joueurModel = new Joueur();
     }
 
+    // Récupère les joueurs pour une rencontre
     public function getJoueursSelectionnes($id_rencontre) {
         try {
             return $this->selectionModel->getJoueursSelectionnes($id_rencontre);
@@ -22,6 +23,7 @@ class SelectionControleur {
         }
     }
 
+    //Modifie les postes des joueurs pour une rencontre
     public function updatePostes($id_rencontre, $postes_postes) {
         try {
             foreach ($postes_postes as $numero_licence => $poste) {
@@ -35,6 +37,7 @@ class SelectionControleur {
         }
     }
 
+    // Modifier les notes des joueurs pour une rencontre
     public function updateNotes($id_rencontre, $notes) {
         try {
             foreach ($notes as $id_joueur => $note) {
@@ -46,6 +49,7 @@ class SelectionControleur {
         }
     }
 
+    // Récupère les notes des joueurs pour une rencontre
     public function getNotesByRencontre($id_rencontre) {
         return $this->selectionModel->getNotesByRencontre($id_rencontre);
     }
@@ -64,8 +68,6 @@ class SelectionControleur {
                 throw new \Exception("Tous les postes obligatoires doivent être assignés.");
             }
         }
-
-        // Mettre à jour la base de données
         $this->updatePostes($id_rencontre, $postes_postes);
     }
 

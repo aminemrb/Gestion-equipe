@@ -1,10 +1,8 @@
 <?php
-include __DIR__ . '/../../config.php';
 include __DIR__ . '/../Layouts/header.php';
 
 use App\Controleurs\UtilisateurControleur;
 
-// Créer une instance du contrôleur
 $utilisateurControleur = new UtilisateurControleur();
 $message = "";
 
@@ -15,7 +13,7 @@ $fullName = htmlspecialchars($infosUtilisateur['prenom']) . " " . htmlspecialcha
 // Traiter la mise à jour si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = $utilisateurControleur->modifierInfos();
-    header("refresh:1;url=accueil.php");
+    header("refresh:1;url=/football_manager/accueil");
 }
 ?>
 

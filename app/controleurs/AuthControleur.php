@@ -8,7 +8,7 @@ class AuthControleur {
     private $db;
 
     public function __construct() {
-        $this->db = Database::getInstance(); // Accès à la base de données
+        $this->db = Database::getInstance();
     }
 
     public function login($email, $password) {

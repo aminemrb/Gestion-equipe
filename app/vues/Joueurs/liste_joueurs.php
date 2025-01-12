@@ -2,15 +2,12 @@
 include __DIR__ . '/../Layouts/header.php';
 use App\Controleurs\JoueurControleur;
 
-// Initialisation
 $joueurControleur = new JoueurControleur();
 $joueurs = $joueurControleur->liste_joueurs();
 
 // Vérification si des joueurs existent
 if (!$joueurs || count($joueurs) === 0) {
-    echo "<p>Aucun joueur trouvé.</p>";
-    include __DIR__ . '/../Layouts/footer.php';
-    exit;
+    echo "<p style='color: red;text-align: center' >Aucun joueur trouvé.</p>";
 }
 ?>
 
@@ -60,12 +57,12 @@ if (!$joueurs || count($joueurs) === 0) {
                     <td><?= htmlspecialchars($joueur['commentaire']) ?></td>
                     <td class="actions">
                         <a class="btn-modifier" href="/football_manager/joueurs/modifier?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>">
-                            <i class="fas fa-edit"></i> <!-- Icône de modification -->
+                            <i class="fas fa-edit"></i>
                         </a>
 
                         <a class="btn-supprimer" href="/football_manager/joueurs/supprimer?numero_licence=<?= htmlspecialchars($joueur['numero_licence']) ?>"
                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce joueur ?');">
-                            <i class="fas fa-trash-alt"></i> <!-- Icône de suppression -->
+                            <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
                 </tr>

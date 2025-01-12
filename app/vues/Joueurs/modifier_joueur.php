@@ -1,10 +1,8 @@
 <?php
-// Inclure le header
 include __DIR__ . '/../Layouts/header.php';
 
 use App\Controleurs\JoueurControleur;
 
-// Créer une instance du contrôleur
 $joueurControleur = new JoueurControleur();
 
 // Vérifier si un numéro de licence est passé dans l'URL
@@ -16,14 +14,13 @@ if (!$numero_licence) {
 }
 
 // Récupérer les informations du joueur
-$joueur = $joueurControleur->modifier_joueur($numero_licence); // Cette méthode renvoie les données du joueur
+$joueur = $joueurControleur->modifier_joueur($numero_licence);
 
 if (!$joueur) {
     echo "Aucun joueur trouvé pour ce numéro de licence.";
     include __DIR__ . '/../Layouts/footer.php';
     exit;
 }
-echo $_SERVER['REQUEST_METHOD'];
 
 ?>
 
@@ -39,7 +36,7 @@ echo $_SERVER['REQUEST_METHOD'];
 <div>
     <main>
         <h1>Modifier un joueur</h1>
-        <form method="POST" action="<?= BASE_URL ?>/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($numero_licence) ?>">
+        <form method="POST" action="/football_manager/app/vues/Joueurs/modifier_joueur.php?numero_licence=<?= htmlspecialchars($numero_licence) ?>">
 
             <div class="form-group">
                 <label for="numero_licence">Numéro de licence :</label>
@@ -100,6 +97,5 @@ echo $_SERVER['REQUEST_METHOD'];
 </html>
 
 <?php
-// Inclure le footer
 include __DIR__ . '/../Layouts/footer.php';
 ?>

@@ -8,7 +8,6 @@ class Rencontre {
     private $db;
 
     public function __construct() {
-        // Connexion à la base de données via une instance de PDO
         $this->db = Database::getInstance();
     }
 
@@ -16,24 +15,22 @@ class Rencontre {
     public function getAllRencontres() {
         $stmt = $this->db->prepare("SELECT * FROM rencontre ORDER BY date_rencontre, heure_rencontre");
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourner tous les résultats sous forme de tableau associatif
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
     // Ajouter une rencontre
     public function ajouterRencontre($equipe_adverse, $date_rencontre, $heure_rencontre, $lieu, $resultat = null) {
         try {
-            // Définir les scores comme null au lieu de 0
             $stmt = $this->db->prepare("INSERT INTO rencontre (equipe_adverse, date_rencontre, heure_rencontre, lieu, score_equipe, score_adverse, resultat) 
                                     VALUES (:equipe_adverse, :date_rencontre, :heure_rencontre, :lieu, :score_equipe, :score_adverse, :resultat)");
 
-            // Lier les paramètres aux valeurs
             $stmt->bindParam(':equipe_adverse', $equipe_adverse);
             $stmt->bindParam(':date_rencontre', $date_rencontre);
             $stmt->bindParam(':heure_rencontre', $heure_rencontre);
             $stmt->bindParam(':lieu', $lieu);
-            $stmt->bindValue(':score_equipe', null, PDO::PARAM_NULL); // Score de l'équipe est null
-            $stmt->bindValue(':score_adverse', null, PDO::PARAM_NULL); // Score de l'équipe adverse est null
+            $stmt->bindValue(':score_equipe', null, PDO::PARAM_NULL);
+            $stmt->bindValue(':score_adverse', null, PDO::PARAM_NULL);
             $stmt->bindParam(':resultat', $resultat);
 
             // Exécuter la requête
