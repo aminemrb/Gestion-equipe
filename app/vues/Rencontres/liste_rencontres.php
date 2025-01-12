@@ -151,7 +151,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                                                 <div class="line forward">
                                                     <div class="poste-container">
                                                         <div class="note">
-                                                            <div><?= htmlspecialchars(str_repeat("★",$joueursParPoste['attaquants']['AG']['note'])) ?></div>
+                                                            <div><?= htmlspecialchars(str_repeat("★",$joueursParPoste['attaquants']['AG']['note'] ?? 0)) ?></div>
                                                             <div class="note-reste"><?= htmlspecialchars(str_repeat("★",5-$joueursParPoste['attaquants']['AG']['note'])) ?></div>
                                                         </div>
                                                         <div class="player"><?= htmlspecialchars($joueursParPoste['attaquants']['AG']['nom'] ?? null) ?></div>

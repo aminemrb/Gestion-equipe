@@ -93,6 +93,11 @@ function obtenirClassePoste($poste) {
 <body>
 <main id="fdm">
     <h1>Feuille de Match</h1>
+    <?php if (!$matchPasse): ?>
+        <p style="text-align: center">Veuillez assigner tous les postes titulaires avant de valider la sélection. Aucun poste de remplaçant n'est obligatoire.</p>
+    <?php else: ?>
+        <p style="text-align: center">La notation de tous les joueurs n'est pas obligatoire</p>
+    <?php endif; ?>
 
     <form method="POST">
         <input type="hidden" name="id_rencontre" value="<?php echo htmlspecialchars($idRencontre); ?>">
