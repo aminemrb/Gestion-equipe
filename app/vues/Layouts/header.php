@@ -1,8 +1,7 @@
 <?php
 // Chargement des dépendances
 require_once __DIR__ . '/../../../vendor/autoload.php';
-require_once __DIR__ . '/../../config.php'; // Chargement de la configuration
-require_once __DIR__ . '/../../auth/auth.php'; // Chargement des fonctions d'authentification
+require_once __DIR__ . '/../../auth/auth.php';
 
 if (basename($_SERVER['REQUEST_URI']) !== 'accueil') {
     verifierUtilisateurConnecte();
@@ -13,8 +12,8 @@ if (basename($_SERVER['REQUEST_URI']) !== 'accueil') {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive -->
-    <link rel="stylesheet" href="/football_manager/public/assets/css/header.css"> <!-- Chemin absolu basé sur BASE_URL -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/football_manager/public/assets/css/header.css">
     <title>Football Manager</title>
 </head>
 <body>
@@ -24,9 +23,9 @@ if (basename($_SERVER['REQUEST_URI']) !== 'accueil') {
     <?php
     // Inclusion du menu en fonction de l'état de connexion
     if (isset($_SESSION['utilisateur_id'])) {
-        include __DIR__ . '/menu.php'; // Menu pour les utilisateurs connectés
+        include __DIR__ . '/menu.php';
     } else {
-        include __DIR__ . '/menu_deconnecter.php'; // Menu pour les utilisateurs déconnectés
+        include __DIR__ . '/menu_deconnecter.php';
     }
     ?>
 </header>

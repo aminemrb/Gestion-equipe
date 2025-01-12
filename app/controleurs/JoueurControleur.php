@@ -8,7 +8,7 @@ class JoueurControleur {
     private $joueurModel;
 
     public function __construct() {
-        $this->joueurModel = new Joueur(); // Créer une instance du modèle Joueur
+        $this->joueurModel = new Joueur();
     }
 
     // Afficher la liste des joueurs
@@ -38,7 +38,7 @@ class JoueurControleur {
     // Afficher le formulaire d'ajout et gérer la soumission
     public function ajouter_joueur() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Récupérer les données du formulaire
+
             $numero_licence = trim($_POST['numero_licence']);
             $nom = trim($_POST['nom']);
             $prenom = trim($_POST['prenom']);
@@ -60,7 +60,7 @@ class JoueurControleur {
                 return;
              }
 
-            if ($poids !== null && ($poids < 15 || $poids > 300)) { // Vérifie un poids raisonnable
+            if ($poids !== null && ($poids < 15 || $poids > 300)) {
                 echo "Le poids doit être compris entre 15 kg et 300 kg.";
                 return;
             }
@@ -68,7 +68,7 @@ class JoueurControleur {
             // Ajouter le joueur via le modèle
             try {
                 $this->joueurModel->ajouterJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
-                // Redirection vers la liste des joueurs après succès
+
                 header("Location: /football_manager/joueurs");
                 exit;
             } catch (\Exception $e) {
@@ -104,7 +104,7 @@ class JoueurControleur {
             // Modifier le joueur via le modèle
             try {
                 $this->joueurModel->modifierJoueur($numero_licence, $nom, $prenom, $date_naissance, $taille, $poids, $statut, $position_preferee, $commentaire);
-                // Redirection vers la liste des joueurs après succès
+
                 header("Location: /football_manager/joueurs");
                 exit;
             } catch (\Exception $e) {
@@ -128,7 +128,7 @@ class JoueurControleur {
                 echo "<p style='color: red'>Le joueur ne peut pas être supprimé car il est dans une selection en cours.</p>";
             } else {
                 $this->joueurModel->supprimerJoueur($numero_licence);
-                // Redirection vers la liste des joueurs après succès
+
                 header("Location: /football_manager/joueurs");
                 exit;
             }

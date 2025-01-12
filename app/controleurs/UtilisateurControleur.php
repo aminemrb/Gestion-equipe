@@ -4,17 +4,13 @@ namespace App\Controleurs;
 use App\Modeles\Utilisateur;
 
 class UtilisateurControleur {
-
     private $utilisateurModel;
-
     public function __construct() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
         $this->utilisateurModel = new Utilisateur(); // Créer une instance du modèle Utilisateur
     }
-
-
     public function getInfosUtilisateur() {
         // Vérifier si l'utilisateur est connecté
         if (isset($_SESSION['email'])) {

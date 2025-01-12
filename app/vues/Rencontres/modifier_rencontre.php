@@ -6,7 +6,6 @@ use App\Controleurs\RencontreControleur;
 $rencontreControleur = new RencontreControleur();
 $id_rencontre = $_GET['id_rencontre'] ?? null;
 
-// Vérification si l'ID est valide
 if (!$id_rencontre) {
     echo "ID de la rencontre non fourni.";
     exit;
@@ -29,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lieu = $_POST['lieu'];
 
     // Vérification que la nouvelle date et heure sont valides
-    $currentDateTime = new DateTime(); // Date et heure actuelles
-    $dateTimeRendezvous = new DateTime("$date_rencontre $heure_rencontre"); // Date + heure sélectionnées
+    $currentDateTime = new DateTime();
+    $dateTimeRendezvous = new DateTime("$date_rencontre $heure_rencontre");
 
     if ($dateTimeRendezvous <= $currentDateTime) {
         echo "<p style='color: red;'>Erreur : La date et l'heure de la rencontre doivent être supérieures à la date et l'heure actuelles.</p>";
@@ -64,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label for="date_rencontre">Date de la rencontre :</label>
                 <?php
-                // Date minimale = aujourd'hui
                 $minDate = date("Y-m-d");
                 ?>
                 <input type="date" id="date_rencontre" name="date_rencontre"
@@ -74,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label for="heure_rencontre">Heure de la rencontre :</label>
                 <?php
-                // Heure minimale = maintenant + 1 minute (pour éviter les valeurs invalides si c'est aujourd'hui)
                 $minTime = date("H:i", strtotime("+1 minute"));
                 ?>
                 <input type="time" id="heure_rencontre" name="heure_rencontre"

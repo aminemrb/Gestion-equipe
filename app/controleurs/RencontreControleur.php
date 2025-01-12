@@ -8,7 +8,7 @@ class RencontreControleur {
     private $rencontreModel;
 
     public function __construct() {
-        $this->rencontreModel = new Rencontre(); // Créer une instance du modèle Rencontre
+        $this->rencontreModel = new Rencontre();
     }
 
     // Récupérer les détails d'une rencontre par ID
@@ -79,7 +79,7 @@ class RencontreControleur {
             // Modifier la rencontre via le modèle
             try {
                 $this->rencontreModel->modifierRencontre($id_rencontre, $equipe_adverse, $date_rencontre, $heure_rencontre, $lieu);
-                // Redirection vers la liste des rencontres après succès
+
                 header("Location: /football_manager/rencontres");
                 exit;
             } catch (\Exception $e) {
@@ -100,7 +100,7 @@ class RencontreControleur {
     public function supprimer_rencontre($id_rencontre) {
         try {
             $this->rencontreModel->supprimerRencontre($id_rencontre);
-            // Redirection vers la liste des rencontres après succès
+
             header("Location: /football_manager/rencontres");
             exit;
         } catch (\Exception $e) {

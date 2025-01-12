@@ -1,8 +1,5 @@
 <?php
-// /app/auth/auth.php
-
 session_start();
-
 
 function verifierUtilisateurConnecte() {
     if (!isset($_SESSION['utilisateur_id'])) {
@@ -11,6 +8,4 @@ function verifierUtilisateurConnecte() {
         exit;
     }
 }
-
-
 ?>
