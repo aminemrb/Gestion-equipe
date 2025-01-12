@@ -16,15 +16,14 @@ $listeRencontres = $controleurRencontre->liste_rencontres();
 $infosUtilisateur = $utilisateurControleur->getInfosUtilisateur();
 $nomEquipe = htmlspecialchars($infosUtilisateur['nom_equipe']);
 
-
 // Organiser les joueurs par poste
 function getJoueursParPoste($joueurs) {
     $postesMapping = [
         'gardiens'    => ['GB'],
-        'defenseurs'  => ['DD', 'DG', 'DCG', 'DCD'], // Défenseurs spécifiques
-        'milieux'     => ['MD', 'MCG', 'MCD'],       // Milieux spécifiques
-        'attaquants'  => ['AD', 'AG', 'BU'],         // Attaquants spécifiques
-        'remplacants' => []                          // Pour tous les autres
+        'defenseurs'  => ['DD', 'DG', 'DCG', 'DCD'],
+        'milieux'     => ['MD', 'MCG', 'MCD'],
+        'attaquants'  => ['AD', 'AG', 'BU'],
+        'remplacants' => []
     ];
 
     $joueursParPoste = [
@@ -42,7 +41,7 @@ function getJoueursParPoste($joueurs) {
         // Assigner le joueur à sa catégorie en fonction du poste
         foreach ($postesMapping as $categorie => $postes) {
             if (in_array($poste, $postes)) {
-                $joueursParPoste[$categorie][$poste] = $joueur; // Clé = poste exact
+                $joueursParPoste[$categorie][$poste] = $joueur;
                 $ajoute = true;
                 break;
             }
@@ -93,7 +92,8 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
     <div style="text-align: center;"><a href="/football_manager/rencontres/ajouter" class="btn-ajouter">Ajouter une rencontre</a></div>
 
     <div class="rencontres-container">
-        <!-- Colonne des matchs passés -->
+
+                                           <!-- Colonne des matchs passés -->
         <div class="column">
             <h2>Matchs Passés</h2>
             <?php foreach ($listeRencontres as $rencontre): ?>
@@ -107,9 +107,13 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                 $scoreAdverse = $rencontre['score_adverse'] ?? null;
                 $couleurScore = couleurScore($scoreEquipe, $scoreAdverse);
 
-                $score = ($scoreEquipe !== null && $scoreAdverse !== null)
-                    ? "{$scoreEquipe} - {$scoreAdverse}"
-                    : '-';
+                if($rencontre['lieu'] == 'Domicile') :
+                    $score = ($scoreEquipe !== null && $scoreAdverse !== null)
+                    ? "{$scoreEquipe} - {$scoreAdverse}" : '-';
+                else :
+                    $score = ($scoreEquipe !== null && $scoreAdverse !== null)
+                    ? "{$scoreAdverse} - {$scoreEquipe}" : '-';
+                endif;
 
                 $currentDateTime = new DateTime();
                 $matchDateTime = new DateTime("{$rencontre['date_rencontre']} {$rencontre['heure_rencontre']}");
@@ -133,11 +137,19 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                         </div>
 
                         <div class="match-body">
+                            <?php if($rencontre['lieu'] == 'Domicile') :?>
                             <div class="team">
                                 <div class="team-name team-end"><?=$nomEquipe?></div>
                                 <span class="score" style="background-color: <?= $couleurScore ?>;"><?=$score?></span>
                                 <div class="team-name team-left"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></div>
                             </div>
+                            <?php else : ?>
+                                <div class="team">
+                                    <div class="team-name team-end"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></div>
+                                    <span class="score" style="background-color: <?= $couleurScore ?>;"><?=$score?></span>
+                                    <div class="team-name team-left"><?=$nomEquipe?></div>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="match-footer">
@@ -281,7 +293,7 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
             <?php endforeach; ?>
         </div>
 
-        <!-- Colonne des matchs à venir -->
+                                              <!-- Colonne des matchs à venir -->
         <div class="column">
             <h2>Matchs à Venir</h2>
             <?php foreach ($listeRencontres as $rencontre): ?>
@@ -314,11 +326,19 @@ function couleurScore($scoreEquipe, $scoreAdverse) {
                         </div>
 
                         <div class="match-body">
-                            <div class="team">
-                                <div class="team-name team-end"><?=$nomEquipe?></div>
-                                <span class="score" style="color: <?= $couleurScore ?>;"><?=$score?></span>
-                                <div class="team-name team-left"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></div>
-                            </div>
+                            <?php if($rencontre['lieu'] == 'Domicile') :?>
+                                <div class="team">
+                                    <div class="team-name team-end"><?=$nomEquipe?></div>
+                                    <span class="score" style="background-color: <?= $couleurScore ?>;"><?=$score?></span>
+                                    <div class="team-name team-left"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></div>
+                                </div>
+                            <?php else : ?>
+                                <div class="team">
+                                    <div class="team-name team-end"><?= htmlspecialchars($rencontre['equipe_adverse']) ?></div>
+                                    <span class="score" style="background-color: <?= $couleurScore ?>;"><?=$score?></span>
+                                    <div class="team-name team-left"><?=$nomEquipe?></div>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="match-footer">

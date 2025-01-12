@@ -1,13 +1,10 @@
 <?php
-// Inclure le header
 include __DIR__ . '/../Layouts/header.php';
 
 use App\Controleurs\RencontreControleur;
 
-// Créer une instance du contrôleur
 $rencontreControleur = new RencontreControleur();
 
-// Vérifier si un ID de rencontre est passé dans l'URL
 $id_rencontre = $_GET['id_rencontre'] ?? null;
 if (!$id_rencontre) {
     echo "ID de la rencontre manquant.";
@@ -16,7 +13,7 @@ if (!$id_rencontre) {
 }
 
 // Récupérer les informations de la rencontre via la méthode ajouter_resultat
-$rencontre = $rencontreControleur->ajouter_resultat(); // Appel de la méthode
+$rencontre = $rencontreControleur->ajouter_resultat();
 
 // Si aucune rencontre n'a été trouvée, afficher un message d'erreur
 if (!$rencontre) {
@@ -31,8 +28,7 @@ $score_adverse = $rencontre['score_adverse'] ?? null;
 
 // Traiter la soumission du formulaire pour ajouter ou modifier les résultats
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Appeler la méthode ajouter_resultat pour mettre à jour les résultats
-    $rencontreControleur->ajouter_resultat(); // Cette méthode gère l'ajout du résultat
+    $rencontreControleur->ajouter_resultat();
     echo "<p>Résultat ajouté avec succès.</p>";
 }
 ?>
@@ -49,22 +45,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
     <h1>Résultat</h1>
     <form method="post" action="">
-        <!-- Champ caché pour l'ID de la rencontre -->
         <input type="hidden" name="id_rencontre" value="<?= htmlspecialchars($id_rencontre) ?>">
 
-        <!-- Champ pour le score de l'équipe -->
         <div>
             <label for="score_equipe">Score de notre équipe:</label>
             <input type="number" id="score_equipe" name="score_equipe" min="0" value="<?= $score_equipe !== null ? htmlspecialchars($score_equipe) : '' ?>" required>
         </div>
 
-        <!-- Champ pour le score adverse -->
         <div>
             <label for="score_adverse"> Score <?=htmlspecialchars($rencontre['equipe_adverse']) ?></label>
             <input type="number" id="score_adverse" name="score_adverse" min="0" value="<?= $score_adverse !== null ? htmlspecialchars($score_adverse) : '' ?>" required>
         </div>
 
-        <!-- Bouton de soumission -->
         <button type="submit">Ajouter Résultat</button>
     </form>
 </main>
@@ -72,6 +64,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </html>
 
 <?php
-// Inclure le footer
 include __DIR__ . '/../Layouts/footer.php';
 ?>

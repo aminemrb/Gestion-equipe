@@ -1,17 +1,14 @@
 <?php
-// Inclure le header
 include __DIR__ . '/../Layouts/header.php';
 
 use App\Controleurs\JoueurControleur;
 
-// Créer une instance du contrôleur
 $joueurControleur = new JoueurControleur();
 
 // Traiter la soumission du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $commentaire = $_POST['commentaire'] ?? '';
     if (preg_match('/^[A-Za-z0-9À-ÿ\s\'\-.,!?]+$/', $commentaire)) {
-        // Appeler la méthode du contrôleur pour ajouter un joueur
         $joueurControleur->ajouter_joueur();
     } else {
         echo "<p>Le commentaire contient des caractères non valides.</p>";
@@ -105,6 +102,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </html>
 
 <?php
-// Inclure le footer
 include __DIR__ . '/../Layouts/footer.php';
 ?>

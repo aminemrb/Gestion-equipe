@@ -5,7 +5,6 @@ use App\Controleurs\RencontreControleur;
 
 $rencontreControleur = new RencontreControleur();
 
-// Vérification après soumission du formulaire
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer les données soumises
     $equipe_adverse = $_POST['equipe_adverse'];
@@ -15,13 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Obtenir la date et l'heure actuelles
     $currentDateTime = new DateTime(); // Maintenant
-    $dateTimeRendezvous = new DateTime("$date_rencontre $heure_rencontre"); // Date + heure saisies
+    $dateTimeRendezvous = new DateTime("$date_rencontre $heure_rencontre");
 
     // Validation combinée
     if ($dateTimeRendezvous <= $currentDateTime) {
         echo "<p style='color: red;'>Erreur : La date et l'heure de la rencontre doivent être supérieures à la date et l'heure actuelles.</p>";
     } else {
-        // Appeler la fonction pour ajouter la rencontre
         $rencontreControleur->ajouter_rencontre();
     }
 }
@@ -45,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label for="date_rencontre">Date de la rencontre :</label>
         <?php
-        // Définir la date minimale à aujourd'hui
         $minDate = date("Y-m-d");
         ?>
         <input type="date" id="date_rencontre" name="date_rencontre" required min="<?= $minDate ?>">

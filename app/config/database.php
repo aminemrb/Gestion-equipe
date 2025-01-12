@@ -14,9 +14,9 @@ class Database {
         $port = '3306';
         $dbname = 'footballmanager_v1';
         $username = '387083';
-        $password = '$iutinfo'; // Mot de passe MySQL (vide dans ce cas)
+        $password = '$iutinfo';
 
-        // DSN (Data Source Name)
+        // DSN
         $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
 
         // Création de l'instance PDO
@@ -24,6 +24,7 @@ class Database {
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    //retourne l'instance de la connexion à la base de données
     public static function getInstance() {
         if (self::$instance === null) {
             self::$instance = new Database();

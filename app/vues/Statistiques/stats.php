@@ -46,7 +46,6 @@ foreach ($joueurs as $joueur) {
 <body>
 <div id="stats">
     <main>
-        <!-- Statistiques des Rencontres -->
         <h2>Statistiques des Rencontres</h2>
         <div id="my-chart">
             <table class="charts-css pie hide-data">
@@ -87,7 +86,6 @@ foreach ($joueurs as $joueur) {
             </div>
         </div>
 
-        <!-- Statistiques des Joueurs -->
         <h2>Statistiques des Joueurs</h2>
         <table class="stats_joueurs">
             <thead>
