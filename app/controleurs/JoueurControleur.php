@@ -150,6 +150,7 @@ class JoueurControleur {
             ];
         }
     }
-
-
+    public function estJoueurSelectionnePourMatchAVenir($numero_licence) {
+        return $this->joueurModel->estJoueurSelectionne($numero_licence, true);
+    }
 }

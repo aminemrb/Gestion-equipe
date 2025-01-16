@@ -139,15 +139,16 @@ class Joueur {
     }
 
     // Vérifier si un joueur est sélectionné pour un match passé
-    public function estJoueurSelectionne($numero_licence) {
+    public function estJoueurSelectionne($numero_licence, $matchAVenir = false) {
         try {
+            $operator = $matchAVenir ? '>' : '<';
             $stmt = $this->db->prepare("
-                SELECT COUNT(*) 
-                FROM selection s
-                JOIN rencontre r ON s.id_rencontre = r.id_rencontre
-                WHERE s.numero_licence = :numero_licence 
-                AND CONCAT(r.date_rencontre, ' ', r.heure_rencontre) < NOW()
-            ");
+            SELECT COUNT(*) 
+            FROM selection s
+            JOIN rencontre r ON s.id_rencontre = r.id_rencontre
+            WHERE s.numero_licence = :numero_licence 
+            AND CONCAT(r.date_rencontre, ' ', r.heure_rencontre) $operator NOW()
+        ");
             $stmt->bindParam(':numero_licence', $numero_licence, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchColumn() > 0;
