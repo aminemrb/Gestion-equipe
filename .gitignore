@@ -1,6 +1,8 @@
 
 # Tout le contenu de ce fichier est temporairement désactivé
 
+app/config/
+
 # Dépendances PHP et Node.js
  vendor/
  node_modules/
